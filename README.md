@@ -1,2 +1,2 @@
 # Pathfinding
-Tiralabra 2014 -projekti
+Tietorakenteiden ja algoritmien harjoitustyö, periodi IV, 2015
