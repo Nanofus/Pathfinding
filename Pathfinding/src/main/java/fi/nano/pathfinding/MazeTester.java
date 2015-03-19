@@ -16,6 +16,8 @@ class MazeTester {
     private String testedAlgorithm;
     private int testMode;
     
+    private float doorCloseInterval = 2000;
+    
     ArrayList<String> maze;
     ArrayList<String> positions;
     

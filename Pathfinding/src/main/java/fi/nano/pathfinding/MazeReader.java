@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Luokka joka lukee tason tekstitiedostosta.
- *
- * @author Nanofus
+ * Luokka joka lukee sokkelon tekstitiedostosta.
  */
 public class MazeReader {
 
     private ArrayList<String> maze;
     private ArrayList<String> positions;
+    private ArrayList<String> doors;
 
     /**
      * Konstruktori lataa sokkelon tekstitiedostosta.
@@ -25,7 +24,8 @@ public class MazeReader {
 
         maze = new ArrayList();
         positions = new ArrayList();
-
+        doors = new ArrayList();
+        
         System.out.println("Reading maze...");
 
         try {
@@ -52,9 +52,23 @@ public class MazeReader {
             positions.add(in.nextLine());
         }
         
+        System.out.println("Reading door positions...");
+
+        try {
+            in = new Scanner(new File("mazes/" + mazeName + "/doors.txt"), "UTF-8");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Can't load door positions!");
+            System.exit(1);
+        }
+
+        while (in.hasNext()) {
+            doors.add(in.nextLine());
+        }
+        
         //Fix sille että tiedostojen alkuun tulee ylimääräinen kysymysmerkki jostain merkistöenkoodauksen mysteerisyystä
         maze.set(0, maze.get(0).substring(1));
         positions.set(0, positions.get(0).substring(1));
+        doors.set(0, positions.get(0).substring(1));
 
     }
 
@@ -64,6 +78,10 @@ public class MazeReader {
 
     public ArrayList<String> GetPositions() {
         return positions;
+    }
+    
+    public ArrayList<String> GetDoors() {
+        return doors;
     }
 
 }
