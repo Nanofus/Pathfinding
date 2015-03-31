@@ -4,9 +4,9 @@ package fi.nano.pathfinding;
 
 public class main {
     public static void main(String[] args) {
-        MazeReader mazeReader = new MazeReader("maze");
+        MazeReader mazeReader = new MazeReader("41x41");
         
-        MazeTester mazeTester = new MazeTester("A*", 0, mazeReader.GetMaze(),mazeReader.GetPositions());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("Dijkstra", 0, false, mazeReader.GetMaze());
         
     }
 }

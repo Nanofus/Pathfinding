@@ -1,18 +1,17 @@
 package fi.nano.pathfinding;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import fi.nano.pathfinding.dataStructures.OArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Luokka joka lukee sokkelon tekstitiedostosta.
  */
 public class MazeReader {
 
-    private ArrayList<String> maze;
-    private ArrayList<String> positions;
-    private ArrayList<String> doors;
+    private OArrayList<String> maze;
+    private OArrayList<String> doors;
 
     /**
      * Konstruktori lataa sokkelon tekstitiedostosta.
@@ -20,67 +19,47 @@ public class MazeReader {
      * @param mazeName Ladattavan tasokansion nimi
      */
     public MazeReader(String mazeName) {
-        Scanner in = null;
 
-        maze = new ArrayList();
-        positions = new ArrayList();
-        doors = new ArrayList();
-        
+        maze = new OArrayList();
+        doors = new OArrayList();
+
         System.out.println("Reading maze...");
 
+        String line;
+
         try {
-            in = new Scanner(new File("mazes/" + mazeName + "/maze.txt"), "UTF-8");
-        } catch (FileNotFoundException ex) {
+            BufferedReader lineReader = new BufferedReader(new FileReader("mazes/" + mazeName + "/maze.txt"));
+            while ((line = lineReader.readLine()) != null) {
+                maze.add(line);
+            }
+            //System.out.println("Maze width: " + maze.get(0).length());
+            //System.out.println("Maze height: " + maze.size());
+        } catch (IOException ex) {
             System.out.println("Can't load maze!");
             System.exit(1);
         }
 
-        while (in.hasNext()) {
-            maze.add(in.nextLine());
-        }
-
-        System.out.println("Reading start and goal positions...");
-
-        try {
-            in = new Scanner(new File("mazes/" + mazeName + "/positions.txt"), "UTF-8");
-        } catch (FileNotFoundException ex) {
-            System.out.println("Can't load positions!");
-            System.exit(1);
-        }
-
-        while (in.hasNext()) {
-            positions.add(in.nextLine());
-        }
-        
         System.out.println("Reading door positions...");
 
         try {
-            in = new Scanner(new File("mazes/" + mazeName + "/doors.txt"), "UTF-8");
-        } catch (FileNotFoundException ex) {
+            BufferedReader lineReader = new BufferedReader(new FileReader("mazes/" + mazeName + "/doors.txt"));
+            while ((line = lineReader.readLine()) != null) {
+                doors.add(line);
+            }
+        } catch (IOException ex) {
             System.out.println("Can't load door positions!");
             System.exit(1);
         }
 
-        while (in.hasNext()) {
-            doors.add(in.nextLine());
-        }
-        
         //Fix sille että tiedostojen alkuun tulee ylimääräinen kysymysmerkki jostain merkistöenkoodauksen mysteerisyystä
-        maze.set(0, maze.get(0).substring(1));
-        positions.set(0, positions.get(0).substring(1));
-        doors.set(0, positions.get(0).substring(1));
-
+        //maze.set(0, maze.get(0).substring(1));
     }
 
-    public ArrayList<String> GetMaze() {
+    public OArrayList<String> GetMaze() {
         return maze;
     }
 
-    public ArrayList<String> GetPositions() {
-        return positions;
-    }
-    
-    public ArrayList<String> GetDoors() {
+    public OArrayList<String> GetDoors() {
         return doors;
     }
 

@@ -9,8 +9,8 @@ import java.util.Comparator;
 public class NodeComparator implements Comparator<Node> {
         @Override
         public int compare(Node first, Node second) {
-            if (first.f > second.f) return 1;
-            if (second.f > first.f) return -1;
+            if (first.aStar_f > second.aStar_f) return 1;
+            if (second.aStar_f > first.aStar_f) return -1;
             return 0;
         }
     } 
