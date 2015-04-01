@@ -1,6 +1,6 @@
 package fi.nano.pathfinding;
 
-import fi.nano.pathfinding.dataStructures.OArrayList;
+import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +10,8 @@ import java.io.IOException;
  */
 public class MazeReader {
 
-    private OArrayList<String> maze;
-    private OArrayList<String> doors;
+    private OwnArrayList<String> maze;
+    private OwnArrayList<String> doors;
 
     /**
      * Konstruktori lataa sokkelon tekstitiedostosta.
@@ -20,8 +20,8 @@ public class MazeReader {
      */
     public MazeReader(String mazeName) {
 
-        maze = new OArrayList();
-        doors = new OArrayList();
+        maze = new OwnArrayList();
+        doors = new OwnArrayList();
 
         System.out.println("Reading maze...");
 
@@ -55,11 +55,11 @@ public class MazeReader {
         //maze.set(0, maze.get(0).substring(1));
     }
 
-    public OArrayList<String> GetMaze() {
+    public OwnArrayList<String> GetMaze() {
         return maze;
     }
 
-    public OArrayList<String> GetDoors() {
+    public OwnArrayList<String> GetDoors() {
         return doors;
     }
 

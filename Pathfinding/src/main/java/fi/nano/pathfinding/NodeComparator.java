@@ -3,7 +3,7 @@ package fi.nano.pathfinding;
 import java.util.Comparator;
 
 /**
- *
+ * Komparaattori solmujen vertailua varten.
  * @author Nanofus
  */
 public class NodeComparator implements Comparator<Node> {

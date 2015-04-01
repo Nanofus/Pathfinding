@@ -2,12 +2,12 @@ package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Node;
 import fi.nano.pathfinding.NodeComparator;
-import fi.nano.pathfinding.dataStructures.OArrayList;
+import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
 /**
- *
+ * A*-polunetsintäalgoritmin toteutus.
  * @author Nanofus
  */
 public class AStar implements Pathfinding {
@@ -23,7 +23,7 @@ public class AStar implements Pathfinding {
      * @return Polku listana nodeista
      */
     @Override
-    public OArrayList<Node> FindPath(Node sPos, Node ePos) {
+    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
 
         HashSet<Node> closed = new HashSet<>();
         PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator());
@@ -81,8 +81,14 @@ public class AStar implements Pathfinding {
         return Pathify(sPos, ePos);
     }
 
-    private OArrayList<Node> Pathify(Node sPos, Node ePos) {
-        OArrayList<Node> path = new OArrayList<>();
+    /**
+     * Käy läpi solmujen vanhemmat ja muodostaa niistä listan
+     * @param sPos Aloitussolmu
+     * @param ePos Maalisolmu
+     * @return 
+     */
+    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
+        OwnArrayList<Node> path = new OwnArrayList<>();
 
         Node start = ePos;
 

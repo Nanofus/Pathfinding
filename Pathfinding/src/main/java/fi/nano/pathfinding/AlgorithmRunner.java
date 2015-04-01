@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fi.nano.pathfinding;
 
 import fi.nano.pathfinding.algorithms.Pathfinding;
 import fi.nano.pathfinding.algorithms.AStar;
 import fi.nano.pathfinding.algorithms.Dijkstra;
-import fi.nano.pathfinding.dataStructures.OArrayList;
+import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
 /**
+ * Ohjeman "pääluokka", ajattaa sokkelossa eri algoritmit ja vastaa sokkelon
+ * toimintojen käyttämisestä.
  *
  * @author Nanofus
  */
@@ -24,16 +21,25 @@ class AlgorithmRunner {
     private float doorCloseInterval = 2000;
     private boolean allowDiagonalMovement = false;
 
-    OArrayList<String> maze;
+    private OwnArrayList<String> maze;
 
-    OArrayList<Node> path = new OArrayList<>();
+    private OwnArrayList<Node> path = new OwnArrayList<>();
 
-    Node[][] parsedMaze;
+    private Node[][] parsedMaze;
 
-    int width;
-    int height;
+    private int width;
+    private int height;
 
-    public AlgorithmRunner(String testedAlgorithm, int testMode, boolean allowDiagonalMovement, OArrayList<String> maze) {
+    /**
+     * Konstruktori
+     *
+     * @param testedAlgorithm Algoritmi, jota testataan. Esimerkiksi "Dijkstra"
+     * tai "A*".
+     * @param testMode Käytetäänkö itsestään sulkeutuvia seiniä
+     * @param allowDiagonalMovement Sallitaanko ruudukossa liikkuminen vinottain
+     * @param maze Sokkelo tiedostosta luetussa tekstirivimuodossa
+     */
+    public AlgorithmRunner(String testedAlgorithm, int testMode, boolean allowDiagonalMovement, OwnArrayList<String> maze) {
         this.testedAlgorithm = testedAlgorithm;
         this.testMode = testMode;
         this.allowDiagonalMovement = allowDiagonalMovement;
@@ -49,10 +55,10 @@ class AlgorithmRunner {
     }
 
     /**
-     * Luo sokkelon tiedostosta luettujen tietojen perusteella
+     * Luo sokkelon tiedostosta luettujen tietojen perusteella.
      */
     private void CreateMaze() {
-        width = ((String)maze.get(0)).length();
+        width = ((String) maze.get(0)).length();
         height = maze.size();
 
         System.out.println("Width: " + width);
@@ -63,7 +69,7 @@ class AlgorithmRunner {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Node node;
-                if (((String)maze.get(j)).charAt(i) == ' ') {
+                if (((String) maze.get(j)).charAt(i) == ' ') {
                     node = new Node(false);
                 } else {
                     node = new Node(true);
@@ -79,52 +85,44 @@ class AlgorithmRunner {
 
                     if ((i - 1 >= 0) && (i - 1 < width)) {
                         if (!parsedMaze[i - 1][j].IsWall()) {
-                            node.SetNeighbour(parsedMaze[i - 1][j]);
-                            node.SetNeighbourDiagonal(false);
+                            node.SetNeighbour(parsedMaze[i - 1][j], false);
                         }
                     }
                     if ((i + 1 >= 0) && (i + 1 < width)) {
                         if (!parsedMaze[i + 1][j].IsWall()) {
-                            node.SetNeighbour(parsedMaze[i + 1][j]);
-                            node.SetNeighbourDiagonal(false);
+                            node.SetNeighbour(parsedMaze[i + 1][j], false);
                         }
                     }
                     if ((j - 1 >= 0) && (j - 1 < height)) {
                         if (!parsedMaze[i][j - 1].IsWall()) {
-                            node.SetNeighbour(parsedMaze[i][j - 1]);
-                            node.SetNeighbourDiagonal(false);
+                            node.SetNeighbour(parsedMaze[i][j - 1], false);
                         }
                     }
                     if ((j + 1 >= 0) && (j + 1 < height)) {
                         if (!parsedMaze[i][j + 1].IsWall()) {
-                            node.SetNeighbour(parsedMaze[i][j + 1]);
-                            node.SetNeighbourDiagonal(false);
+                            node.SetNeighbour(parsedMaze[i][j + 1], false);
                         }
                     }
 
                     if (allowDiagonalMovement) {
                         if ((i - 1 >= 0) && (i - 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
                             if (!parsedMaze[i - 1][j - 1].IsWall()) {
-                                node.SetNeighbour(parsedMaze[i - 1][j - 1]);
-                                node.SetNeighbourDiagonal(true);
+                                node.SetNeighbour(parsedMaze[i - 1][j - 1], true);
                             }
                         }
                         if ((i + 1 >= 0) && (i + 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
                             if (!parsedMaze[i + 1][j + 1].IsWall()) {
-                                node.SetNeighbour(parsedMaze[i + 1][j + 1]);
-                                node.SetNeighbourDiagonal(true);
+                                node.SetNeighbour(parsedMaze[i + 1][j + 1], true);
                             }
                         }
                         if ((i + 1 >= 0) && (i + 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
                             if (!parsedMaze[i + 1][j - 1].IsWall()) {
-                                node.SetNeighbour(parsedMaze[i + 1][j - 1]);
-                                node.SetNeighbourDiagonal(true);
+                                node.SetNeighbour(parsedMaze[i + 1][j - 1], true);
                             }
                         }
                         if ((i - 1 >= 0) && (i - 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
                             if (!parsedMaze[i - 1][j + 1].IsWall()) {
-                                node.SetNeighbour(parsedMaze[i - 1][j + 1]);
-                                node.SetNeighbourDiagonal(true);
+                                node.SetNeighbour(parsedMaze[i - 1][j + 1], true);
                             }
                         }
                     }
@@ -138,7 +136,8 @@ class AlgorithmRunner {
     }
 
     /**
-     * Tulostaa sokkelon komentoriville
+     * Tulostaa sokkelon komentoriville. X kuvaa seinää, välilyönti tyhjää tilaa
+     * ja piste kuljettua reittiä, jos sellainen on jo etsitty.
      */
     private void PrintMaze() {
         for (int j = 0; j < height; j++) {
@@ -161,7 +160,7 @@ class AlgorithmRunner {
      * Käynnistää algoritmin. Ajanotto tulee myös tänne.
      */
     private void Run() {
-        path = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]);
+        path = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
 
         if (path == null) {
             System.out.println("Path not found!");

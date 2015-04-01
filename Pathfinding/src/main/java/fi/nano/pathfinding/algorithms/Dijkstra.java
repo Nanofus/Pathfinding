@@ -1,24 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Node;
 import fi.nano.pathfinding.NodeComparator;
-import fi.nano.pathfinding.dataStructures.OArrayList;
-import java.util.ArrayList;
+import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import java.util.PriorityQueue;
 
 /**
- *
+ * Dijkstran algoritmin toteutus.
  * @author Nanofus
  */
 public class Dijkstra implements Pathfinding {
 
+    /**
+     * Etsii polun solmusta toiseen Dijkstran algoritmilla.
+     * @param sPos Alkusolmu
+     * @param ePos Maalisolmu
+     * @return 
+     */
     @Override
-    public OArrayList<Node> FindPath(Node sPos, Node ePos) {
+    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
         sPos.dijkstra_minDistance = 0;
 
         PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator());
@@ -60,8 +61,14 @@ public class Dijkstra implements Pathfinding {
         return Pathify(sPos, ePos);
     }
 
-    private OArrayList<Node> Pathify(Node sPos, Node ePos) {
-        OArrayList<Node> path = new OArrayList<>();
+    /**
+     * Luo polkulistan käymällä solmut läpi
+     * @param sPos Aloitussolmu
+     * @param ePos Lopetussolmu
+     * @return 
+     */
+    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
+        OwnArrayList<Node> path = new OwnArrayList<>();
 
         Node start = ePos;
 
