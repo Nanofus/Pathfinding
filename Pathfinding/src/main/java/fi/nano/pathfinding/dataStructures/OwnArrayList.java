@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Oma ArrayList-toteutus.
+ *
  * @author Nanofus
  */
 public class OwnArrayList<O> {
@@ -19,6 +20,7 @@ public class OwnArrayList<O> {
 
     /**
      * Lisää objekti
+     *
      * @param o Objekti
      */
     public void add(O o) {
@@ -30,36 +32,41 @@ public class OwnArrayList<O> {
 
     /**
      * Hae objekti indeksistä
+     *
      * @param index Indeksi
      * @return Objekti
      */
-    public Object get(int index) {
+    public O get(int index) {
         checkIfOutOfBounds(index);
 
         if (objects[index] != null) {
             Object item = objects[index];
-            return item;
+            return (O) item;
         }
         return null;
     }
 
     /**
-     * Poista objekti indeksistä
+     * Poista objekti indeksistä.
+     *
      * @param index Indeksi
      * @return Poistettu objekti
      */
-    public Object remove(int index) {
+    public O remove(int index) {
         checkIfOutOfBounds(index);
 
         Object o = get(index);
+
         if (index != --size) {
-            System.arraycopy(o, index + 1, o, index, size - index);
+            cleanArray(index);
         }
-        return o;
+
+        return (O) o;
     }
 
     /**
-     * Palauta listan koko
+     * Palauta listan koko.
+     *
      * @return Koko
      */
     public int size() {
@@ -67,7 +74,8 @@ public class OwnArrayList<O> {
     }
 
     /**
-     * Onko listassa objekti
+     * Onko listassa tietty objekti.
+     *
      * @param o Objekti
      * @return Onko objekti listassa
      */
@@ -76,15 +84,17 @@ public class OwnArrayList<O> {
     }
 
     /**
-     * Onko lista tyhjä
-     * @return 
+     * Onko lista tyhjä.
+     *
+     * @return
      */
     public boolean isEmpty() {
         return size == 0;
     }
 
     /**
-     * Objektin indeksi
+     * Objektin indeksi.
+     *
      * @param o Objekti
      * @return Objektin indeksi
      */
@@ -101,16 +111,43 @@ public class OwnArrayList<O> {
      * Kasvata listaa sen täyttyessä.
      */
     private void enlargeList() {
-        objects = Arrays.copyOf(objects, objects.length * 2);
+        Object[] copy = new Object[objects.length * 2];
+
+        for (int i = 0; i < objects.length; i++) {
+            copy[i] = objects[i];
+        }
+
+        objects = copy;
     }
 
     /**
-     * Tuottaa virheilmoituksen jos yritetään käsitellä listaa virheellisellä indeksillä.
-     * @param index 
+     * Tuottaa virheilmoituksen jos yritetään käsitellä listaa virheellisellä
+     * indeksillä.
+     *
+     * @param index
      */
     private void checkIfOutOfBounds(int index) {
         if (index < 0 || index > objects.length) {
             throw new IndexOutOfBoundsException();
         }
+    }
+
+    /**
+     * Kun poistetaan kohta taulukosta pudotetaan ylimääräinen väli pois.
+     *
+     * @param index Indeksi josta objekti poistettiin
+     */
+    private void cleanArray(int index) {
+        Object[] copy = new Object[objects.length - 1];
+
+        int objectIndex = 0;
+        for (int i = 0; i < copy.length; i++) {
+            if (i != index) {
+                copy[i] = objects[objectIndex];
+                objectIndex++;
+            }
+        }
+
+        objects = copy;
     }
 }

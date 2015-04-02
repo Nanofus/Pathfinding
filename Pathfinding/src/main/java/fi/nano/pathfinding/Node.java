@@ -1,5 +1,4 @@
 package fi.nano.pathfinding;
-
 import java.util.ArrayList;
 
 /**

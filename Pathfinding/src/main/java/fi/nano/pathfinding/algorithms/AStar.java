@@ -26,7 +26,7 @@ public class AStar implements Pathfinding {
     public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
 
         HashSet<Node> closed = new HashSet<>();
-        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator());
+        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator(0));
 
         open.add(sPos);
 

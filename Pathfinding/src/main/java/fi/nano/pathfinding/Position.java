@@ -5,8 +5,15 @@ package fi.nano.pathfinding;
  * @author Nanofus
  */
 public class Position {
-    int x;
-    int y;
+    
+    /**
+     * Sijainti x-akselilla
+     */
+    public int x;
+    /**
+     * Sijainti y-akselilla
+     */
+    public int y;
     
     public Position(int x, int y) {
         this.x = x;
@@ -31,14 +38,6 @@ public class Position {
     public void SetPosition(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-    
-    public int GetX() {
-        return this.x;
-    }
-    
-    public int GetY() {
-        return this.y;
     }
     
 }

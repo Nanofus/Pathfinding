@@ -11,7 +11,7 @@ import fi.nano.pathfinding.dataStructures.OwnArrayList;
  *
  * @author Nanofus
  */
-class AlgorithmRunner {
+public class AlgorithmRunner {
 
     private Pathfinding algorithm;
 
@@ -30,6 +30,8 @@ class AlgorithmRunner {
     private int width;
     private int height;
 
+    private boolean hasRun = false;
+
     /**
      * Konstruktori
      *
@@ -45,10 +47,13 @@ class AlgorithmRunner {
         this.allowDiagonalMovement = allowDiagonalMovement;
         this.maze = maze;
 
-        if (testedAlgorithm.equals("A*")) {
-            algorithm = new AStar();
-        } else if (testedAlgorithm.equals("Dijkstra")) {
-            algorithm = new Dijkstra();
+        switch (testedAlgorithm) {
+            case "A*":
+                algorithm = new AStar();
+                break;
+            case "Dijkstra":
+                algorithm = new Dijkstra();
+                break;
         }
 
         CreateMaze();
@@ -139,7 +144,7 @@ class AlgorithmRunner {
      * Tulostaa sokkelon komentoriville. X kuvaa seinää, välilyönti tyhjää tilaa
      * ja piste kuljettua reittiä, jos sellainen on jo etsitty.
      */
-    private void PrintMaze() {
+    public void PrintMaze() {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
                 if (parsedMaze[i][j].IsWall()) {
@@ -170,6 +175,25 @@ class AlgorithmRunner {
             System.out.println();
             PrintMaze();
             System.out.println();
+        }
+
+        hasRun = true;
+    }
+
+    /**
+     * Onko algoritmin suoritus valmis
+     *
+     * @return Totuusarvo
+     */
+    public boolean HasRun() {
+        return hasRun;
+    }
+
+    public OwnArrayList<Node> GetSolution() {
+        if (path != null) {
+            return path;
+        } else {
+            return new OwnArrayList<>();
         }
     }
 }

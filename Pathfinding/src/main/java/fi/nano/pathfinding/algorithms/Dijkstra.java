@@ -22,7 +22,7 @@ public class Dijkstra implements Pathfinding {
     public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
         sPos.dijkstra_minDistance = 0;
 
-        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator());
+        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator(1));
 
         open.add(sPos);
 
