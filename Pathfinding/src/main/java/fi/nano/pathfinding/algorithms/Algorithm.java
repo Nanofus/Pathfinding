@@ -8,7 +8,7 @@ import fi.nano.pathfinding.dataStructures.OwnArrayList;
  * Rajapinta, jonka polunetsintäalgoritmit toteuttavat.
  * @author Nanofus
  */
-public interface Pathfinding {
+public interface Algorithm {
     /**
      * Etsii reitin solmujen sPos ja ePos välillä ja palauttaa reitin.
      * @param sPos Aloitussolmu

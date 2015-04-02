@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
  * A*-polunetsintäalgoritmin toteutus.
  * @author Nanofus
  */
-public class AStar implements Pathfinding {
+public class AStar implements Algorithm {
 
     public AStar() {
     }

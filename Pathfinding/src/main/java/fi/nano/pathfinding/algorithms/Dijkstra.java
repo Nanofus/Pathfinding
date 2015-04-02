@@ -10,7 +10,7 @@ import java.util.PriorityQueue;
  * Dijkstran algoritmin toteutus.
  * @author Nanofus
  */
-public class Dijkstra implements Pathfinding {
+public class Dijkstra implements Algorithm {
 
     /**
      * Etsii polun solmusta toiseen Dijkstran algoritmilla.

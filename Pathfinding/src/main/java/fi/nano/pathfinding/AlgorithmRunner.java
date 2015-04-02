@@ -1,6 +1,6 @@
 package fi.nano.pathfinding;
 
-import fi.nano.pathfinding.algorithms.Pathfinding;
+import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
 import fi.nano.pathfinding.algorithms.Dijkstra;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
@@ -13,7 +13,7 @@ import fi.nano.pathfinding.dataStructures.OwnArrayList;
  */
 public class AlgorithmRunner {
 
-    private Pathfinding algorithm;
+    private Algorithm algorithm;
 
     private String testedAlgorithm;
     private int testMode;

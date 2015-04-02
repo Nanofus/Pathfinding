@@ -1,11 +1,10 @@
 package fi.nano.pathfinding.dataStructures;
 
-import java.util.Arrays;
-
 /**
  * Oma ArrayList-toteutus.
  *
  * @author Nanofus
+ * @param <O> Listattava oliotyyppi
  */
 public class OwnArrayList<O> {
 
