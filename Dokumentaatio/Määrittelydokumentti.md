@@ -38,3 +38,5 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
 * A*:
   * http://www.policyalmanac.org/games/aStarTutorial.htm
   * http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
+* Dijkstra:
+  * http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
