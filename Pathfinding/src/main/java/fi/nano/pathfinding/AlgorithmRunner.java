@@ -2,6 +2,7 @@ package fi.nano.pathfinding;
 
 import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
+import fi.nano.pathfinding.algorithms.BreadthFirstSearch;
 import fi.nano.pathfinding.algorithms.Dijkstra;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
@@ -53,6 +54,9 @@ public class AlgorithmRunner {
                 break;
             case "Dijkstra":
                 algorithm = new Dijkstra();
+                break;
+            case "Breadth-first":
+                algorithm = new BreadthFirstSearch();
                 break;
         }
 

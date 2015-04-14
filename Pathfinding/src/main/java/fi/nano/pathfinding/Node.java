@@ -33,6 +33,11 @@ public class Node {
      * Dijkstran algoritmin lyhin etäisyys aloitussolmuun
      */
     public double dijkstra_minDistance = Double.POSITIVE_INFINITY;
+    
+    /**
+     * Leveyshakua varten tieto onko tässä käyty jo
+     */
+    public boolean breadthfirst_visited = false;
 
     public Node(boolean isWall) {
         this.isWall = isWall;
