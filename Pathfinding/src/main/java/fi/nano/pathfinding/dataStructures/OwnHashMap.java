@@ -39,6 +39,7 @@ public class OwnHashMap<Key, Value> {
 
         // Jos bucketissa on jo objekti, lisätään uusi sen perään. Muuten luodaan uusi bucket.
         if (array[hashCode] != null) {
+
             MapObject<Key, Value> prev = null;
             MapObject<Key, Value> curr = array[hashCode];
 
@@ -77,6 +78,7 @@ public class OwnHashMap<Key, Value> {
 
         // Etsitään osuva objekti ja poistetaan se, jos ei löydy niin false
         if (array[hashCode] != null) {
+
             MapObject<Key, Value> prev = null;
             MapObject<Key, Value> curr = array[hashCode];
 
@@ -115,6 +117,7 @@ public class OwnHashMap<Key, Value> {
 
         // Etsitään bucketista oikea objekti, jos löytyy niin true, muutoin false
         if (array[hashCode] != null) {
+
             MapObject<Key, Value> object = array[hashCode];
 
             while (object != null) {
@@ -137,11 +140,12 @@ public class OwnHashMap<Key, Value> {
      * @return Objekti
      */
     public Value get(Key key) {
-        
+
         hashCode = generateHash(key);
 
         // Etsitään vastaava objekti, jos ei löydy niin null
         if (array[hashCode] != null) {
+
             MapObject<Key, Value> object = array[hashCode];
 
             while (object != null) {

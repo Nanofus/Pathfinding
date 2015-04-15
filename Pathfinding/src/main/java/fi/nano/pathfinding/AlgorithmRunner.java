@@ -174,7 +174,13 @@ public class AlgorithmRunner {
      * Käynnistää algoritmin. Ajanotto tulee myös tänne.
      */
     private void Run() {
+        System.out.println("Starting algorithm...");
+        long startTime = System.currentTimeMillis();
+
         path = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
+
+        long endTime = System.currentTimeMillis() - startTime;
+        System.out.println("Finished in " + endTime + " milliseconds");
 
         if (path == null) {
             System.out.println("Path not found!");

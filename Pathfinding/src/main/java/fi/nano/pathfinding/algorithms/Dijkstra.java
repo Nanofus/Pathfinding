@@ -29,7 +29,7 @@ public class Dijkstra implements Algorithm {
 
         boolean finished = false;
 
-        while (open.size() > 0) {
+        while (open.size() > 0 && !finished) {
             Node node = open.poll();
 
             if (node.equals(ePos)) {

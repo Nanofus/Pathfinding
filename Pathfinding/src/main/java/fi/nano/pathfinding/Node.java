@@ -1,6 +1,6 @@
 package fi.nano.pathfinding;
 
-import java.util.ArrayList;
+import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
 /**
  * Solmuobjekti
@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class Node {
 
-    private final ArrayList<Node> neighbours = new ArrayList<>();
-    private final ArrayList<Boolean> isNeighbourDiagonal = new ArrayList<>();
+    private final OwnArrayList<Node> neighbours = new OwnArrayList<>();
+    private final OwnArrayList<Boolean> isNeighbourDiagonal = new OwnArrayList<>();
     private boolean isWall;
 
     /**
@@ -68,7 +68,7 @@ public class Node {
      *
      * @return Naapurit
      */
-    public ArrayList<Node> GetNeighbours() {
+    public OwnArrayList<Node> GetNeighbours() {
         return neighbours;
     }
 
@@ -77,7 +77,7 @@ public class Node {
      *
      * @return Lista naapurien vinottaisuustiedoista
      */
-    public ArrayList<Boolean> GetNeighbourDiagonals() {
+    public OwnArrayList<Boolean> GetNeighbourDiagonals() {
         return isNeighbourDiagonal;
     }
 

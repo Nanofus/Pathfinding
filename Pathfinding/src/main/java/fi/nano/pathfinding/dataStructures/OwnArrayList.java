@@ -10,13 +10,13 @@ public class OwnArrayList<O> {
 
     private int size = 0;
     private int capacity = 12;
-    private Object objects[];
+    private Object array[];
 
     /**
      * Konstruktori
      */
     public OwnArrayList() {
-        objects = new Object[capacity];
+        array = new Object[capacity];
     }
 
     /**
@@ -25,10 +25,10 @@ public class OwnArrayList<O> {
      * @param object Objekti
      */
     public void add(O object) {
-        if (size == objects.length) {
+        if (size == array.length) {
             enlargeArray();
         }
-        objects[size++] = object;
+        array[size++] = object;
     }
 
     /**
@@ -40,8 +40,8 @@ public class OwnArrayList<O> {
     public O get(int index) {
         checkIfOutOfBounds(index);
 
-        if (objects[index] != null) {
-            Object item = objects[index];
+        if (array[index] != null) {
+            Object item = array[index];
             return (O) item;
         }
         return null;
@@ -112,13 +112,13 @@ public class OwnArrayList<O> {
      * Kasvata taulukkoa sen täyttyessä.
      */
     private void enlargeArray() {
-        Object[] copy = new Object[objects.length * 2];
+        Object[] copy = new Object[array.length * 2];
 
-        for (int i = 0; i < objects.length; i++) {
-            copy[i] = objects[i];
+        for (int i = 0; i < array.length; i++) {
+            copy[i] = array[i];
         }
 
-        objects = copy;
+        array = copy;
     }
 
     /**
@@ -128,7 +128,7 @@ public class OwnArrayList<O> {
      * @param index
      */
     private void checkIfOutOfBounds(int index) {
-        if (index < 0 || index > objects.length) {
+        if (index < 0 || index > array.length) {
             throw new IndexOutOfBoundsException();
         }
     }
@@ -139,16 +139,16 @@ public class OwnArrayList<O> {
      * @param index Indeksi josta objekti poistettiin
      */
     private void cleanArray(int index) {
-        Object[] copy = new Object[objects.length - 1];
+        Object[] copy = new Object[array.length - 1];
 
         int objectIndex = 0;
         for (int i = 0; i < copy.length; i++) {
             if (i != index) {
-                copy[i] = objects[objectIndex];
+                copy[i] = array[objectIndex];
                 objectIndex++;
             }
         }
 
-        objects = copy;
+        array = copy;
     }
 }

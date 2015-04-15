@@ -1,9 +1,8 @@
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Node;
-import fi.nano.pathfinding.dataStructures.NodeComparator;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
-import java.util.PriorityQueue;
+import fi.nano.pathfinding.dataStructures.OwnQueue;
 
 /**
  * Dijkstran algoritmin toteutus.
@@ -21,15 +20,16 @@ public class BreadthFirstSearch implements Algorithm {
      */
     @Override
     public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
-        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator(1));
+        OwnQueue q = new OwnQueue();
 
-        open.add(sPos);
+        q.push(sPos);
+        
+        sPos.breadthfirst_visited = true;
 
         boolean finished = false;
 
-        while (!open.isEmpty()) {
-            Node node = open.poll();
-            node.breadthfirst_visited = true;
+        while (!q.isEmpty() && !finished) {
+            Node node = q.pop();
 
             if (node.equals(ePos)) {
                 finished = true;
@@ -40,15 +40,9 @@ public class BreadthFirstSearch implements Algorithm {
 
                 if (!neighbour.breadthfirst_visited) {
                     neighbour.parent = node;
-                    
-                    boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
+                    neighbour.breadthfirst_visited = true;
 
-                    double weight = 1;
-                    if (isDiagonal) {
-                        weight = 1.4;
-                    }
-
-                    open.add(neighbour);
+                    q.push(neighbour);
                 }
             }
         }
