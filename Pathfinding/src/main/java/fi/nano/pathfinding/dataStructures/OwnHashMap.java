@@ -11,7 +11,7 @@ public class OwnHashMap<Key, Value> {
 
     private MapObject<Key, Value>[] array;
     private int capacity = 12;
-    
+
     private int hashCode;
 
     /**
@@ -61,7 +61,10 @@ public class OwnHashMap<Key, Value> {
                 prev = curr;
                 curr = curr.next;
             }
-            prev.next = addedObject;
+
+            if (prev != null) {
+                prev.next = addedObject;
+            }
         }
     }
 
@@ -72,7 +75,7 @@ public class OwnHashMap<Key, Value> {
      * @return Objekti
      */
     public Value get(Key key) {
-        
+
         hashCode = generateHash(key);
 
         //Objektia ei löydy avaimella...
@@ -80,7 +83,7 @@ public class OwnHashMap<Key, Value> {
             return null;
         } else { //...Mutta jos löytyy, otetaan se jonka avain vastaa
             MapObject<Key, Value> object = array[hashCode];
-            
+
             while (object != null) {
                 if (object.key.equals(key)) {
                     return object.value;
@@ -88,6 +91,33 @@ public class OwnHashMap<Key, Value> {
                 object = object.next;
             }
             return null;
+        }
+    }
+
+    /**
+     * Onko tiettyä avainta mapissa
+     *
+     * @param key Avain
+     * @return
+     */
+    public boolean contains(Key key) {
+
+        hashCode = generateHash(key);
+
+        // Objektia ei löydy hashilla...
+        if (array[hashCode] == null) {
+            return false;
+        } else { //...mutta jos löytyy, etsitään bucketista se jonka avain vastaa
+            MapObject<Key, Value> object = array[hashCode];
+
+            while (object != null) {
+                if (object.key.equals(key)) {
+                    return true;
+                }
+                object = object.next;
+            }
+
+            return false;
         }
     }
 
@@ -131,34 +161,8 @@ public class OwnHashMap<Key, Value> {
     }
 
     /**
-     * Onko tiettyä avainta mapissa
-     *
-     * @param key Avain
-     * @return
-     */
-    public boolean contains(Key key) {
-
-        hashCode = generateHash(key);
-
-        // Objektia ei löydy hashilla...
-        if (array[hashCode] == null) {
-            return false;
-        } else { //...mutta jos löytyy, etsitään bucketista se jonka avain vastaa
-            MapObject<Key, Value> object = array[hashCode];
-
-            while (object != null) {
-                if (object.key.equals(key)) {
-                    return true;
-                }
-                object = object.next;
-            }
-
-            return false;
-        }
-    }
-
-    /**
-     * Generoi avaimesta hashcoden objektin .hashCode():lla, kuitenkin niin ettei arvo mene taulukosta yli
+     * Generoi avaimesta hashcoden objektin .hashCode():lla, kuitenkin niin
+     * ettei arvo mene taulukosta yli
      *
      * @param key Avain
      * @return Hashcode
@@ -181,13 +185,12 @@ class MapObject<Key, Value> {
      * Avain
      */
     public Key key;
-    
+
     /**
      * Arvo
      */
-    
     public Value value;
-    
+
     /**
      * Seuraava objekti, jos samaan bucketiin päätyy useita
      */
