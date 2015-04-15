@@ -38,6 +38,11 @@ public class Node {
      * Leveyshakua varten tieto onko tässä käyty jo
      */
     public boolean breadthfirst_visited = false;
+    
+    /**
+     * Syvyyshakua varten tieto onko tässä käyty jo
+     */
+    public boolean depthfirst_visited = false;
 
     public Node(boolean isWall) {
         this.isWall = isWall;

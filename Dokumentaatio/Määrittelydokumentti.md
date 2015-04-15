@@ -40,3 +40,12 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
   * http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
 * Dijkstra:
   * http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
+* Syvyyshaku:
+  * http://en.wikipedia.org/wiki/Depth-first_search
+* Leveyshaku:
+  * http://en.wikipedia.org/wiki/Breadth-first_search
+  
+* Keko:
+  * http://opendatastructures.org/ods-java/10_1_BinaryHeap_Implicit_Bi.html
+  * http://www.cse.hut.fi/en/research/SVG/TRAKLA2/tutorials/heap_tutorial/taulukkona.html
+  * http://en.wikipedia.org/wiki/Binary_heap

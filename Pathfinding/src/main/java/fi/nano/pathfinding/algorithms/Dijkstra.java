@@ -1,34 +1,35 @@
-
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Node;
 import fi.nano.pathfinding.NodeComparator;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
-import java.util.PriorityQueue;
+import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
 
 /**
  * Dijkstran algoritmin toteutus.
+ *
  * @author Nanofus
  */
 public class Dijkstra implements Algorithm {
 
     /**
      * Etsii polun solmusta toiseen Dijkstran algoritmilla.
+     *
      * @param sPos Alkusolmu
      * @param ePos Maalisolmu
-     * @return 
+     * @return
      */
     @Override
     public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
         sPos.dijkstra_minDistance = 0;
 
-        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator(1));
+        OwnBinaryHeap open = new OwnBinaryHeap(1024, new NodeComparator(1));
 
         open.add(sPos);
 
         boolean finished = false;
 
-        while (!open.isEmpty()) {
+        while (open.size() > 0) {
             Node node = open.poll();
 
             if (node.equals(ePos)) {
@@ -47,7 +48,7 @@ public class Dijkstra implements Algorithm {
                 double distanceThroughNode = node.dijkstra_minDistance + weight;
 
                 if (distanceThroughNode < neighbour.dijkstra_minDistance) {
-                    open.remove(neighbour);
+                    //open.remove(neighbour);
                     neighbour.dijkstra_minDistance = distanceThroughNode;
                     neighbour.parent = node;
                     open.add(neighbour);
@@ -63,9 +64,10 @@ public class Dijkstra implements Algorithm {
 
     /**
      * Luo polkulistan käymällä solmut läpi
+     *
      * @param sPos Aloitussolmu
      * @param ePos Lopetussolmu
-     * @return 
+     * @return
      */
     private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
         OwnArrayList<Node> path = new OwnArrayList<>();

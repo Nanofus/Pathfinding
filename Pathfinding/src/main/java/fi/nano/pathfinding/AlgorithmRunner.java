@@ -3,6 +3,7 @@ package fi.nano.pathfinding;
 import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
 import fi.nano.pathfinding.algorithms.BreadthFirstSearch;
+import fi.nano.pathfinding.algorithms.DepthFirstSearch;
 import fi.nano.pathfinding.algorithms.Dijkstra;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
@@ -38,7 +39,8 @@ public class AlgorithmRunner {
      *
      * @param testedAlgorithm Algoritmi, jota testataan. Esimerkiksi "Dijkstra"
      * tai "A*".
-     * @param testMode Käytetäänkö itsestään sulkeutuvia seiniä
+     * @param testMode Käytetäänkö itsestään sulkeutuvia seiniä ja liikkuuko
+     * maali
      * @param allowDiagonalMovement Sallitaanko ruudukossa liikkuminen vinottain
      * @param maze Sokkelo tiedostosta luetussa tekstirivimuodossa
      */
@@ -57,6 +59,9 @@ public class AlgorithmRunner {
                 break;
             case "Breadth-first":
                 algorithm = new BreadthFirstSearch();
+                break;
+            case "Depth-first":
+                algorithm = new DepthFirstSearch();
                 break;
         }
 

@@ -9,24 +9,26 @@ package fi.nano.pathfinding.dataStructures;
 public class OwnArrayList<O> {
 
     private int size = 0;
-
-    private final int initialCapacity = 12;
+    private int capacity = 12;
     private Object objects[];
 
+    /**
+     * Konstruktori
+     */
     public OwnArrayList() {
-        objects = new Object[initialCapacity];
+        objects = new Object[capacity];
     }
 
     /**
      * Lisää objekti
      *
-     * @param o Objekti
+     * @param object Objekti
      */
-    public void add(O o) {
+    public void add(O object) {
         if (size == objects.length) {
-            enlargeList();
+            enlargeArray();
         }
-        objects[size++] = o;
+        objects[size++] = object;
     }
 
     /**
@@ -54,13 +56,13 @@ public class OwnArrayList<O> {
     public O remove(int index) {
         checkIfOutOfBounds(index);
 
-        Object o = get(index);
+        Object object = get(index);
 
         if (index != --size) {
             cleanArray(index);
         }
 
-        return (O) o;
+        return (O) object;
     }
 
     /**
@@ -75,11 +77,11 @@ public class OwnArrayList<O> {
     /**
      * Onko listassa tietty objekti.
      *
-     * @param o Objekti
+     * @param object Objekti
      * @return Onko objekti listassa
      */
-    public boolean contains(Object o) {
-        return indexOf(o) != -1;
+    public boolean contains(Object object) {
+        return indexOf(object) != -1;
     }
 
     /**
@@ -94,12 +96,12 @@ public class OwnArrayList<O> {
     /**
      * Objektin indeksi.
      *
-     * @param o Objekti
+     * @param object Objekti
      * @return Objektin indeksi
      */
-    public int indexOf(Object o) {
+    public int indexOf(Object object) {
         for (int i = 0; i < size; i++) {
-            if (o == get(i)) {
+            if (object == get(i)) {
                 return i;
             }
         }
@@ -107,9 +109,9 @@ public class OwnArrayList<O> {
     }
 
     /**
-     * Kasvata listaa sen täyttyessä.
+     * Kasvata taulukkoa sen täyttyessä.
      */
-    private void enlargeList() {
+    private void enlargeArray() {
         Object[] copy = new Object[objects.length * 2];
 
         for (int i = 0; i < objects.length; i++) {

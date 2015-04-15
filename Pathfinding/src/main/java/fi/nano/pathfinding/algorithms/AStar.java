@@ -3,11 +3,12 @@ package fi.nano.pathfinding.algorithms;
 import fi.nano.pathfinding.Node;
 import fi.nano.pathfinding.NodeComparator;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
-import java.util.HashSet;
-import java.util.PriorityQueue;
+import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
+import fi.nano.pathfinding.dataStructures.OwnHashSet;
 
 /**
  * A*-polunetsintäalgoritmin toteutus.
+ *
  * @author Nanofus
  */
 public class AStar implements Algorithm {
@@ -25,8 +26,8 @@ public class AStar implements Algorithm {
     @Override
     public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
 
-        HashSet<Node> closed = new HashSet<>();
-        PriorityQueue<Node> open = new PriorityQueue<>(11, new NodeComparator(0));
+        OwnHashSet<Node> closed = new OwnHashSet<>();
+        OwnBinaryHeap open = new OwnBinaryHeap(1024, new NodeComparator(0));
 
         open.add(sPos);
 
@@ -34,7 +35,7 @@ public class AStar implements Algorithm {
 
         boolean finished = false;
 
-        while (!open.isEmpty()) {
+        while (open.size() > 0) {
             Node node = open.poll();
 
             if (node.equals(ePos)) {
@@ -61,13 +62,8 @@ public class AStar implements Algorithm {
 
                 if (!open.contains(neighbour) || (temp_f < neighbour.aStar_f)) {
                     neighbour.parent = node;
-                    open.add(neighbour);
                     neighbour.aStar_g = temp_g;
                     neighbour.aStar_f = temp_f;
-
-                    if (open.contains(neighbour)) {
-                        open.remove(neighbour);
-                    }
 
                     open.add(neighbour);
                 }
@@ -83,9 +79,10 @@ public class AStar implements Algorithm {
 
     /**
      * Käy läpi solmujen vanhemmat ja muodostaa niistä listan
+     *
      * @param sPos Aloitussolmu
      * @param ePos Maalisolmu
-     * @return 
+     * @return
      */
     private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
         OwnArrayList<Node> path = new OwnArrayList<>();
