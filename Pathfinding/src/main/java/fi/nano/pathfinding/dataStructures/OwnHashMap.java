@@ -37,10 +37,8 @@ public class OwnHashMap<Key, Value> {
 
         MapObject<Key, Value> addedObject = new MapObject<>(key, object, null);
 
-        //Laitetaan uuteen bucketiin jos voidaan...
-        if (array[hashCode] == null) {
-            array[hashCode] = addedObject;
-        } else { //...ja jos ei voida niin edellisen arvon "perään" samaan.
+        // Jos bucketissa on jo objekti, lisätään uusi sen perään. Muuten luodaan uusi bucket.
+        if (array[hashCode] != null) {
             MapObject<Key, Value> prev = null;
             MapObject<Key, Value> curr = array[hashCode];
 
@@ -61,63 +59,9 @@ public class OwnHashMap<Key, Value> {
                 prev = curr;
                 curr = curr.next;
             }
-
-            if (prev != null) {
-                prev.next = addedObject;
-            }
-        }
-    }
-
-    /**
-     * Hae objekti avaimella
-     *
-     * @param key Avain
-     * @return Objekti
-     */
-    public Value get(Key key) {
-
-        hashCode = generateHash(key);
-
-        //Objektia ei löydy avaimella...
-        if (array[hashCode] == null) {
-            return null;
-        } else { //...Mutta jos löytyy, otetaan se jonka avain vastaa
-            MapObject<Key, Value> object = array[hashCode];
-
-            while (object != null) {
-                if (object.key.equals(key)) {
-                    return object.value;
-                }
-                object = object.next;
-            }
-            return null;
-        }
-    }
-
-    /**
-     * Onko tiettyä avainta mapissa
-     *
-     * @param key Avain
-     * @return
-     */
-    public boolean contains(Key key) {
-
-        hashCode = generateHash(key);
-
-        // Objektia ei löydy hashilla...
-        if (array[hashCode] == null) {
-            return false;
-        } else { //...mutta jos löytyy, etsitään bucketista se jonka avain vastaa
-            MapObject<Key, Value> object = array[hashCode];
-
-            while (object != null) {
-                if (object.key.equals(key)) {
-                    return true;
-                }
-                object = object.next;
-            }
-
-            return false;
+            prev.next = addedObject;
+        } else {
+            array[hashCode] = addedObject;
         }
     }
 
@@ -131,11 +75,8 @@ public class OwnHashMap<Key, Value> {
 
         hashCode = generateHash(key);
 
-        //Objektia ei löydy avaimella ja ei voida poistaa...
-        if (array[hashCode] == null) {
-            return false;
-        } else { //...mutta jos voidaan, etsitään se bucketista
-
+        // Etsitään osuva objekti ja poistetaan se, jos ei löydy niin false
+        if (array[hashCode] != null) {
             MapObject<Key, Value> prev = null;
             MapObject<Key, Value> curr = array[hashCode];
 
@@ -156,8 +97,63 @@ public class OwnHashMap<Key, Value> {
             }
 
             return false; //Ei löytynyt!
+        } else {
+            return false;
         }
 
+    }
+
+    /**
+     * Onko tiettyä avainta mapissa
+     *
+     * @param key Avain
+     * @return
+     */
+    public boolean contains(Key key) {
+
+        hashCode = generateHash(key);
+
+        // Etsitään bucketista oikea objekti, jos löytyy niin true, muutoin false
+        if (array[hashCode] != null) {
+            MapObject<Key, Value> object = array[hashCode];
+
+            while (object != null) {
+                if (object.key.equals(key)) {
+                    return true;
+                }
+                object = object.next;
+            }
+
+            return false;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Hae objekti avaimella
+     *
+     * @param key Avain
+     * @return Objekti
+     */
+    public Value get(Key key) {
+        
+        hashCode = generateHash(key);
+
+        // Etsitään vastaava objekti, jos ei löydy niin null
+        if (array[hashCode] != null) {
+            MapObject<Key, Value> object = array[hashCode];
+
+            while (object != null) {
+                if (object.key.equals(key)) {
+                    return object.value;
+                }
+                object = object.next;
+            }
+            return null;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -201,7 +197,7 @@ class MapObject<Key, Value> {
      *
      * @param key Avain
      * @param value Arvo
-     * @param next Seuraava objekti samassa bucketissa, optimitilanteessa null
+     * @param next Seuraava objekti samassa bucketissa
      */
     public MapObject(Key key, Value value, MapObject<Key, Value> next) {
         this.key = key;

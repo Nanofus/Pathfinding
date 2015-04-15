@@ -1,7 +1,6 @@
 package fi.nano.pathfinding.dataStructures;
 
 import fi.nano.pathfinding.Node;
-import fi.nano.pathfinding.NodeComparator;
 
 /**
  *
@@ -46,24 +45,24 @@ public class OwnBinaryHeap {
     /**
      * Lisää solmu kekoon
      *
-     * @param n Solmu
+     * @param node Solmu
      * @return Onnistuiko operaatio
      */
-    public boolean add(Node n) {
-        return offer(n);
+    public boolean add(Node node) {
+        return offer(node);
     }
 
     /**
      * Tarjoa solmu keolle
      *
-     * @param n Solmu
+     * @param node Solmu
      * @return Mahtuuko solmu kekoon
      */
-    public boolean offer(Node n) {
+    public boolean offer(Node node) {
         if (size >= array.length) {
             return false;
         }
-        array[size++] = n;
+        array[size++] = node;
         siftUp();
         return true;
     }
@@ -97,7 +96,8 @@ public class OwnBinaryHeap {
     }
 
     /**
-     * Hakee keon päällimmäisen solmun
+     * Hakee keon päällimmäisen solmun (ja heittää viimeisen huipulle ja siftaa
+     * sen paikalleen)
      *
      * @return Solmu
      */
@@ -106,41 +106,41 @@ public class OwnBinaryHeap {
             return null;
         }
 
-        Node n = array[0];
+        Node node = array[0];
 
         array[0] = array[--size];
 
         siftDown();
-        return n;
+        return node;
     }
 
     /**
      * Vaihtaa kahden solmun paikkoja
      *
-     * @param n1
-     * @param n2
+     * @param first
+     * @param second
      */
-    private void swapPlaces(int n1, int n2) {
-        Node n = array[n2];
-        array[n2] = array[n1];
-        array[n1] = n;
+    private void swapPlaces(int first, int second) {
+        Node node = array[second];
+        array[second] = array[first];
+        array[first] = node;
     }
 
     /**
      * Korjaa keko lisäyksen jälkeen
      */
     private void siftUp() {
-        int i = size - 1;
+        int index = size - 1;
 
-        while (i > 0) {
-            int p = (i + 1) / 2 - 1;
+        while (index > 0) {
+            int parentIndex = (index + 1) / 2 - 1; // Verrataan parentiin ja nosta hierarkiassa ylemmäksi tarvittaessa
 
-            if (comparator.compare(array[i], array[p]) >= 0) {
+            if (comparator.compare(array[index], array[parentIndex]) >= 0) {
                 break;
             }
 
-            swapPlaces(i, p);
-            i = p;
+            swapPlaces(index, parentIndex);
+            index = parentIndex;
         }
     }
 
@@ -148,23 +148,25 @@ public class OwnBinaryHeap {
      * Korjaa keko poiston jälkeen
      */
     private void siftDown() {
-        int i = 0;
+        int index = 0;
 
-        while (i < size) {
-            int n = (i + 1) * 2 - 1;
+        while (index < size) {
+            int childIndex = (index + 1) * 2 - 1; // Lapsosen indeksi, verrataan tähän ja tarvittaessa lasketaan hierarkiassa
 
-            if (n > size) {
-                break;
-            }
-            if ((n + 1) < size && comparator.compare(array[i], array[n]) < 0) {
-                n++;
-            }
-            if (comparator.compare(array[i], array[n]) <= 0) {
+            if (childIndex > size) {
                 break;
             }
 
-            swapPlaces(i, n);
-            i = n;
+            if ((childIndex + 1) < size && comparator.compare(array[index], array[childIndex]) < 0) {
+                childIndex++;
+            }
+
+            if (comparator.compare(array[index], array[childIndex]) <= 0) {
+                break;
+            }
+
+            swapPlaces(index, childIndex);
+            index = childIndex;
         }
     }
 
@@ -180,4 +182,5 @@ public class OwnBinaryHeap {
 
         array = copy;
     }
+
 }

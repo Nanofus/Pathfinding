@@ -1,7 +1,7 @@
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Node;
-import fi.nano.pathfinding.NodeComparator;
+import fi.nano.pathfinding.dataStructures.NodeComparator;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import java.util.PriorityQueue;
 

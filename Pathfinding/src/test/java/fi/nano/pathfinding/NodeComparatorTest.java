@@ -5,6 +5,7 @@
  */
 package fi.nano.pathfinding;
 
+import fi.nano.pathfinding.dataStructures.NodeComparator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

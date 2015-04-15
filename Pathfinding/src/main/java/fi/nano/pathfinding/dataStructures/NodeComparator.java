@@ -1,5 +1,6 @@
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.dataStructures;
 
+import fi.nano.pathfinding.Node;
 import java.util.Comparator;
 
 /**
