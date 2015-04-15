@@ -32,7 +32,7 @@ public class OwnHashSet<O> {
      * @return
      */
     public boolean contains(O object) {
-        return hashMap.contains(object) != null;
+        return hashMap.contains(object);
     }
 
     /**

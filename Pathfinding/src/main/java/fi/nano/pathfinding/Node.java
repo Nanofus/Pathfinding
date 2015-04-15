@@ -1,8 +1,10 @@
 package fi.nano.pathfinding;
+
 import java.util.ArrayList;
 
 /**
  * Solmuobjekti
+ *
  * @author Nanofus
  */
 public class Node {
@@ -10,12 +12,12 @@ public class Node {
     private final ArrayList<Node> neighbours = new ArrayList<>();
     private final ArrayList<Boolean> isNeighbourDiagonal = new ArrayList<>();
     private boolean isWall;
-    
+
     /**
      * Solmua edeltävä solmu
      */
     public Node parent;
-    
+
     /**
      * A*-algoritmin h-arvo
      */
@@ -28,17 +30,17 @@ public class Node {
      * A*-algoritmin f-arvo
      */
     public double aStar_f;
-    
+
     /**
      * Dijkstran algoritmin lyhin etäisyys aloitussolmuun
      */
     public double dijkstra_minDistance = Double.POSITIVE_INFINITY;
-    
+
     /**
      * Leveyshakua varten tieto onko tässä käyty jo
      */
     public boolean breadthfirst_visited = false;
-    
+
     /**
      * Syvyyshakua varten tieto onko tässä käyty jo
      */
@@ -52,6 +54,7 @@ public class Node {
 
     /**
      * Aseta solmu toisen naapuriksi
+     *
      * @param node Naapurisolmu
      * @param diagonal Onko solmu vinottain tästä katsottuna
      */
@@ -59,17 +62,19 @@ public class Node {
         neighbours.add(node);
         isNeighbourDiagonal.add(diagonal);
     }
-    
+
     /**
      * Hae naapurit
+     *
      * @return Naapurit
      */
     public ArrayList<Node> GetNeighbours() {
         return neighbours;
     }
-    
+
     /**
      * Hae tiedot naapurien vinottaisuuksista
+     *
      * @return Lista naapurien vinottaisuustiedoista
      */
     public ArrayList<Boolean> GetNeighbourDiagonals() {
@@ -78,7 +83,8 @@ public class Node {
 
     /**
      * Onko tämä solmu seinää
-     * @return 
+     *
+     * @return
      */
     public boolean IsWall() {
         return isWall;
@@ -86,15 +92,15 @@ public class Node {
 
     /**
      * Aseta solmu seinäksi
-     * @param isWall 
+     *
+     * @param isWall
      */
     public void SetWall(boolean isWall) {
         this.isWall = isWall;
     }
 
     /*@Override
-    public String toString() {
-        return "(h: " + h + ", g:" + g + ", f:" + f + ", neighbs: " + neighbours.toString() + ")";
-    }*/
-
+     public String toString() {
+     return "(h: " + h + ", g:" + g + ", f:" + f + ", neighbs: " + neighbours.toString() + ")";
+     }*/
 }

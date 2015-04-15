@@ -49,3 +49,10 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
   * http://opendatastructures.org/ods-java/10_1_BinaryHeap_Implicit_Bi.html
   * http://www.cse.hut.fi/en/research/SVG/TRAKLA2/tutorials/heap_tutorial/taulukkona.html
   * http://en.wikipedia.org/wiki/Binary_heap
+* HashSet:
+  * http://stackoverflow.com/questions/4558754/define-what-is-a-hashset
+* HashMap:
+  * http://eclipsesource.com/blogs/2012/09/04/the-3-things-you-should-know-about-hashcode/
+  * http://en.wikipedia.org/wiki/Hash_table
+  * http://codereview.stackexchange.com/questions/62049/simple-implementation-of-hashmap
+  * http://www.javamadesoeasy.com/2015/02/hashmap-custom-implementation.html
