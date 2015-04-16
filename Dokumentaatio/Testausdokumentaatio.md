@@ -16,10 +16,10 @@ Komentoriviparametrit: 401x401 true
 
 #### Tulokset
 
-A*: 85ms, 2029 askelta
-Dijkstra: 58ms, 2029 askelta
-Leveyshaku: 30ms, 2029 askelta
-Syvyyshaku: 26ms, 7921 askelta
+A*: 85ms, 2029 askelta<br />
+Dijkstra: 58ms, 2029 askelta<br />
+Leveyshaku: 30ms, 2029 askelta<br />
+Syvyyshaku: 26ms, 7921 askelta<br />
 
 ### Testi 2
 
@@ -31,7 +31,7 @@ Komentoriviparametrit: 401x401 false
 
 #### Tulokset
 
-A*: 72ms, 2879 askelta
-Dijkstra: 48ms, 2879 askelta
-Leveyshaku: 34ms, 2879 askelta
-Syvyyshaku: 26ms, 7741 askelta
+A*: 72ms, 2879 askelta<br />
+Dijkstra: 48ms, 2879 askelta<br />
+Leveyshaku: 34ms, 2879 askelta<br />
+Syvyyshaku: 26ms, 7741 askelta<br />
