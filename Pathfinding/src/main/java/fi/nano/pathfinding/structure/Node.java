@@ -1,4 +1,4 @@
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.structure;
 
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
@@ -14,22 +14,43 @@ public class Node {
     private boolean isWall;
 
     /**
+     * X-sijainti
+     */
+    public int x;
+    /**
+     * Y-sijainti
+     */
+    public int y;
+
+    /**
      * Solmua edeltävä solmu
      */
     public Node parent;
 
     /**
+     * Suljettu A*:ssa
+     */
+    public boolean aStar_closed = false;
+    /**
+     * Suljettu A*:ssa
+     */
+    public boolean aStar_open = false;
+    /**
+     * Kekoindeksi lähinnä A*:ta varten
+     */
+    public int binaryHeapIndex = -1;
+    /**
      * A*-algoritmin h-arvo
      */
-    public double aStar_h;
+    public int aStar_h = 0;
     /**
      * A*-algoritmin g-arvo
      */
-    public double aStar_g;
+    public int aStar_g = 0;
     /**
      * A*-algoritmin f-arvo
      */
-    public double aStar_f;
+    public int aStar_f = 0;
 
     /**
      * Dijkstran algoritmin lyhin etäisyys aloitussolmuun
@@ -49,7 +70,14 @@ public class Node {
     public Node(boolean isWall) {
         this.isWall = isWall;
 
-        this.aStar_g = Double.MAX_VALUE;
+        this.aStar_g = Integer.MAX_VALUE;
+    }
+    
+    public Node(boolean isWall, int testFValue) {
+        this.isWall = isWall;
+
+        this.aStar_g = Integer.MAX_VALUE;
+        this.aStar_f = testFValue;
     }
 
     /**

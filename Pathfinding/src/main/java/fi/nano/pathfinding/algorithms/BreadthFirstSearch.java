@@ -1,11 +1,10 @@
 package fi.nano.pathfinding.algorithms;
 
-import fi.nano.pathfinding.Node;
-import fi.nano.pathfinding.dataStructures.OwnArrayList;
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnQueue;
 
 /**
- * Dijkstran algoritmin toteutus.
+ * Leveyshaku.
  *
  * @author Nanofus
  */
@@ -19,11 +18,11 @@ public class BreadthFirstSearch implements Algorithm {
      * @return
      */
     @Override
-    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
+    public boolean FindPath(Node sPos, Node ePos) {
         OwnQueue q = new OwnQueue();
 
         q.push(sPos);
-        
+
         sPos.breadthfirst_visited = true;
 
         boolean finished = false;
@@ -47,31 +46,6 @@ public class BreadthFirstSearch implements Algorithm {
             }
         }
 
-        if (!finished) {
-            return null;
-        }
-        return Pathify(sPos, ePos);
+        return finished;
     }
-
-    /**
-     * Luo polkulistan käymällä solmut läpi
-     *
-     * @param sPos Aloitussolmu
-     * @param ePos Lopetussolmu
-     * @return
-     */
-    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
-        OwnArrayList<Node> path = new OwnArrayList<>();
-
-        Node start = ePos;
-
-        while (start != sPos) {
-            path.add(start);
-            start = start.parent;
-        }
-        path.add(start);
-
-        return path;
-    }
-
 }

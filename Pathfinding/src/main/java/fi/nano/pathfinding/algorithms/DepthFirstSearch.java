@@ -1,10 +1,10 @@
 package fi.nano.pathfinding.algorithms;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
 /**
- * Dijkstran algoritmin toteutus.
+ * Ahne syvyyshaku, joka jatkaa lähtökohtaisesti solmun ensimmäistä lasta pitkin.
  *
  * @author Nanofus
  */
@@ -22,20 +22,17 @@ public class DepthFirstSearch implements Algorithm {
      * @return
      */
     @Override
-    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
+    public boolean FindPath(Node sPos, Node ePos) {
         this.ePos = ePos;
-        
+
         Search(sPos);
 
-        if (!finished) {
-            return null;
-        }
-
-        return Pathify(sPos, ePos);
+        return finished;
     }
 
     /**
      * Rekursiivinen metodi jolla etsitään tietä maaliin
+     *
      * @param node Nykyinen solmu
      */
     private void Search(Node node) {
@@ -55,26 +52,4 @@ public class DepthFirstSearch implements Algorithm {
             }
         }
     }
-
-    /**
-     * Luo polkulistan käymällä solmut läpi
-     *
-     * @param sPos Aloitussolmu
-     * @param ePos Lopetussolmu
-     * @return
-     */
-    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
-        path = new OwnArrayList<>();
-
-        Node start = ePos;
-
-        while (start != sPos) {
-            path.add(start);
-            start = start.parent;
-        }
-        path.add(start);
-
-        return path;
-    }
-
 }

@@ -28,7 +28,6 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
 * Dijkstran algoritmi
 * Syvyyshaku
 * Leveyshaku
-* Mahdollisesti ant colony -pohjainen algoritmi
 * Todennäköisesti muita vielä määrittämättömiä
 
 ## Lähteet
@@ -38,6 +37,8 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
 * A*:
   * http://www.policyalmanac.org/games/aStarTutorial.htm
   * http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
+  * http://web.mit.edu/eranki/www/tutorials/search/
+  * http://rocketmandevelopment.com/blog/a-heuristics/
 * Dijkstra:
   * http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 * Syvyyshaku:

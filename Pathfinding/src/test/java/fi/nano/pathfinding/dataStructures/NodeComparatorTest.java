@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.dataStructures;
 
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.NodeComparator;
 import org.junit.After;
 import org.junit.AfterClass;

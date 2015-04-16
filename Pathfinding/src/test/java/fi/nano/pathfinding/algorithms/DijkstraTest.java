@@ -5,9 +5,9 @@
  */
 package fi.nano.pathfinding.algorithms;
 
-import fi.nano.pathfinding.AlgorithmRunner;
-import fi.nano.pathfinding.MazeReader;
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.AlgorithmRunner;
+import fi.nano.pathfinding.structure.MazeReader;
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import org.junit.After;
 import org.junit.AfterClass;

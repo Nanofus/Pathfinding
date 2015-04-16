@@ -1,4 +1,4 @@
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.structure;
 
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import java.io.BufferedReader;

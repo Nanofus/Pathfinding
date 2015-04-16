@@ -1,6 +1,6 @@
 package fi.nano.pathfinding.dataStructures;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 
 /**
  * Jonon toteutus
@@ -30,6 +30,15 @@ public class OwnQueue {
      */
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    /**
+     * Jonon pituus
+     *
+     * @return Totuusarvo
+     */
+    public int size() {
+        return size;
     }
 
     /**
@@ -75,7 +84,7 @@ public class OwnQueue {
     }
 
     /**
-     * Jonoa eteenpäin "työntävä" metodi
+     * Päivittää jonon pään
      *
      * @param i Jonon häntä
      * @return Uusi häntä

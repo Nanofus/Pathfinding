@@ -1,6 +1,6 @@
 package fi.nano.pathfinding.dataStructures;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 
 /**
  *
@@ -8,172 +8,211 @@ import fi.nano.pathfinding.Node;
  */
 public class OwnBinaryHeap {
 
-    private Node array[];
-    private int size;
+    private Node[] array = null;
+    private int size = 0;
+    private int capacity = 11;
     private NodeComparator comparator;
 
     /**
      * Konstruktori
      *
-     * @param capacity Keon maksimikapasiteetti
-     * @param comparator Komparaattori joka vertaa solmuja algoritmin
-     * tarvitsemalla tavalla
+     * @param comparator Solmukomparaattori
      */
-    public OwnBinaryHeap(int capacity, NodeComparator comparator) {
-        array = new Node[capacity];
+    public OwnBinaryHeap(NodeComparator comparator) {
         this.comparator = comparator;
+        this.array = new Node[capacity];
     }
 
     /**
-     * Keon objektien määrä
+     * Lisää solmun kekoon
      *
-     * @return Määrä
+     * @param node Lisättävä solmu
+     */
+    public void add(Node node) {
+        if (size >= array.length) {
+            enlargeHeap();
+        }
+
+        size++;
+        int i = size - 1;
+        while (i > 0 && comparator.compare(get(parent(i)), node) >= 0) {
+            changeIndex(i, parent(i));
+            i = parent(i);
+        }
+
+        array[i] = node;
+        updateHeapIndex(i);
+    }
+
+    /**
+     * Ottaa keon päällimmäisen solmun.
+     *
+     * @return Keon päällimmäinen solmu
+     */
+    public Node poll() {
+        if (isEmpty()) {
+            return null;
+        }
+
+        Node node = get(0);
+        node.binaryHeapIndex = -1;
+
+        size--;
+
+        if (isEmpty()) {
+            array[0] = null;
+        } else {
+            changeIndex(0, size);
+            sift(0);
+        }
+
+        return node;
+    }
+
+    /**
+     * Päivittää solmun sijainnin keossa
+     *
+     * @param node Solmu
+     */
+    public void decreaseKey(Node node) {
+        int i = node.binaryHeapIndex;
+
+        if (i == -1) {
+            return;
+        }
+
+        while (i > 0 && comparator.compare(get(parent(i)), node) >= 0) {
+            swap(i, parent(i));
+            i = parent(i);
+        }
+    }
+
+    /**
+     * Hakee solmun indeksistä
+     *
+     * @param i Indeksi
+     * @return Solmu
+     */
+    private Node get(int i) {
+        return array[i];
+    }
+
+    /**
+     * Korjaa keon lisäämisen tai poiston jälkeen
+     *
+     * @param i Indeksi solmulle
+     */
+    private void sift(int i) {
+        int leftIndex = leftChild(i);
+        int rightIndex = rightChild(i);
+
+        int smallestIndex;
+
+        if (rightIndex < size) {
+            if (comparator.compare(get(leftIndex), get(rightIndex)) <= 0) {
+                smallestIndex = leftIndex;
+            } else {
+                smallestIndex = rightIndex;
+            }
+
+            if (comparator.compare(get(i), get(smallestIndex)) >= 0) {
+                swap(i, smallestIndex);
+                sift(smallestIndex);
+            }
+        } else if (leftIndex == (size - 1) && comparator.compare(get(i), get(leftIndex)) >= 0) {
+            swap(i, leftIndex);
+        }
+    }
+
+    /**
+     * Onko keko tyhjä
+     *
+     * @return
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    /**
+     * Keon koko
+     *
+     * @return
      */
     public int size() {
         return size;
     }
 
     /**
-     * Keon kokonaiskapasiteetti, käytännössä taulukon koko
+     * Indeksissä index olevan solmun vanhemman indeksi
      *
-     * @return Kapasiteetti
+     * @param index Indeksi
+     * @return Vanhemman indeksi
      */
-    public int capacity() {
-        return array.length;
+    private int parent(int index) {
+        return index / 2;
     }
 
     /**
-     * Lisää solmu kekoon
+     * Indeksissä index olevan solmun vasemman lapsen indeksi
      *
-     * @param node Solmu
-     * @return Onnistuiko operaatio
+     * @param index Indeksi
+     * @return Vasemman lapsen indeksi
      */
-    public boolean add(Node node) {
-        return offer(node);
+    private int leftChild(int index) {
+        return (index == 0 ? 1 : 2 * index);
     }
 
     /**
-     * Tarjoa solmu keolle
+     * Indeksissä index olevan solmun oikean lapsen indeksi
      *
-     * @param node Solmu
-     * @return Mahtuuko solmu kekoon
+     * @param index Indeksi
+     * @return Oikean lapsen indeksi
      */
-    public boolean offer(Node node) {
-        if (size >= array.length) {
-            return false;
-        }
-        array[size++] = node;
-        siftUp();
-        return true;
+    private int rightChild(int index) {
+        return (index == 0 ? 2 : 2 * index + 1);
     }
 
     /**
-     * Kurkka päällimmäinen solmu poistamatta
+     * Vaihtaa indeksissä i olevan solmun sisäisesti tiedossa olevan indeksin
+     * oikeaksi
      *
-     * @return Päällimmäinen solmu
+     * @param i Indeksi
      */
-    public Node peek() {
-        if (size == 0) {
-            return null;
-        } else {
-            return array[0];
-        }
+    private void updateHeapIndex(int i) {
+        get(i).binaryHeapIndex = i;
     }
 
     /**
-     * Onko tietty solmu keossa
+     * Vaihtaa kahden solmun paikat keossa
      *
-     * @param node Etsitty solmu
-     * @return Onko keossa
+     * @param i Solmun 1 indeksi
+     * @param j Solmun 2 indeksi
      */
-    public boolean contains(Node node) {
-        for (int i = 0; i < array.length; i++) {
-            if (node == array[i]) {
-                return true;
-            }
-        }
-        return false;
+    private void swap(int i, int j) {
+        Node n = array[i];
+
+        array[i] = array[j];
+        array[j] = n;
+
+        updateHeapIndex(i);
+        updateHeapIndex(j);
     }
 
     /**
-     * Hakee keon päällimmäisen solmun (ja heittää viimeisen huipulle ja siftaa
-     * sen paikalleen)
+     * Vaihtaa solmun indeksistä i indeksiin j
      *
-     * @return Solmu
+     * @param i Lähtöindeksi
+     * @param j Kohdeindeksi
      */
-    public Node poll() {
-        if (size == 0) {
-            return null;
-        }
-
-        Node node = array[0];
-
-        array[0] = array[--size];
-
-        siftDown();
-        return node;
+    private void changeIndex(int i, int j) {
+        array[i] = array[j];
+        updateHeapIndex(i);
     }
 
     /**
-     * Vaihtaa kahden solmun paikkoja
-     *
-     * @param first
-     * @param second
+     * Kasvattaa kekoa tarvittaessa
      */
-    private void swapPlaces(int first, int second) {
-        Node node = array[second];
-        array[second] = array[first];
-        array[first] = node;
-    }
-
-    /**
-     * Korjaa keko lisäyksen jälkeen
-     */
-    private void siftUp() {
-        int index = size - 1;
-
-        while (index > 0) {
-            int parentIndex = (index + 1) / 2 - 1; // Verrataan parentiin ja nosta hierarkiassa ylemmäksi tarvittaessa
-
-            if (comparator.compare(array[index], array[parentIndex]) >= 0) {
-                break;
-            }
-
-            swapPlaces(index, parentIndex);
-            index = parentIndex;
-        }
-    }
-
-    /**
-     * Korjaa keko poiston jälkeen
-     */
-    private void siftDown() {
-        int index = 0;
-
-        while (index < size) {
-            int childIndex = (index + 1) * 2 - 1; // Lapsosen indeksi, verrataan tähän ja tarvittaessa lasketaan hierarkiassa
-
-            if (childIndex > size) {
-                break;
-            }
-
-            if ((childIndex + 1) < size && comparator.compare(array[index], array[childIndex]) < 0) {
-                childIndex++;
-            }
-
-            if (comparator.compare(array[index], array[childIndex]) <= 0) {
-                break;
-            }
-
-            swapPlaces(index, childIndex);
-            index = childIndex;
-        }
-    }
-
-    /**
-     * Kasvata taulukkoa sen täyttyessä.
-     */
-    private void enlargeArray() {
+    private void enlargeHeap() {
         Node[] copy = new Node[array.length * 2];
 
         for (int i = 0; i < array.length; i++) {

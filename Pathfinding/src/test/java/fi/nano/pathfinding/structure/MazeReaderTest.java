@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.structure;
 
+import fi.nano.pathfinding.structure.MazeReader;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import org.junit.After;
 import org.junit.AfterClass;

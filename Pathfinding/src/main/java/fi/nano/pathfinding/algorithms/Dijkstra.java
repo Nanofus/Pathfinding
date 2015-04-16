@@ -1,8 +1,7 @@
 package fi.nano.pathfinding.algorithms;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.NodeComparator;
-import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
 
 /**
@@ -12,6 +11,8 @@ import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
  */
 public class Dijkstra implements Algorithm {
 
+    OwnBinaryHeap open;
+    
     /**
      * Etsii polun solmusta toiseen Dijkstran algoritmilla.
      *
@@ -20,67 +21,51 @@ public class Dijkstra implements Algorithm {
      * @return
      */
     @Override
-    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
+    public boolean FindPath(Node sPos, Node ePos) {
         sPos.dijkstra_minDistance = 0;
 
-        OwnBinaryHeap open = new OwnBinaryHeap(1024, new NodeComparator(1));
+        open = new OwnBinaryHeap(new NodeComparator(1));
+        //PriorityQueue<Node> open = new PriorityQueue<>(11,new NodeComparator(1));
 
         open.add(sPos);
 
         boolean finished = false;
 
-        while (open.size() > 0 && !finished) {
+        while (!open.isEmpty() && !finished) {
             Node node = open.poll();
 
             if (node.equals(ePos)) {
                 finished = true;
             }
 
-            for (int i = 0; i < node.GetNeighbours().size(); i++) {
-                Node neighbour = node.GetNeighbours().get(i);
-                boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
-
-                double weight = 1;
-                if (isDiagonal) {
-                    weight = 1.4;
-                }
-
-                double distanceThroughNode = node.dijkstra_minDistance + weight;
-
-                if (distanceThroughNode < neighbour.dijkstra_minDistance) {
-                    //open.remove(neighbour);
-                    neighbour.dijkstra_minDistance = distanceThroughNode;
-                    neighbour.parent = node;
-                    open.add(neighbour);
-                }
-            }
+            InspectNeighbours(node);
         }
 
-        if (!finished) {
-            return null;
-        }
-        return Pathify(sPos, ePos);
+        return finished;
     }
 
     /**
-     * Luo polkulistan käymällä solmut läpi
-     *
-     * @param sPos Aloitussolmu
-     * @param ePos Lopetussolmu
-     * @return
+     * Tutkii solmun naapurit
+     * @param node Solmu
      */
-    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
-        OwnArrayList<Node> path = new OwnArrayList<>();
+    private void InspectNeighbours(Node node) {
+        for (int i = 0; i < node.GetNeighbours().size(); i++) {
+            Node neighbour = node.GetNeighbours().get(i);
+            boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
 
-        Node start = ePos;
+            double weight = 10;
+            if (isDiagonal) {
+                weight = 14;
+            }
 
-        while (start != sPos) {
-            path.add(start);
-            start = start.parent;
+            double distanceThroughNode = node.dijkstra_minDistance + weight;
+
+            if (distanceThroughNode < neighbour.dijkstra_minDistance) {
+                //open.remove(neighbour);
+                neighbour.dijkstra_minDistance = distanceThroughNode;
+                neighbour.parent = node;
+                open.add(neighbour);
+            }
         }
-        path.add(start);
-
-        return path;
     }
-
 }

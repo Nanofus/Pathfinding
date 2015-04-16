@@ -1,6 +1,6 @@
 package fi.nano.pathfinding.dataStructures;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 import java.util.Comparator;
 
 /**
@@ -16,6 +16,12 @@ public class NodeComparator implements Comparator<Node> {
         this.algoId = algoId;
     }
 
+    /**
+     * Vertaa kahta solmua keskenään tietyn algoritmin parametrien mukaan
+     * @param first Solmu 1
+     * @param second Solmu 2
+     * @return
+     */
     @Override
     public int compare(Node first, Node second) {
         
@@ -24,7 +30,7 @@ public class NodeComparator implements Comparator<Node> {
             if (first.aStar_f > second.aStar_f) {
                 return 1;
             }
-            if (second.aStar_f > first.aStar_f) {
+            if (first.aStar_f < second.aStar_f) {
                 return -1;
             }
             return 0;

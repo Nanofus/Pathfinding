@@ -1,10 +1,8 @@
 package fi.nano.pathfinding.algorithms;
 
-import fi.nano.pathfinding.Node;
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.NodeComparator;
-import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
-import fi.nano.pathfinding.dataStructures.OwnHashSet;
 
 /**
  * A*-polunetsintäalgoritmin toteutus.
@@ -13,11 +11,10 @@ import fi.nano.pathfinding.dataStructures.OwnHashSet;
  */
 public class AStar implements Algorithm {
 
-    OwnHashSet<Node> closed = new OwnHashSet<>();
-    OwnBinaryHeap open = new OwnBinaryHeap(1024, new NodeComparator(0));
+    OwnBinaryHeap open = new OwnBinaryHeap(new NodeComparator(0));
+    //PriorityQueue<Node> open = new PriorityQueue<>(11,new NodeComparator(0));
 
-    public AStar() {
-    }
+    Node end;
 
     /**
      * A*-algoritmin polunetsintä
@@ -27,82 +24,74 @@ public class AStar implements Algorithm {
      * @return Polku listana nodeista
      */
     @Override
-    public OwnArrayList<Node> FindPath(Node sPos, Node ePos) {
-
-        open.add(sPos);
+    public boolean FindPath(Node sPos, Node ePos) {
+        end = ePos;
 
         sPos.aStar_g = 0;
+        sPos.aStar_f = sPos.aStar_h;
+        open.add(sPos);
+        sPos.aStar_open = true;
 
         boolean finished = false;
 
-        while (open.size() > 0 && !finished) {
+        while (!open.isEmpty() && !finished) {
             Node node = open.poll();
+            node.aStar_open = false;
+            node.aStar_closed = true;
 
-            if (node.equals(ePos)) {
+            if (node.equals(end)) {
                 finished = true;
+                break;
             }
 
-            closed.add(node);
-
-            InspectNeighbours(node);
+            for (int i = 0; i < node.GetNeighbours().size(); i++) {
+                InspectNeighbour(node, node.GetNeighbours().get(i), node.GetNeighbourDiagonals().get(i));
+            }
         }
 
-        if (!finished) {
-            return null;
-        }
-        return Pathify(sPos, ePos);
+        return finished;
     }
 
-    /**
-     * Tutkii solmun naapurit, laskee painot ja lisää naapurit kekoon
-     *
-     * @param node Solmu
-     */
-    private void InspectNeighbours(Node node) {
-        for (int i = 0; i < node.GetNeighbours().size(); i++) {
-            Node neighbour = node.GetNeighbours().get(i);
-            boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
+    private int EstimateDistance(Node node) {
+        int xDiffer = end.x - node.x;
+        int yDiffer = end.y - node.y;
+        return (int) Math.sqrt((xDiffer * xDiffer) + (yDiffer * yDiffer));
+    }
 
-            double weight = 1;
-            if (isDiagonal) {
-                weight = 1.4;
-            }
+    private void InspectNeighbour(Node node, Node neighbour, boolean isDiagonal) {
+        if (neighbour.aStar_closed) {
+            return;
+        }
 
-            double temp_g = node.aStar_g + weight;
-            double temp_f = temp_g + neighbour.aStar_h;
+        int temp_h = EstimateDistance(neighbour);
 
-            if (closed.contains(neighbour) && (temp_f > neighbour.aStar_f)) {
-                continue;
-            }
+        int weight = 10;
+        if (!isDiagonal) {
+            weight = 15;
+        }
+        
+        int temp_g = node.aStar_g + weight;
 
-            if (!open.contains(neighbour) || (temp_f < neighbour.aStar_f)) {
+        if (!neighbour.aStar_open) {
+            neighbour.parent = node;
+
+            neighbour.aStar_g = temp_g;
+            neighbour.aStar_h = temp_h;
+            neighbour.aStar_f = neighbour.aStar_h + neighbour.aStar_g;
+
+            open.add(neighbour);
+            
+            neighbour.aStar_open = true;
+        } else {
+            if (temp_g < neighbour.aStar_g) {
                 neighbour.parent = node;
-                neighbour.aStar_g = temp_g;
-                neighbour.aStar_f = temp_f;
 
-                open.add(neighbour);
+                neighbour.aStar_g = temp_g;
+                neighbour.aStar_h = temp_h;
+                neighbour.aStar_f = neighbour.aStar_h + neighbour.aStar_g;
+
+                open.decreaseKey(neighbour);
             }
         }
-    }
-
-    /**
-     * Käy läpi solmujen vanhemmat ja muodostaa niistä listan
-     *
-     * @param sPos Aloitussolmu
-     * @param ePos Maalisolmu
-     * @return
-     */
-    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
-        OwnArrayList<Node> path = new OwnArrayList<>();
-
-        Node start = ePos;
-
-        while (start != sPos) {
-            path.add(start);
-            start = start.parent;
-        }
-        path.add(start);
-
-        return path;
     }
 }

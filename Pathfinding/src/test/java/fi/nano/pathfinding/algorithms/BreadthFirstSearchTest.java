@@ -20,9 +20,9 @@ import static org.junit.Assert.*;
  *
  * @author Nanofus
  */
-public class AStarTest {
+public class BreadthFirstSearchTest {
 
-    public AStarTest() {
+    public BreadthFirstSearchTest() {
     }
 
     @BeforeClass
@@ -42,9 +42,9 @@ public class AStarTest {
     }
 
     @Test
-    public void TestAStar() {
+    public void Test() {
         MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, false, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("Breadth-first", 0, false, mazeReader.GetMaze());
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -52,9 +52,9 @@ public class AStarTest {
     }
     
     @Test
-    public void TestAStarWithDiagonalMovement() {
+    public void TestWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, true, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("Breadth-first", 0, true, mazeReader.GetMaze());
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -62,9 +62,9 @@ public class AStarTest {
     }
     
     @Test
-    public void TestAStarImpossible() {
+    public void TestImpossible() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, false, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("Breadth-first", 0, false, mazeReader.GetMaze());
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -72,9 +72,9 @@ public class AStarTest {
     }
     
     @Test
-    public void TestAStarImpossibleWithDiagonalMovement() {
+    public void TestImpossibleWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, true, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("Breadth-first", 0, true, mazeReader.GetMaze());
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 

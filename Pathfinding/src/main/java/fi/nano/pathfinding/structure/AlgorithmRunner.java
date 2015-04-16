@@ -1,5 +1,6 @@
-package fi.nano.pathfinding;
+package fi.nano.pathfinding.structure;
 
+import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
 import fi.nano.pathfinding.algorithms.BreadthFirstSearch;
@@ -28,6 +29,8 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> path = new OwnArrayList<>();
 
     private Node[][] parsedMaze;
+    
+    private long runTime;
 
     private int width;
     private int height;
@@ -89,6 +92,8 @@ public class AlgorithmRunner {
                     node = new Node(true);
                 }
                 parsedMaze[i][j] = node;
+                node.x = i;
+                node.y = j;
             }
         }
 
@@ -174,21 +179,25 @@ public class AlgorithmRunner {
      * Käynnistää algoritmin. Ajanotto tulee myös tänne.
      */
     private void Run() {
-        System.out.println("Starting algorithm...");
+        System.out.println("\n-----");
+        System.out.println("Starting algorithm: "+testedAlgorithm);
         long startTime = System.currentTimeMillis();
 
-        path = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
+        //System.out.println(parsedMaze[0][1].x+","+parsedMaze[0][1].y);
+        //System.out.println(parsedMaze[width - 1][height - 2].x+","+parsedMaze[width - 1][height - 2].y);
+        boolean success = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
 
-        long endTime = System.currentTimeMillis() - startTime;
-        System.out.println("Finished in " + endTime + " milliseconds");
+        runTime = System.currentTimeMillis() - startTime;
+        System.out.println("Finished in " + runTime + " milliseconds\n-----\n");
 
-        if (path == null) {
+        if (!success) {
             System.out.println("Path not found!");
         } else {
+            path = Pathify(parsedMaze[0][1], parsedMaze[width - 1][height - 2]);
             System.out.println("Path found successfully!");
             System.out.println("Path length: " + path.size());
             System.out.println();
-            PrintMaze();
+            //PrintMaze();
             System.out.println();
         }
 
@@ -210,5 +219,32 @@ public class AlgorithmRunner {
         } else {
             return new OwnArrayList<>();
         }
+    }
+    
+    public long GetRunTime() {
+        return runTime;
+    }
+
+    /**
+     * Käy läpi solmujen vanhemmat ja muodostaa niistä listan
+     *
+     * @param sPos Aloitussolmu
+     * @param ePos Maalisolmu
+     * @return
+     */
+    private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
+        System.out.println("Pathifying...");
+        
+        OwnArrayList<Node> path = new OwnArrayList<>();
+
+        Node start = ePos;
+
+        while (start != sPos) {
+            path.add(start);
+            start = start.parent;
+        }
+        path.add(start);
+
+        return path;
     }
 }
