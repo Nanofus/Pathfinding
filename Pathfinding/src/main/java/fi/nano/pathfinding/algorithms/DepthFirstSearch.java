@@ -12,7 +12,6 @@ public class DepthFirstSearch implements Algorithm {
 
     boolean finished = false;
     Node ePos;
-    OwnArrayList<Node> path;
 
     /**
      * Etsii polun solmusta toiseen syvyyshaun avulla.
