@@ -41,6 +41,9 @@ public class BreadthFirstSearchTest {
     public void tearDown() {
     }
 
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti
+     */
     @Test
     public void Test() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -51,6 +54,9 @@ public class BreadthFirstSearchTest {
         assertEquals(418, path.size());
     }
     
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen liike on sallittua
+     */
     @Test
     public void TestWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -61,6 +67,9 @@ public class BreadthFirstSearchTest {
         assertEquals(296, path.size());
     }
     
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy
+     */
     @Test
     public void TestImpossible() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
@@ -71,6 +80,9 @@ public class BreadthFirstSearchTest {
         assertEquals(0, path.size());
     }
     
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike sallittu
+     */
     @Test
     public void TestImpossibleWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit_impossible");

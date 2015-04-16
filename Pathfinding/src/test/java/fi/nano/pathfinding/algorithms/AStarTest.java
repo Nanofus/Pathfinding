@@ -41,6 +41,9 @@ public class AStarTest {
     public void tearDown() {
     }
 
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti
+     */
     @Test
     public void TestAStar() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -51,6 +54,9 @@ public class AStarTest {
         assertEquals(418, path.size());
     }
     
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen liike on sallittua
+     */
     @Test
     public void TestAStarWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -61,6 +67,9 @@ public class AStarTest {
         assertEquals(296, path.size());
     }
     
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy
+     */
     @Test
     public void TestAStarImpossible() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
@@ -71,6 +80,9 @@ public class AStarTest {
         assertEquals(0, path.size());
     }
     
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike sallittu
+     */
     @Test
     public void TestAStarImpossibleWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit_impossible");

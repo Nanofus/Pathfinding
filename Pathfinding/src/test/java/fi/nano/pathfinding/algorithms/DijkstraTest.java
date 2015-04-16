@@ -41,6 +41,9 @@ public class DijkstraTest {
     public void tearDown() {
     }
 
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti
+     */
     @Test
     public void TestDijkstra() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -51,6 +54,9 @@ public class DijkstraTest {
         assertEquals(418, path.size());
     }
 
+    /**
+     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen liike on sallittua
+     */
     @Test
     public void TestDijkstraWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit");
@@ -61,6 +67,9 @@ public class DijkstraTest {
         assertEquals(296, path.size());
     }
 
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy
+     */
     @Test
     public void TestDijkstraImpossible() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
@@ -71,6 +80,9 @@ public class DijkstraTest {
         assertEquals(0, path.size());
     }
 
+    /**
+     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike sallittu
+     */
     @Test
     public void TestDijkstraImpossibleWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
