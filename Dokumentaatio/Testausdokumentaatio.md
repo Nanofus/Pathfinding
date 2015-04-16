@@ -15,3 +15,23 @@ Vinottainen liike on sallittu.
 Komentoriviparametrit: 401x401 true
 
 #### Tulokset
+
+A*: 85ms, 2029 askelta
+Dijkstra: 58ms, 2029 askelta
+Leveyshaku: 30ms, 2029 askelta
+Syvyyshaku: 26ms, 7921 askelta
+
+### Testi 2
+
+Testissä käytetään samaa sokkeloa kuin testissä 1.
+
+Vinottainen liike on kielletty.
+
+Komentoriviparametrit: 401x401 false
+
+#### Tulokset
+
+A*: 72ms, 2879 askelta
+Dijkstra: 48ms, 2879 askelta
+Leveyshaku: 34ms, 2879 askelta
+Syvyyshaku: 26ms, 7741 askelta

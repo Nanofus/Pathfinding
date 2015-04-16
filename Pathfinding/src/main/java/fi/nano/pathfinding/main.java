@@ -13,7 +13,7 @@ public class main {
             maze = args[0];
             allowDiagonal = Boolean.parseBoolean(args[1]);
         } else {
-            allowDiagonal = true;
+            allowDiagonal = false;
             maze = "401x401";
         }
 
