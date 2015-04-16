@@ -10,6 +10,8 @@ AlgorithmRunner luo instanssin algoritmiluokasta, jonka se käskee ratkomaan sok
 
 Algoritmit toteuttavat **Algorithm**-rajapinnan, joka sisältää AlgorithmRunnerin kutsuman **FindPath**(alkusolmu,loppusolmu)-metodin.
 
+Aikavaativuuksissa n on solmujen määrä ja e kaarien.
+
 ## Algoritmit
 
 ### A*
@@ -21,10 +23,12 @@ Algoritmi laskee h-arvon etäisyytenä suoraan linnuntietä nykyisestä solmusta
 Algoritmi ottaa huomioon kaarien painot: kyljet vastakkain olevien solmujen välinen etäisyys on 10, vinottaisten 14. Tämä on pyöristys kahden neliöjuuresta.
 
 *Aika 401x401-sokkelon ratkaisemiseen:* 85ms
+
 *Saadun reitin pituus:* 2029
 
-*Aikavaativuus:*
-*Saavutettu aikavaativuus:*
+*Aikavaativuus:* O((e+n)*log(n))
+
+*Saavutettu aikavaativuus:* O((e+n)*log(n))
 
 ### Dijkstran algoritmi
 
@@ -33,20 +37,24 @@ Dijkstran algoritmin toteutus käyttää myös kekoa. Aluksi se merkitsee etäis
 Algoritmi käyttää samoja kaaripainoja kuin A*: 10 vierekkäisille ja 14 vinottaisille.
 
 *Aika 401x401-sokkelon ratkaisemiseen:* 58ms
+
 *Saadun reitin pituus:* 2029
 
-*Aikavaativuus:*
-*Saavutettu aikavaativuus:*
+*Aikavaativuus:* O((e+n)*log(n))
+
+*Saavutettu aikavaativuus:* O((e+n)*log(n))
 
 ### Leveyshaku
 
 Leveyshaku on Dijkstran algoritmia ja A*:ta yksinkertaisempi. Se on nopeampi, ja löytää lyhimmän reitin, mutta ei kuitenkaan ole täysin vertailukelpoinen näiden kanssa, sillä se ei huomioi kaarien painoja. Leveyshaku käy solmuja läpi jonon avulla niin, että se tutkii verkkoa joka suuntaan tasaisesti.
 
 *Aika 401x401-sokkelon ratkaisemiseen:* 30ms
+
 *Saadun reitin pituus:* 2029
 
-*Aikavaativuus:*
-*Saavutettu aikavaativuus:*
+*Aikavaativuus:* O(n+e)
+
+*Saavutettu aikavaativuus:* O(n+e)
 
 ### Syvyyshaku
 
@@ -55,7 +63,9 @@ Syvyyshaku on anhe eli nopea algoritmi, mutta se löytää epäoptimaalisen reit
 Syvyyshaun löytämä reitti olisi oikeassa navigointikäytössä käyttökelvoton, mutta silti hyödyllinen, jos riittää tietää, onko reitti kahden solmun välillä olemassa.
 
 *Aika 401x401-sokkelon ratkaisemiseen:* 26ms
+
 *Saadun reitin pituus:* 7921
 
-*Aikavaativuus:*
-*Saavutettu aikavaativuus:*
+*Aikavaativuus:* O(e)
+
+*Saavutettu aikavaativuus:* O(e)
