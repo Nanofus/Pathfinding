@@ -29,13 +29,16 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> path = new OwnArrayList<>();
 
     private Node[][] parsedMaze;
-    
+
     private long runTime;
 
-    private int width;
-    private int height;
+    public int width;
+    public int height;
 
     private boolean hasRun = false;
+
+    private MazeEntity chaser;
+    private MazeEntity chased;
 
     /**
      * Konstruktori
@@ -47,11 +50,14 @@ public class AlgorithmRunner {
      * @param allowDiagonalMovement Sallitaanko ruudukossa liikkuminen vinottain
      * @param maze Sokkelo tiedostosta luetussa tekstirivimuodossa
      */
-    public AlgorithmRunner(String testedAlgorithm, int testMode, boolean allowDiagonalMovement, OwnArrayList<String> maze) {
+    public AlgorithmRunner(String testedAlgorithm, int testMode, boolean allowDiagonalMovement, OwnArrayList<String> maze, MazeEntity chaser, MazeEntity chased) {
         this.testedAlgorithm = testedAlgorithm;
         this.testMode = testMode;
         this.allowDiagonalMovement = allowDiagonalMovement;
         this.maze = maze;
+
+        this.chaser = chaser;
+        this.chased = chased;
 
         switch (testedAlgorithm) {
             case "A*":
@@ -149,59 +155,116 @@ public class AlgorithmRunner {
                 }
             }
         }
+    }
 
-        //PrintMaze();
-        Run();
+    /**
+     * Resetoi sokkelon solmut
+     */
+    private void ResetNodes() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                Node node = parsedMaze[i][j];
+                node.aStar_closed = false;
+                node.aStar_f = 0;
+                node.aStar_g = 0;
+                node.aStar_h = 0;
+                node.binaryHeapIndex = -1;
+                node.breadthfirst_visited = false;
+                node.depthfirst_visited = false;
+                node.dijkstra_minDistance = Double.POSITIVE_INFINITY;
+                node.parent = null;
+            }
+        }
     }
 
     /**
      * Tulostaa sokkelon komentoriville. X kuvaa seinää, välilyönti tyhjää tilaa
-     * ja piste kuljettua reittiä, jos sellainen on jo etsitty.
+     * ja piste kuljettua reittiä, jos sellainen on jo etsitty. 1 ja 2 ovat liikkuja ja maali.
      */
     public void PrintMaze() {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
-                if (parsedMaze[i][j].IsWall()) {
-                    System.out.print("X");
-                } else {
-                    if (path.contains(parsedMaze[i][j])) {
-                        System.out.print(".");
-                    } else {
-                        System.out.print(" ");
-                    }
-                }
+                System.out.print(ContentsOfTile(i,j));
             }
             System.out.println();
         }
     }
 
+    public char ContentsOfTile(int x, int y) {
+        if (parsedMaze[x][y].IsWall()) {
+            return 'X';
+        } else {
+            if (chaser != null && chased != null) {
+                if (chaser.x == x && chaser.y == y) {
+                    return '1';
+                } else if (chased.x == x && chased.y == y) {
+                    return '2';
+                } else {
+                    if (path.contains(parsedMaze[x][y])) {
+                        return '.';
+                    } else {
+                        return ' ';
+                    }
+                }
+            } else {
+                if (path.contains(parsedMaze[x][y])) {
+                    return '.';
+                } else {
+                    return ' ';
+                }
+            }
+        }
+    }
+
+    /**
+     * Resetoi algoritminajajan jotta se voidaan ajaa uudestaan
+     *
+     * @return Uusi reitti
+     */
+    public OwnArrayList<Node> Pathfind() {
+        hasRun = false;
+        ResetNodes();
+        return Run(chaser.x, chaser.y, chased.x, chased.y);
+    }
+
     /**
      * Käynnistää algoritmin. Ajanotto tulee myös tänne.
      */
-    private void Run() {
-        System.out.println("\n-----");
-        System.out.println("Starting algorithm: "+testedAlgorithm);
+    private OwnArrayList<Node> Run(int sx, int sy, int ex, int ey) {
+        //System.out.println("\n-----");
+        //System.out.println("Starting algorithm: " + testedAlgorithm);
         long startTime = System.currentTimeMillis();
+
+        Node start = parsedMaze[sx][sy];
+        Node end = parsedMaze[ex][ey];
 
         //System.out.println(parsedMaze[0][1].x+","+parsedMaze[0][1].y);
         //System.out.println(parsedMaze[width - 1][height - 2].x+","+parsedMaze[width - 1][height - 2].y);
-        boolean success = algorithm.FindPath(parsedMaze[0][1], parsedMaze[width - 1][height - 2]); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
+        boolean success = algorithm.FindPath(start, end); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
 
         runTime = System.currentTimeMillis() - startTime;
-        System.out.println("Finished in " + runTime + " milliseconds\n-----\n");
+        //System.out.println("Finished in " + runTime + " milliseconds\n-----\n");
+
+        path = new OwnArrayList<>();
 
         if (!success) {
             System.out.println("Path not found!");
         } else {
-            path = Pathify(parsedMaze[0][1], parsedMaze[width - 1][height - 2]);
             System.out.println("Path found successfully!");
+            path = Pathify(start, end);
             System.out.println("Path length: " + path.size());
-            System.out.println();
+            //System.out.println();
             //PrintMaze();
-            System.out.println();
+            //System.out.println();
         }
 
         hasRun = true;
+
+        if (path != null) {
+            return path;
+        } else {
+            return new OwnArrayList<>();
+        }
     }
 
     /**
@@ -213,14 +276,6 @@ public class AlgorithmRunner {
         return hasRun;
     }
 
-    public OwnArrayList<Node> GetSolution() {
-        if (path != null) {
-            return path;
-        } else {
-            return new OwnArrayList<>();
-        }
-    }
-    
     public long GetRunTime() {
         return runTime;
     }
@@ -234,17 +289,18 @@ public class AlgorithmRunner {
      */
     private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
         System.out.println("Pathifying...");
-        
-        OwnArrayList<Node> path = new OwnArrayList<>();
+
+        OwnArrayList<Node> foundPath = new OwnArrayList<>();
 
         Node start = ePos;
 
         while (start != sPos) {
-            path.add(start);
+            foundPath.add(start);
+            //System.out.println(start.x+","+start.y+","+start.parent);
             start = start.parent;
         }
-        path.add(start);
+        foundPath.add(start);
 
-        return path;
+        return foundPath;
     }
 }

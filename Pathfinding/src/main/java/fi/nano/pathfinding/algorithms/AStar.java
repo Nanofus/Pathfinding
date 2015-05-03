@@ -11,7 +11,7 @@ import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
  */
 public class AStar implements Algorithm {
 
-    OwnBinaryHeap open = new OwnBinaryHeap(new NodeComparator(0));
+    OwnBinaryHeap open;
     //PriorityQueue<Node> open = new PriorityQueue<>(11,new NodeComparator(0));
 
     Node end;
@@ -25,6 +25,8 @@ public class AStar implements Algorithm {
      */
     @Override
     public boolean FindPath(Node sPos, Node ePos) {
+        open = new OwnBinaryHeap(new NodeComparator(0));
+        
         end = ePos;
 
         sPos.aStar_g = 0;
