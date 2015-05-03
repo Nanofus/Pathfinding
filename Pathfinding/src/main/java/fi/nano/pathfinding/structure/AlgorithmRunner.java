@@ -163,49 +163,34 @@ public class AlgorithmRunner {
     private void ResetNodes() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                Node node = parsedMaze[i][j];
-                node.aStar_closed = false;
-                node.aStar_f = 0;
-                node.aStar_g = 0;
-                node.aStar_h = 0;
-                node.binaryHeapIndex = -1;
-                node.breadthfirst_visited = false;
-                node.depthfirst_visited = false;
-                node.dijkstra_minDistance = Double.POSITIVE_INFINITY;
-                node.parent = null;
+                parsedMaze[i][j].Reset();
             }
         }
     }
 
     /**
      * Tulostaa sokkelon komentoriville. X kuvaa seinää, välilyönti tyhjää tilaa
-     * ja piste kuljettua reittiä, jos sellainen on jo etsitty. 1 ja 2 ovat liikkuja ja maali.
+     * ja piste kuljettua reittiä, jos sellainen on jo etsitty. 1 ja 2 ovat
+     * liikkuja ja maali.
      */
     public void PrintMaze() {
         for (int j = 0; j < height; j++) {
             for (int i = 0; i < width; i++) {
-                System.out.print(ContentsOfTile(i,j));
+                System.out.print(ContentsOfTile(i, j));
             }
             System.out.println();
         }
     }
 
     public char ContentsOfTile(int x, int y) {
-        if (parsedMaze[x][y].IsWall()) {
-            return 'X';
-        } else {
-            if (chaser != null && chased != null) {
-                if (chaser.x == x && chaser.y == y) {
-                    return '1';
-                } else if (chased.x == x && chased.y == y) {
-                    return '2';
-                } else {
-                    if (path.contains(parsedMaze[x][y])) {
-                        return '.';
-                    } else {
-                        return ' ';
-                    }
-                }
+
+        if (chaser != null && chased != null) {
+            if (chaser.x == x && chaser.y == y) {
+                return '1';
+            } else if (chased.x == x && chased.y == y) {
+                return '2';
+            } else if (parsedMaze[x][y].IsWall()) {
+                return 'X';
             } else {
                 if (path.contains(parsedMaze[x][y])) {
                     return '.';
@@ -213,18 +198,27 @@ public class AlgorithmRunner {
                     return ' ';
                 }
             }
+        } else {
+            if (path.contains(parsedMaze[x][y])) {
+                return '.';
+            } else {
+                return ' ';
+            }
         }
+
     }
 
     /**
-     * Resetoi algoritminajajan jotta se voidaan ajaa uudestaan
+     * Etsii uuden polun
      *
+     * @param start Alkusijainti
+     * @param end Loppusijainti
      * @return Uusi reitti
      */
-    public OwnArrayList<Node> Pathfind() {
+    public OwnArrayList<Node> Pathfind(Position start, Position end) {
         hasRun = false;
         ResetNodes();
-        return Run(chaser.x, chaser.y, chased.x, chased.y);
+        return Run(start.x, start.y, end.x, end.y);
     }
 
     /**
@@ -248,11 +242,11 @@ public class AlgorithmRunner {
         path = new OwnArrayList<>();
 
         if (!success) {
-            System.out.println("Path not found!");
+            //System.out.println("Path not found!");
         } else {
-            System.out.println("Path found successfully!");
+            //System.out.println("Path found successfully!");
             path = Pathify(start, end);
-            System.out.println("Path length: " + path.size());
+            //System.out.println("Path length: " + path.size());
             //System.out.println();
             //PrintMaze();
             //System.out.println();
@@ -288,7 +282,7 @@ public class AlgorithmRunner {
      * @return
      */
     private OwnArrayList<Node> Pathify(Node sPos, Node ePos) {
-        System.out.println("Pathifying...");
+        //System.out.println("Pathifying...");
 
         OwnArrayList<Node> foundPath = new OwnArrayList<>();
 

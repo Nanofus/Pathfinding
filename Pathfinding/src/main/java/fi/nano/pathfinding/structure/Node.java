@@ -68,16 +68,31 @@ public class Node {
     public boolean depthfirst_visited = false;
 
     public Node(boolean isWall) {
-        this.isWall = isWall;
+        Reset();
 
-        this.aStar_g = Integer.MAX_VALUE;
+        this.isWall = isWall;
     }
-    
+
     public Node(boolean isWall, int testFValue) {
+        Reset();
+
         this.isWall = isWall;
 
         this.aStar_g = Integer.MAX_VALUE;
         this.aStar_f = testFValue;
+    }
+
+    public void Reset() {
+        parent = null;
+        aStar_h = 0;
+        aStar_g = 0;
+        aStar_f = 0;
+        breadthfirst_visited = false;
+        depthfirst_visited = false;
+        dijkstra_minDistance = Double.POSITIVE_INFINITY;
+        binaryHeapIndex = -1;
+        aStar_open = false;
+        aStar_closed = false;
     }
 
     /**

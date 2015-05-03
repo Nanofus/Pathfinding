@@ -140,7 +140,7 @@ public class OwnArrayList<O> {
      */
     private void cleanArray(int index) {
         Object[] copy = new Object[array.length - 1];
-
+        
         int objectIndex = 0;
         for (int i = 0; i < copy.length; i++) {
             if (i != index) {

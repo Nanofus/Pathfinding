@@ -45,10 +45,9 @@ public class Window implements Runnable {
 
     @Override
     public void run() {
-        frame = new JFrame("Tangential");
-        frame.setResizable(false);
+        frame = new JFrame("Pathfinding");
+        
         frame.setVisible(true);
-        frame.setIconImage(imageLoader.GetImage("Icon"));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(windowWidth + frame.getInsets().left + frame.getInsets().right, windowHeight + frame.getInsets().top + frame.getInsets().bottom));
 
