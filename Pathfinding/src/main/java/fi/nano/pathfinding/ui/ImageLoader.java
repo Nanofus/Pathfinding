@@ -22,8 +22,17 @@ public class ImageLoader {
     private BufferedImage door;
     private BufferedImage chaser;
     private BufferedImage chased;
+    private BufferedImage swall;
+    private BufferedImage sfloor;
+    private BufferedImage spath;
+    private BufferedImage sdoor;
+    private BufferedImage schaser;
+    private BufferedImage schased;
 
-    public ImageLoader() {
+    private boolean smallTiles = false;
+
+    public ImageLoader(boolean smallTiles) {
+        this.smallTiles = smallTiles;
         try {
             wall = ImageIO.read(new File("graphics/wall.png"));
             floor = ImageIO.read(new File("graphics/floor.png"));
@@ -31,6 +40,12 @@ public class ImageLoader {
             door = ImageIO.read(new File("graphics/door.png"));
             chaser = ImageIO.read(new File("graphics/chaser.png"));
             chased = ImageIO.read(new File("graphics/chased.png"));
+            swall = ImageIO.read(new File("graphics/walls.png"));
+            sfloor = ImageIO.read(new File("graphics/floors.png"));
+            spath = ImageIO.read(new File("graphics/paths.png"));
+            sdoor = ImageIO.read(new File("graphics/doors.png"));
+            schaser = ImageIO.read(new File("graphics/chasers.png"));
+            schased = ImageIO.read(new File("graphics/chaseds.png"));
         } catch (IOException ex) {
             System.out.println("Graphics file not found! Exiting...");
             System.exit(1);
@@ -38,19 +53,36 @@ public class ImageLoader {
     }
 
     public BufferedImage GetImage(String name) {
-        switch (name) {
-            case "Wall":
-                return wall;
-            case "Floor":
-                return floor;
-            case "Path":
-                return path;
-            case "Door":
-                return door;
-            case "Chaser":
-                return chaser;
-            case "Chased":
-                return chased;
+        if (!smallTiles) {
+            switch (name) {
+                case "Wall":
+                    return wall;
+                case "Floor":
+                    return floor;
+                case "Path":
+                    return path;
+                case "Door":
+                    return door;
+                case "Chaser":
+                    return chaser;
+                case "Chased":
+                    return chased;
+            }
+        } else {
+            switch (name) {
+                case "Wall":
+                    return swall;
+                case "Floor":
+                    return sfloor;
+                case "Path":
+                    return spath;
+                case "Door":
+                    return sdoor;
+                case "Chaser":
+                    return schaser;
+                case "Chased":
+                    return schased;
+            }
         }
         return null;
     }

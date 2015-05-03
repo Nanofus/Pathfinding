@@ -61,7 +61,7 @@ public class MazeReader {
                 targetMovement.add(line);
             }
         } catch (IOException ex) {
-            System.out.println("Can't load movements positions!");
+            System.out.println("Can't load target movements!");
             System.exit(1);
         }
 

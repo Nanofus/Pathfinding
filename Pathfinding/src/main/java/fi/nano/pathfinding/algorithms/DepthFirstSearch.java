@@ -23,6 +23,7 @@ public class DepthFirstSearch implements Algorithm {
     @Override
     public boolean FindPath(Node sPos, Node ePos) {
         this.ePos = ePos;
+        finished = false;
 
         Search(sPos);
 

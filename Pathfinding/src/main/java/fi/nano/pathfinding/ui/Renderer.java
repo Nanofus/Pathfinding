@@ -15,7 +15,7 @@ public class Renderer extends JPanel {
 
     private final AlgorithmRunner runner;
 
-    private final int repaintDelay = 10;
+    private final int repaintDelay = 5;
 
     private int windowWidth;
     private int windowHeight;
@@ -102,7 +102,7 @@ public class Renderer extends JPanel {
                         drawnImage = imageLoader.GetImage("Wall");
                         break;
                 }
-                g.drawImage(drawnImage, i * 10, j * 10, null);
+                g.drawImage(drawnImage, i * drawnImage.getWidth(), j * drawnImage.getHeight(), null);
             }
         }
     }

@@ -12,13 +12,13 @@ import fi.nano.pathfinding.structure.MazeEntity;
  *
  * @author Nanofus
  */
-public class TextMover {
+public class TargetMover {
 
     MazeEntity entity;
     OwnArrayList<String> movement;
-    int row = 0;
+    int row = 1;
 
-    public TextMover(MazeEntity entity, OwnArrayList<String> movement) {
+    public TargetMover(MazeEntity entity, OwnArrayList<String> movement) {
         this.entity = entity;
         this.movement = movement;
     }
@@ -26,12 +26,7 @@ public class TextMover {
     public void Move() {
         if (row < movement.size()) {
             String[] stringArray = movement.get(row).split(" ");
-            int[] values = new int[stringArray.length];
-            for (int i = 0; i < stringArray.length; i++) {
-                values[i] = Integer.parseInt(stringArray[i]);
-            }
-
-            entity.MoveRelative(values[0], values[1]);
+            entity.MoveRelative(Integer.parseInt(stringArray[0]), Integer.parseInt(stringArray[1]));
 
             row++;
         }

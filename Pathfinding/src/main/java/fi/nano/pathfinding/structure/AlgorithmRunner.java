@@ -45,14 +45,11 @@ public class AlgorithmRunner {
      *
      * @param testedAlgorithm Algoritmi, jota testataan. Esimerkiksi "Dijkstra"
      * tai "A*".
-     * @param testMode Käytetäänkö itsestään sulkeutuvia seiniä ja liikkuuko
-     * maali
      * @param allowDiagonalMovement Sallitaanko ruudukossa liikkuminen vinottain
      * @param maze Sokkelo tiedostosta luetussa tekstirivimuodossa
      */
-    public AlgorithmRunner(String testedAlgorithm, int testMode, boolean allowDiagonalMovement, OwnArrayList<String> maze, MazeEntity chaser, MazeEntity chased) {
+    public AlgorithmRunner(String testedAlgorithm, boolean allowDiagonalMovement, OwnArrayList<String> maze, MazeEntity chaser, MazeEntity chased) {
         this.testedAlgorithm = testedAlgorithm;
-        this.testMode = testMode;
         this.allowDiagonalMovement = allowDiagonalMovement;
         this.maze = maze;
 
@@ -227,16 +224,17 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> Run(int sx, int sy, int ex, int ey) {
         //System.out.println("\n-----");
         //System.out.println("Starting algorithm: " + testedAlgorithm);
-        long startTime = System.currentTimeMillis();
 
         Node start = parsedMaze[sx][sy];
         Node end = parsedMaze[ex][ey];
+
+        long startTime = System.nanoTime();
 
         //System.out.println(parsedMaze[0][1].x+","+parsedMaze[0][1].y);
         //System.out.println(parsedMaze[width - 1][height - 2].x+","+parsedMaze[width - 1][height - 2].y);
         boolean success = algorithm.FindPath(start, end); //Reitti sokkelossa etsitään toisen rivin ensimmäisestä toiseksi viimeisen viimeiseen ruutuun.
 
-        runTime = System.currentTimeMillis() - startTime;
+        runTime = System.nanoTime() - startTime;
         //System.out.println("Finished in " + runTime + " milliseconds\n-----\n");
 
         path = new OwnArrayList<>();

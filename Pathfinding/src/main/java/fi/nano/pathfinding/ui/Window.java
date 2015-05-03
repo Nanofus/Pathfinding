@@ -33,14 +33,14 @@ public class Window implements Runnable {
      * @param windowWidth Ikkunan leveys
      * @param windowHeight Ikkunan korkeus
      */
-    public Window(AlgorithmRunner runner, int windowWidth, int windowHeight) {
+    public Window(AlgorithmRunner runner, boolean smallTiles, int windowWidth, int windowHeight) {
         
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
         
         this.runner = runner;
 
-        imageLoader = new ImageLoader();
+        imageLoader = new ImageLoader(smallTiles);
     }
 
     @Override
