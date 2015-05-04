@@ -199,8 +199,6 @@ public class AlgorithmRunner {
                 return 'X';
             } else if (parsedMaze[x][y].IsDoor() && parsedMaze[x][y].IsWall()) {
                 return 'D';
-            } else if (parsedMaze[x][y].IsDoor() && !parsedMaze[x][y].IsWall()) {
-                return ' ';
             } else {
                 if (path.contains(parsedMaze[x][y])) {
                     return '.';

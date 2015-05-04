@@ -68,14 +68,14 @@ public class Pathfinding {
             windowEnabled = Boolean.parseBoolean(args[7]);
             doorDelay = Integer.parseInt(args[8]);
         } else {
-            maze = "121x121 circle";
-            allowDiagonal = false;
+            maze = "401x401 nomove";
+            allowDiagonal = true;
             algo = "A*";
             smallTiles = false;
             waitInMillis = 200;
             moveDelay = 5;
-            logEnabled = true;
-            windowEnabled = true;
+            logEnabled = false;
+            windowEnabled = false;
             doorDelay = 10;
         }
     }
@@ -114,16 +114,17 @@ public class Pathfinding {
                     recalculateNeeded = true;
                 }
             }
-            
+
             doorTimer--;
             if (doorTimer == 0) {
                 doorTimer = doorDelay;
                 for (int i = 0; i < runner.GetDoors().size(); i++) {
-                    if(runner.GetDoors().get(i).IsWall()) {
+                    if (runner.GetDoors().get(i).IsWall()) {
                         runner.GetDoors().get(i).SetWall(false);
                     } else {
                         runner.GetDoors().get(i).SetWall(true);
                     }
+                    recalculateNeeded = true;
                 }
             }
 

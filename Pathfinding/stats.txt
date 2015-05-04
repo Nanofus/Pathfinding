@@ -1,0 +1,76 @@
+Ovet 10 siirron välein
+Kohteen liike 5 siirron välein
+
+121x121 ympyrä ovilla:
+
+Ei vinottaisia:
+- Dijkstra - Time: 35.879089 ms, steps: 147, per step: 0.24407543537414966 ms, recalcs: 15, average calc time: 2.391939266666667 ms
+- A* - Time: 40.633187 ms, steps: 143, per step: 0.28414816083916083 ms, recalcs: 15, average calc time: 2.7088791333333333 ms
+- Leveyshaku - Time: 67.979593 ms, steps: 149, per step: 0.45623887919463085 ms, recalcs: 15, average calc time: 4.531972866666666 ms
+
+Vinottaiset:
+- Dijkstra - Time: 37.905429 ms, steps: 114, per step: 0.3325037631578947 ms, recalcs: 12, average calc time: 3.15878575 ms
+- A* - Time: 37.641349 ms, steps: 74, per step: 0.5086668783783783 ms, recalcs: 8, average calc time: 4.705168625 ms
+- Leveyshaku - Time: 20.736632999999998 ms, steps: 121, per step: 0.17137713223140494 ms, recalcs: 13, average calc time: 1.5951256153846152 ms
+
+
+
+121x121 ympyrä:
+
+Ei vinottaisia:
+- Dijkstra - Time: 75.493122 ms, steps: 202, per step: 0.37372832673267325 ms, recalcs: 41, average calc time: 1.8412956585365854 ms
+- A* - Time: 86.431619 ms, steps: 202, per step: 0.427879301980198 ms, recalcs: 41, average calc time: 2.1080882682926827 ms
+- Leveyshaku - Time: 29.875695999999998 ms, steps: 224, per step: 0.13337364285714284 ms, recalcs: 45, average calc time: 0.6639043555555555 ms
+
+Vinottaiset:
+- Dijkstra - Time: 74.034699 ms, steps: 138, per step: 0.5364833260869566 ms, recalcs: 28, average calc time: 2.644096392857143 ms
+- A* - Time: 70.054418 ms, steps: 138, per step: 0.5076407101449275 ms, recalcs: 28, average calc time: 2.5019435 ms
+- Leveyshaku - Time: 31.989307999999998 ms, steps: 181, per step: 0.17673650828729282 ms, recalcs: 37, average calc time: 0.8645758918918919 ms
+
+
+
+41x41 (ovilla):
+
+Ei vinottaisia:
+- Dijkstra - Time: 20.706573 ms, steps: 210, per step: 0.09860272857142857 ms, recalcs: 43, average calc time: 0.48154820930232556 ms
+- A* - Time: 31.127571999999997 ms, steps: 210, per step: 0.14822653333333333 ms, recalcs: 43, average calc time: 0.7238970232558138 ms
+- Leveyshaku - Time: 21.883457999999997 ms, steps: 210, per step: 0.10420694285714284 ms, recalcs: 43, average calc time: 0.5089176279069767 ms
+- Syvyyshaku - Time: 17.823346 ms, steps: 622, per step: 0.028654897106109325 ms, recalcs: 125, average calc time: 0.142586768 ms
+
+Vinottaiset:
+- Dijkstra - Time: 24.337761999999998 ms, steps: 183, per step: 0.1329932349726776 ms, recalcs: 37, average calc time: 0.6577773513513513 ms
+- A* - Time: 39.283688 ms, steps: 183, per step: 0.21466496174863386 ms, recalcs: 37, average calc time: 1.0617212972972971 ms
+- Leveyshaku - Time: 15.195141 ms, steps: 183, per step: 0.08303355737704918 ms, recalcs: 37, average calc time: 0.4106794864864865 ms
+- Syvyyshaku - Time: 18.118779999999997 ms, steps: 623, per step: 0.029083113964686994 ms, recalcs: 125, average calc time: 0.14495023999999998 ms
+
+
+
+401x401 liikkuva maali (ei UI:ta tai lokia):
+
+Ei vinottaisia:
+- Dijkstra - Time: 11196.091661 ms, steps: 3038, per step: 3.6853494605003294 ms, recalcs: 374, average calc time: 29.93607395989305 ms
+- A* - Time: 10472.976171999999 ms, steps: 3038, per step: 3.447325928900592 ms, recalcs: 374, average calc time: 28.002610085561493 ms
+- Leveyshaku - Time: 5830.431146999999 ms, steps: 3038, per step: 1.9191675928242262 ms, recalcs: 374, average calc time: 15.589388093582885 ms
+- Syvyyshaku - Time: 4553.663963999999 ms, steps: 8012, per step: 0.5683554623065401 ms, recalcs: 374, average calc time: 12.175572096256683 ms
+
+Vinottaiset:
+- Dijkstra - Time: 11693.356817 ms, steps: 2349, per step: 4.978014822051937 ms, recalcs: 374, average calc time: 31.265659938502672 ms
+- A* - Time: 11552.454753 ms, steps: 2349, per step: 4.918030971902938 ms, recalcs: 374, average calc time: 30.88891645187166 ms
+- Leveyshaku - Time: 5698.906046 ms, steps: 2404, per step: 2.370593197171381 ms, recalcs: 374, average calc time: 15.23771670053476 ms
+- Syvyyshaku - Time: 5065.072437 ms, steps: 8150, per step: 0.621481280613497 ms, recalcs: 374, average calc time: 13.542974430481284 ms
+
+
+
+401x401 ei liikkuvaa maalia (ei UI:ta tai lokia):
+
+Ei vinottaisia:
+- Dijkstra - Time: 82.035017 ms, steps: 2877, per step: 0.028514083072645115 ms, recalcs: 1, average calc time: 82.035017 ms
+- A* - Time: 102.57706499999999 ms, steps: 2877, per step: 0.03565417622523462 ms, recalcs: 1, average calc time: 102.57706499999999 ms
+- Leveyshaku - Time: 38.96854 ms, steps: 2877, per step: 0.013544852276677094 ms, recalcs: 1, average calc time: 38.96854 ms
+- Syvyyshaku - Time: 25.319741 ms, steps: 7753, per step: 0.0032657991745130917 ms, recalcs: 1, average calc time: 25.319741 ms
+
+Vinottaiset:
+- Dijkstra - Time: 107.32502199999999 ms, steps: 2029, per step: 0.05289552587481518 ms, recalcs: 1, average calc time: 107.32502199999999 ms
+- A* - Time: 111.08518 ms, steps: 2029, per step: 0.05474873336619024 ms, recalcs: 1, average calc time: 111.08518 ms
+- Leveyshaku - Time: 42.496942999999995 ms, steps: 2029, per step: 0.020944772301626415 ms, recalcs: 1, average calc time: 42.496942999999995 ms
+- Syvyyshaku - Time: 33.438362 ms, steps: 7936, per step: 0.004213503276209677 ms, recalcs: 1, average calc time: 33.438362 ms
