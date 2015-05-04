@@ -12,6 +12,7 @@ public class Node {
     private final OwnArrayList<Node> neighbours = new OwnArrayList<>();
     private final OwnArrayList<Boolean> isNeighbourDiagonal = new OwnArrayList<>();
     private boolean isWall;
+    private boolean isDoor;
 
     /**
      * X-sijainti
@@ -132,6 +133,13 @@ public class Node {
     public boolean IsWall() {
         return isWall;
     }
+    
+    /**
+     * Onko tämä ovi
+     */
+    public boolean IsDoor() {
+        return isDoor;
+    }
 
     /**
      * Aseta solmu seinäksi
@@ -140,6 +148,10 @@ public class Node {
      */
     public void SetWall(boolean isWall) {
         this.isWall = isWall;
+    }
+    
+    public void SetDoor(boolean isDoor) {
+        this.isDoor = isDoor;
     }
 
     /*@Override

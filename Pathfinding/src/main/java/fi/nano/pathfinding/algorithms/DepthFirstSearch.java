@@ -46,7 +46,7 @@ public class DepthFirstSearch implements Algorithm {
         for (int i = 0; i < node.GetNeighbours().size(); i++) {
             Node neighbour = node.GetNeighbours().get(i);
 
-            if (!neighbour.depthfirst_visited) {
+            if (!neighbour.depthfirst_visited && !neighbour.IsWall()) {
                 neighbour.parent = node;
                 Search(neighbour);
             }

@@ -37,7 +37,7 @@ public class BreadthFirstSearch implements Algorithm {
             for (int i = 0; i < node.GetNeighbours().size(); i++) {
                 Node neighbour = node.GetNeighbours().get(i);
 
-                if (!neighbour.breadthfirst_visited) {
+                if (!neighbour.breadthfirst_visited && !neighbour.IsWall()) {
                     neighbour.parent = node;
                     neighbour.breadthfirst_visited = true;
 

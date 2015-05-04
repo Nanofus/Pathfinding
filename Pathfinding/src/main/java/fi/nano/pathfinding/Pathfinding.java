@@ -14,8 +14,6 @@ import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.structure.Position;
 import fi.nano.pathfinding.ui.Window;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -26,6 +24,7 @@ public class Pathfinding {
 
     private long totalTime = 0;
     private int moveDelay;
+    private int doorDelay;
     private int waitInMillis;
     private boolean allowDiagonal;
     private String algo;
@@ -46,63 +45,38 @@ public class Pathfinding {
     private boolean recalculateNeeded;
     private OwnArrayList<Node> path;
     private int chasedMoveTimer;
+    private int doorTimer;
     private int steps;
+    private int recalcs;
 
     Pathfinding(String[] args) {
         ParseArgs(args);
         Init();
         Run();
-
-        System.out.println("\nFINISHED - Total time: " + totalTime * 0.000001 + " ms - Total steps: " + steps + " - Time per step: " + (totalTime * 0.000001) / steps);
+        System.out.println("\nDONE - Time: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms, recalcs: " + recalcs + ", average calc time: " + (totalTime * 0.000001) / recalcs + " ms");
     }
 
     private void ParseArgs(String[] args) {
-        if (args.length > 0) {
+        if (args.length > 8) {
             maze = args[0];
-        } else {
-            maze = "41x41";
-        }
-
-        if (args.length > 1) {
             allowDiagonal = Boolean.parseBoolean(args[1]);
-        } else {
-            allowDiagonal = false;
-        }
-
-        if (args.length > 2) {
             algo = args[2];
-        } else {
-            algo = "A*";
-        }
-
-        if (args.length > 3) {
             smallTiles = Boolean.parseBoolean(args[3]);
-        } else {
-            smallTiles = false;
-        }
-
-        if (args.length > 4) {
             waitInMillis = Integer.parseInt(args[4]);
-        } else {
-            waitInMillis = 10;
-        }
-
-        if (args.length > 5) {
             moveDelay = Integer.parseInt(args[5]);
-        } else {
-            moveDelay = 5;
-        }
-
-        if (args.length > 6) {
             logEnabled = Boolean.parseBoolean(args[6]);
-        } else {
-            logEnabled = true;
-        }
-
-        if (args.length > 7) {
             windowEnabled = Boolean.parseBoolean(args[7]);
+            doorDelay = Integer.parseInt(args[8]);
         } else {
-            windowEnabled = false;
+            maze = "121x121 circle";
+            allowDiagonal = false;
+            algo = "A*";
+            smallTiles = false;
+            waitInMillis = 200;
+            moveDelay = 5;
+            logEnabled = true;
+            windowEnabled = true;
+            doorDelay = 10;
         }
     }
 
@@ -124,6 +98,7 @@ public class Pathfinding {
         recalculateNeeded = true;
         path = new OwnArrayList<>();
         chasedMoveTimer = moveDelay;
+        doorTimer = doorDelay;
         steps = 0;
     }
 
@@ -139,6 +114,18 @@ public class Pathfinding {
                     recalculateNeeded = true;
                 }
             }
+            
+            doorTimer--;
+            if (doorTimer == 0) {
+                doorTimer = doorDelay;
+                for (int i = 0; i < runner.GetDoors().size(); i++) {
+                    if(runner.GetDoors().get(i).IsWall()) {
+                        runner.GetDoors().get(i).SetWall(false);
+                    } else {
+                        runner.GetDoors().get(i).SetWall(true);
+                    }
+                }
+            }
 
             if (recalculateNeeded) {
                 path = runner.Pathfind(new Position(chaser.x, chaser.y), new Position(chased.x, chased.y));
@@ -150,6 +137,7 @@ public class Pathfinding {
                     System.out.println("Time (ms) spent calculating: " + (runner.GetRunTime() * 0.000001) + " (total: " + (totalTime * 0.000001) + "), path length: " + path.size() + " (time per step: " + (runner.GetRunTime() * 0.000001) / path.size() + ")");
                 }
                 recalculateNeeded = false;
+                recalcs++;
             }
 
             chaser.MakeMove(path);

@@ -88,6 +88,9 @@ public class Renderer extends JPanel {
                     case 'X':
                         drawnImage = imageLoader.GetImage("Wall");
                         break;
+                    case 'D':
+                        drawnImage = imageLoader.GetImage("Door");
+                        break;
                     case ' ':
                         drawnImage = imageLoader.GetImage("Floor");
                         break;

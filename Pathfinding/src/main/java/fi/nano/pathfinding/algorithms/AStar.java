@@ -61,7 +61,7 @@ public class AStar implements Algorithm {
     }
 
     private void InspectNeighbour(Node node, Node neighbour, boolean isDiagonal) {
-        if (neighbour.aStar_closed) {
+        if (neighbour.aStar_closed || neighbour.IsWall()) {
             return;
         }
 

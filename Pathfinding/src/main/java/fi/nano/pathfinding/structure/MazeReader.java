@@ -11,7 +11,6 @@ import java.io.IOException;
 public class MazeReader {
 
     private OwnArrayList<String> maze;
-    private OwnArrayList<String> doors;
     private OwnArrayList<String> targetMovement;
 
     /**
@@ -22,7 +21,6 @@ public class MazeReader {
     public MazeReader(String mazeName) {
 
         maze = new OwnArrayList();
-        doors = new OwnArrayList();
         targetMovement = new OwnArrayList();
 
         System.out.println("Reading maze...");
@@ -40,19 +38,7 @@ public class MazeReader {
             System.out.println("Can't load maze!");
             System.exit(1);
         }
-
-        System.out.println("Reading door positions...");
-
-        try {
-            BufferedReader lineReader = new BufferedReader(new FileReader("mazes/" + mazeName + "/doors.txt"));
-            while ((line = lineReader.readLine()) != null) {
-                doors.add(line);
-            }
-        } catch (IOException ex) {
-            System.out.println("Can't load door positions!");
-            System.exit(1);
-        }
-
+        
         System.out.println("Reading target movement...");
 
         try {
@@ -75,10 +61,6 @@ public class MazeReader {
     
     public OwnArrayList<String> GetTargetMovement() {
         return targetMovement;
-    }
-
-    public OwnArrayList<String> GetDoors() {
-        return doors;
     }
 
 }

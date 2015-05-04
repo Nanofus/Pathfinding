@@ -29,6 +29,8 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> path = new OwnArrayList<>();
 
     private Node[][] parsedMaze;
+    
+    private OwnArrayList<Node> doors = new OwnArrayList<>();
 
     private long runTime;
 
@@ -91,6 +93,14 @@ public class AlgorithmRunner {
                 Node node;
                 if (((String) maze.get(j)).charAt(i) == ' ') {
                     node = new Node(false);
+                } else if (((String) maze.get(j)).charAt(i) == 'D') {
+                    node = new Node(false);
+                    node.SetDoor(true);
+                    doors.add(node);
+                } else if (((String) maze.get(j)).charAt(i) == 'd') {
+                    node = new Node(true);
+                    node.SetDoor(true);
+                    doors.add(node);
                 } else {
                     node = new Node(true);
                 }
@@ -185,8 +195,12 @@ public class AlgorithmRunner {
                 return '1';
             } else if (chased.x == x && chased.y == y) {
                 return '2';
-            } else if (parsedMaze[x][y].IsWall()) {
+            } else if (!parsedMaze[x][y].IsDoor() && parsedMaze[x][y].IsWall()) {
                 return 'X';
+            } else if (parsedMaze[x][y].IsDoor() && parsedMaze[x][y].IsWall()) {
+                return 'D';
+            } else if (parsedMaze[x][y].IsDoor() && !parsedMaze[x][y].IsWall()) {
+                return ' ';
             } else {
                 if (path.contains(parsedMaze[x][y])) {
                     return '.';
@@ -214,6 +228,10 @@ public class AlgorithmRunner {
         hasRun = false;
         ResetNodes();
         return Run(start.x, start.y, end.x, end.y);
+    }
+    
+    public OwnArrayList<Node> GetDoors() {
+        return doors;
     }
 
     /**

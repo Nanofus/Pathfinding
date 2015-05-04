@@ -51,6 +51,11 @@ public class Dijkstra implements Algorithm {
     private void InspectNeighbours(Node node) {
         for (int i = 0; i < node.GetNeighbours().size(); i++) {
             Node neighbour = node.GetNeighbours().get(i);
+            
+            if (neighbour.IsWall()) {
+                continue;
+            }
+            
             boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
 
             double weight = 10;
