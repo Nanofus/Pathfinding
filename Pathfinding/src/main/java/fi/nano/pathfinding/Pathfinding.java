@@ -78,7 +78,7 @@ public class Pathfinding {
         if (args.length > 3) {
             smallTiles = Boolean.parseBoolean(args[3]);
         } else {
-            smallTiles = true;
+            smallTiles = false;
         }
 
         if (args.length > 4) {
@@ -102,7 +102,7 @@ public class Pathfinding {
         if (args.length > 7) {
             windowEnabled = Boolean.parseBoolean(args[7]);
         } else {
-            windowEnabled = true;
+            windowEnabled = false;
         }
     }
 
@@ -117,7 +117,7 @@ public class Pathfinding {
         mover = new TargetMover(chased, mazeReader.GetTargetMovement());
 
         if (windowEnabled) {
-            window = new Window(runner, smallTiles, 1024, 768);
+            window = new Window(runner, smallTiles, waitInMillis, 1024, 768);
             SwingUtilities.invokeLater(window);
         }
 
@@ -155,7 +155,7 @@ public class Pathfinding {
             chaser.MakeMove(path);
             steps++;
 
-            if (logEnabled) {
+            if (windowEnabled) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(waitInMillis);
                 } catch (InterruptedException ex) {

@@ -47,7 +47,7 @@ public class AStarTest {
     @Test
     public void TestAStar() {
         MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, false, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", false, mazeReader.GetMaze(), null, null);
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -60,7 +60,7 @@ public class AStarTest {
     @Test
     public void TestAStarWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, true, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", true, mazeReader.GetMaze(), null, null);
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -73,7 +73,7 @@ public class AStarTest {
     @Test
     public void TestAStarImpossible() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, false, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", false, mazeReader.GetMaze(), null, null);
 
         OwnArrayList<Node> path = mazeTester.GetSolution();
 
@@ -86,9 +86,9 @@ public class AStarTest {
     @Test
     public void TestAStarImpossibleWithDiagonalMovement() {
         MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", 0, true, mazeReader.GetMaze());
+        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", true, mazeReader.GetMaze(), null, null);
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
+        OwnArrayList<Node> path = mazeTester.Pathfind(null, null);
 
         assertEquals(0, path.size());
     }

@@ -18,6 +18,8 @@ public class Window implements Runnable {
 
     private int windowWidth = 1280;
     private int windowHeight = 720;
+    
+    private int repaintDelay;
 
     private JFrame frame;
     
@@ -30,13 +32,17 @@ public class Window implements Runnable {
     /**
      * Luo uuden ikkunan
      * @param runner
+     * @param smallTiles
+     * @param waitInMillis
      * @param windowWidth Ikkunan leveys
      * @param windowHeight Ikkunan korkeus
      */
-    public Window(AlgorithmRunner runner, boolean smallTiles, int windowWidth, int windowHeight) {
+    public Window(AlgorithmRunner runner, boolean smallTiles, int repaintDelay, int windowWidth, int windowHeight) {
         
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
+        
+        this.repaintDelay = repaintDelay;
         
         this.runner = runner;
 
@@ -51,7 +57,7 @@ public class Window implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(windowWidth + frame.getInsets().left + frame.getInsets().right, windowHeight + frame.getInsets().top + frame.getInsets().bottom));
 
-        renderer = new Renderer(imageLoader, runner, windowWidth, windowHeight);
+        renderer = new Renderer(imageLoader, runner, repaintDelay, windowWidth, windowHeight);
 
         frame.add(renderer);
     }

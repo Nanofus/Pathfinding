@@ -180,7 +180,6 @@ public class AlgorithmRunner {
     }
 
     public char ContentsOfTile(int x, int y) {
-
         if (chaser != null && chased != null) {
             if (chaser.x == x && chaser.y == y) {
                 return '1';
@@ -202,7 +201,6 @@ public class AlgorithmRunner {
                 return ' ';
             }
         }
-
     }
 
     /**

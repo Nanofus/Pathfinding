@@ -15,7 +15,7 @@ public class Renderer extends JPanel {
 
     private final AlgorithmRunner runner;
 
-    private final int repaintDelay = 5;
+    private final int repaintDelay;
 
     private int windowWidth;
     private int windowHeight;
@@ -28,7 +28,7 @@ public class Renderer extends JPanel {
      * @param windowWidth Ikkunan leveys
      * @param windowHeight Ikkunan korkeus
      */
-    public Renderer(ImageLoader imageLoader, AlgorithmRunner runner, int windowWidth, int windowHeight) {
+    public Renderer(ImageLoader imageLoader, AlgorithmRunner runner, int repaintDelay, int windowWidth, int windowHeight) {
 
         setOpaque(true);
         setBackground(Color.BLACK);
@@ -36,6 +36,8 @@ public class Renderer extends JPanel {
         this.imageLoader = imageLoader;
 
         this.runner = runner;
+        
+        this.repaintDelay = repaintDelay;
 
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
