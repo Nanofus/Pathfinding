@@ -12,6 +12,7 @@ public class MazeReader {
 
     private OwnArrayList<String> maze;
     private OwnArrayList<String> targetMovement;
+    private String startPos;
 
     /**
      * Konstruktori lataa sokkelon tekstitiedostosta.
@@ -38,7 +39,7 @@ public class MazeReader {
             System.out.println("Can't load maze!");
             System.exit(1);
         }
-        
+
         System.out.println("Reading target movement...");
 
         try {
@@ -51,6 +52,16 @@ public class MazeReader {
             System.exit(1);
         }
 
+        System.out.println("Reading start position...");
+
+        try {
+            BufferedReader lineReader = new BufferedReader(new FileReader("mazes/" + mazeName + "/startPosition.txt"));
+            startPos = lineReader.readLine();
+        } catch (IOException ex) {
+            System.out.println("Can't load start position!");
+            System.exit(1);
+        }
+
         //Fix sille että tiedostojen alkuun tulee ylimääräinen kysymysmerkki jostain merkistöenkoodauksen mysteerisyystä
         //maze.set(0, maze.get(0).substring(1));
     }
@@ -58,9 +69,13 @@ public class MazeReader {
     public OwnArrayList<String> GetMaze() {
         return maze;
     }
-    
+
     public OwnArrayList<String> GetTargetMovement() {
         return targetMovement;
+    }
+    
+    public String GetStartPosition() {
+        return startPos;
     }
 
 }

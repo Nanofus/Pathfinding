@@ -36,21 +36,23 @@ public class DepthFirstSearch implements Algorithm {
      * @param node Nykyinen solmu
      */
     private void Search(Node node) {
-        node.depthfirst_visited = true;
+        node.visited = true;
 
+        //Maali löydetty
         if (node.equals(ePos)) {
             finished = true;
             return;
         }
 
+        //Tutkitaan tämän naapurit
         for (int i = 0; i < node.GetNeighbours().size(); i++) {
             Node neighbour = node.GetNeighbours().get(i);
 
-            if (neighbour.IsDoor() && neighbour.IsWall()) {
+            if (neighbour.IsWall()) {
                 continue;
             }
             
-            if (!neighbour.depthfirst_visited) {
+            if (!neighbour.visited) {
                 neighbour.parent = node;
                 Search(neighbour);
             }

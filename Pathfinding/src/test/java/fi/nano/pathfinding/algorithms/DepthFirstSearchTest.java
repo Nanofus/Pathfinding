@@ -5,8 +5,7 @@ package fi.nano.pathfinding.algorithms;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import fi.nano.pathfinding.structure.AlgorithmRunner;
-import fi.nano.pathfinding.structure.MazeReader;
+import fi.nano.pathfinding.Pathfinding;
 import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import org.junit.After;
@@ -46,25 +45,26 @@ public class DepthFirstSearchTest {
      */
     @Test
     public void Test() {
-        MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("Depth-first", 0, false, mazeReader.GetMaze());
+        String[] paramArray = {"junit", "false", "Depth-first", "false", "0", "5", "false", "false", "10", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(590, path.size());
+        assertEquals(590, steps);
     }
 
     /**
-     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen liike on sallittua
+     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen
+     * liike on sallittua
      */
     @Test
     public void TestWithDiagonalMovement() {
-        MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("Depth-first", 0, true, mazeReader.GetMaze());
+        String[] paramArray = {"junit", "true", "Depth-first", "false", "0", "5", "false", "false", "10", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(611, path.size());
+        assertEquals(611, steps);
     }
 
     /**
@@ -72,24 +72,25 @@ public class DepthFirstSearchTest {
      */
     @Test
     public void TestImpossible() {
-        MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("Depth-first", 0, false, mazeReader.GetMaze());
+        String[] paramArray = {"junit_impossible", "false", "Depth-first", "false", "0", "5", "false", "false", "10", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(0, path.size());
+        assertEquals(-1, steps);
     }
 
     /**
-     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike sallittu
+     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike
+     * sallittu
      */
     @Test
     public void TestImpossibleWithDiagonalMovement() {
-        MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("Depth-first", 0, true, mazeReader.GetMaze());
+        String[] paramArray = {"junit_impossible", "true", "Depth-first", "false", "0", "5", "false", "false", "10", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(0, path.size());
+        assertEquals(-1, steps);
     }
 }

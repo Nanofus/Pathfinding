@@ -42,7 +42,7 @@ public class OwnBinaryHeapTest {
     public void TestAddAndSize() {
         OwnBinaryHeap heap = new OwnBinaryHeap(new NodeComparator(0));
 
-        Node node = new Node(false, 5);
+        Node node = new Node(5);
 
         heap.add(node);
 
@@ -53,8 +53,8 @@ public class OwnBinaryHeapTest {
     public void TestAddAndRemove() {
         OwnBinaryHeap heap = new OwnBinaryHeap(new NodeComparator(0));
 
-        Node node = new Node(false, 5);
-        Node node2 = new Node(false, 10);
+        Node node = new Node(5);
+        Node node2 = new Node(10);
 
         heap.add(node);
         heap.add(node2);
@@ -66,8 +66,8 @@ public class OwnBinaryHeapTest {
     public void TestAddAndRemove2() {
         OwnBinaryHeap heap = new OwnBinaryHeap(new NodeComparator(0));
 
-        Node node = new Node(false, 10);
-        Node node2 = new Node(false, 5);
+        Node node = new Node(10);
+        Node node2 = new Node(5);
 
         heap.add(node);
         heap.add(node2);
@@ -79,9 +79,9 @@ public class OwnBinaryHeapTest {
     public void TestDecreaseKey() {
         OwnBinaryHeap heap = new OwnBinaryHeap(new NodeComparator(0));
 
-        Node node = new Node(false, 10);
-        Node node2 = new Node(false, 5);
-        Node node3 = new Node(false, 15);
+        Node node = new Node(10);
+        Node node2 = new Node(5);
+        Node node3 = new Node(15);
 
         heap.add(node);
         heap.add(node2);

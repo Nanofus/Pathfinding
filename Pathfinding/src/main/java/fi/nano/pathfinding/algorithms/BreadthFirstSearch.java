@@ -23,10 +23,11 @@ public class BreadthFirstSearch implements Algorithm {
 
         q.push(sPos);
 
-        sPos.breadthfirst_visited = true;
+        sPos.visited = true;
 
         boolean finished = false;
 
+        // Käydään solmujonoa läpi kunnes tullaan maaliin
         while (!q.isEmpty() && !finished) {
             Node node = q.pop();
 
@@ -37,9 +38,9 @@ public class BreadthFirstSearch implements Algorithm {
             for (int i = 0; i < node.GetNeighbours().size(); i++) {
                 Node neighbour = node.GetNeighbours().get(i);
 
-                if (!neighbour.breadthfirst_visited && !neighbour.IsWall()) {
+                if (!neighbour.visited && !neighbour.IsWall()) {
                     neighbour.parent = node;
-                    neighbour.breadthfirst_visited = true;
+                    neighbour.visited = true;
 
                     q.push(neighbour);
                 }

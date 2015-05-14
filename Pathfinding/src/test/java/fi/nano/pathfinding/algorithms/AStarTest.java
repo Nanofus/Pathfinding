@@ -5,8 +5,7 @@ package fi.nano.pathfinding.algorithms;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import fi.nano.pathfinding.structure.AlgorithmRunner;
-import fi.nano.pathfinding.structure.MazeReader;
+import fi.nano.pathfinding.Pathfinding;
 import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
 import org.junit.After;
@@ -46,50 +45,104 @@ public class AStarTest {
      */
     @Test
     public void TestAStar() {
-        MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", false, mazeReader.GetMaze(), null, null);
+        String[] paramArray = {"junit", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(418, path.size());
+        assertEquals(418, steps);
     }
-    
+
     /**
-     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen liike on sallittua
+     * Tarkistaa löydettiinkö oikean mittainen reitti niin, että vinottainen
+     * liike on sallittua
      */
     @Test
     public void TestAStarWithDiagonalMovement() {
-        MazeReader mazeReader = new MazeReader("junit");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", true, mazeReader.GetMaze(), null, null);
+        String[] paramArray = {"junit", "true", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(296, path.size());
+        assertEquals(296, steps);
     }
-    
+
     /**
      * Testaa algoritmin vastauksen jos reittiä ei löydy
      */
     @Test
     public void TestAStarImpossible() {
-        MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", false, mazeReader.GetMaze(), null, null);
+        String[] paramArray = {"junit_impossible", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.GetSolution();
-
-        assertEquals(0, path.size());
+        assertEquals(-1, steps);
     }
-    
+
     /**
-     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike sallittu
+     * Testaa algoritmin vastauksen jos reittiä ei löydy, vinottainen liike
+     * sallittu
      */
     @Test
     public void TestAStarImpossibleWithDiagonalMovement() {
-        MazeReader mazeReader = new MazeReader("junit_impossible");
-        AlgorithmRunner mazeTester = new AlgorithmRunner("A*", true, mazeReader.GetMaze(), null, null);
+        String[] paramArray = {"junit_impossible", "true", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
 
-        OwnArrayList<Node> path = mazeTester.Pathfind(null, null);
+        assertEquals(-1, steps);
+    }
 
-        assertEquals(0, path.size());
+    /**
+     * Testaa suoruutujen toimintaa
+     */
+    @Test
+    public void TestAStarSwamp() {
+        String[] paramArray = {"junit_swamp", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
+
+        assertEquals(91, steps);
+    }
+
+    /**
+     * Testaa jääruutujen toimintaa
+     */
+    @Test
+    public void TestAStarIce() {
+        String[] paramArray = {"junit_ice", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
+
+        assertEquals(91, steps);
+    }
+
+    /**
+     * Testaa ovien toimintaa
+     */
+    @Test
+    public void TestAStarDoors() {
+        String[] paramArray = {"junit_doors", "false", "A*", "false", "0", "5", "false", "false", "20", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
+
+        assertEquals(107, steps);
+    }
+
+    /**
+     * Testaa liikkuvan kohteen toimintaa
+     */
+    @Test
+    public void TestAStarMovingTarget() {
+        String[] paramArray = {"junit_moving", "false", "A*", "false", "0", "5", "false", "false", "20", "10"};
+        Pathfinding p = new Pathfinding(paramArray);
+        p.Run();
+        int steps = p.GetSteps();
+
+        assertEquals(264, steps);
     }
 }

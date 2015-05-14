@@ -25,6 +25,7 @@ public class Renderer extends JPanel {
      *
      * @param imageLoader Kuvanlataaja
      * @param runner Algorithminajaja
+     * @param repaintDelay Kuvan päivitystiheys
      * @param windowWidth Ikkunan leveys
      * @param windowHeight Ikkunan korkeus
      */
@@ -45,6 +46,9 @@ public class Renderer extends JPanel {
         StartTimer();
     }
 
+    /**
+     * Käynnistetään ajastin ruudun uudelleenpiirtämistä varten
+     */
     private void StartTimer() {
         ActionListener taskPerformer = new ActionListener() {
             @Override
@@ -77,6 +81,10 @@ public class Renderer extends JPanel {
         DrawTileContents(g);
     }
 
+    /**
+     * Piirtää kuvat ruudulle
+     * @param g 
+     */
     private void DrawTileContents(Graphics g) {
         BufferedImage drawnImage;
 
@@ -102,6 +110,12 @@ public class Renderer extends JPanel {
                         break;
                     case '2':
                         drawnImage = imageLoader.GetImage("Chased");
+                        break;
+                    case 'i':
+                        drawnImage = imageLoader.GetImage("Ice");
+                        break;
+                    case 's':
+                        drawnImage = imageLoader.GetImage("Swamp");
                         break;
                     default:
                         drawnImage = imageLoader.GetImage("Wall");

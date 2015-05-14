@@ -13,6 +13,8 @@ public class Node {
     private final OwnArrayList<Boolean> isNeighbourDiagonal = new OwnArrayList<>();
     private boolean isWall;
     private boolean isDoor;
+    private boolean isSwamp;
+    private boolean isIce;
 
     /**
      * X-sijainti
@@ -43,15 +45,15 @@ public class Node {
     /**
      * A*-algoritmin h-arvo
      */
-    public int aStar_h = 0;
+    public float aStar_h = 0;
     /**
      * A*-algoritmin g-arvo
      */
-    public int aStar_g = 0;
+    public float aStar_g = 0;
     /**
      * A*-algoritmin f-arvo
      */
-    public int aStar_f = 0;
+    public float aStar_f = 0;
 
     /**
      * Dijkstran algoritmin lyhin etäisyys aloitussolmuun
@@ -59,41 +61,35 @@ public class Node {
     public double dijkstra_minDistance = Double.POSITIVE_INFINITY;
 
     /**
-     * Leveyshakua varten tieto onko tässä käyty jo
+     * Leveyshakua ja syvyyshakua varten tieto onko tässä käyty jo
      */
-    public boolean breadthfirst_visited = false;
+    public boolean visited = false;
 
-    /**
-     * Syvyyshakua varten tieto onko tässä käyty jo
-     */
-    public boolean depthfirst_visited = false;
-
-    public Node(boolean isWall) {
+    public Node() {
         Reset();
-
-        this.isWall = isWall;
     }
-
-    public Node(boolean isWall, int testFValue) {
+    
+    public Node(int testFValue) {
         Reset();
-
-        this.isWall = isWall;
 
         this.aStar_g = Integer.MAX_VALUE;
         this.aStar_f = testFValue;
     }
 
+    /**
+     * Nollaa solmun
+     */
     public void Reset() {
         parent = null;
         aStar_h = 0;
         aStar_g = 0;
         aStar_f = 0;
-        breadthfirst_visited = false;
-        depthfirst_visited = false;
+        visited = false;
         dijkstra_minDistance = Double.POSITIVE_INFINITY;
         binaryHeapIndex = -1;
         aStar_open = false;
         aStar_closed = false;
+        //System.out.println(x+","+y+","+aStar_closed);
     }
 
     /**
@@ -150,12 +146,35 @@ public class Node {
         this.isWall = isWall;
     }
     
+    /**
+     * Asettaa solmun oveksi
+     * @param isDoor 
+     */
     public void SetDoor(boolean isDoor) {
         this.isDoor = isDoor;
     }
+    
+    /**
+     * Asettaa solmun suoksi
+     * @param isSwamp
+     */
+    public void SetSwamp(boolean isSwamp) {
+        this.isSwamp = isSwamp;
+    }
 
-    /*@Override
-     public String toString() {
-     return "(h: " + h + ", g:" + g + ", f:" + f + ", neighbs: " + neighbours.toString() + ")";
-     }*/
+    /**
+     * Asettaa solmun jääksi
+     * @param isIce
+     */
+    public void SetIce(boolean isIce) {
+        this.isIce = isIce;
+    }
+
+    public boolean IsSwamp() {
+        return this.isSwamp;
+    }
+
+    public boolean IsIce() {
+        return this.isIce;
+    }
 }

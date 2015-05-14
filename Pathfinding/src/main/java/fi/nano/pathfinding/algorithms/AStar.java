@@ -12,7 +12,6 @@ import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
 public class AStar implements Algorithm {
 
     OwnBinaryHeap open;
-    //PriorityQueue<Node> open = new PriorityQueue<>(11,new NodeComparator(0));
 
     Node end;
 
@@ -26,19 +25,22 @@ public class AStar implements Algorithm {
     @Override
     public boolean FindPath(Node sPos, Node ePos) {
         open = new OwnBinaryHeap(new NodeComparator(0));
-        
+
         end = ePos;
 
         sPos.aStar_g = 0;
         sPos.aStar_f = sPos.aStar_h;
         open.add(sPos);
         sPos.aStar_open = true;
+        sPos.aStar_closed = false;
 
         boolean finished = false;
 
+        //System.out.println("Starting...");
         while (!open.isEmpty() && !finished) {
             Node node = open.poll();
             node.aStar_open = false;
+            //System.out.println("Closing " + node.x + "," + node.y);
             node.aStar_closed = true;
 
             if (node.equals(end)) {
@@ -46,37 +48,62 @@ public class AStar implements Algorithm {
                 break;
             }
 
+            //System.out.println("Inspecting neighbours..."+node.GetNeighbours().size());
             for (int i = 0; i < node.GetNeighbours().size(); i++) {
-                InspectNeighbour(node, node.GetNeighbours().get(i), node.GetNeighbourDiagonals().get(i));
+                Node neighbour = node.GetNeighbours().get(i);
+                if (!neighbour.IsWall() && !neighbour.aStar_closed) {
+                    InspectNeighbour(node, neighbour, node.GetNeighbourDiagonals().get(i));
+                }
             }
         }
 
         return finished;
     }
 
-    private int EstimateDistance(Node node) {
+    /**
+     * Laskee matkan solmusta maaliin Pythagoraan lauseella.
+     *
+     * @param node Solmu josta lasketaan
+     * @return Etäisyys
+     */
+    private float EstimateDistance(Node node) {
         int xDiffer = end.x - node.x;
         int yDiffer = end.y - node.y;
-        return (int) Math.sqrt((xDiffer * xDiffer) + (yDiffer * yDiffer));
+        return (float) Math.sqrt((xDiffer * xDiffer) + (yDiffer * yDiffer));
     }
 
+    /**
+     * Tutkitaan solmun naapuri
+     *
+     * @param node Solmu
+     * @param neighbour Naapuri
+     * @param isDiagonal Onko naapuri vinottain katsottuna solmusta; vinottainen
+     * liike on kalliimpaa kuin ei-vinottainen.
+     */
     private void InspectNeighbour(Node node, Node neighbour, boolean isDiagonal) {
-        if (neighbour.aStar_closed) {
-            return;
-        }
-        
-        if (neighbour.IsWall() && neighbour.IsDoor()) {
-            return;
-        }
+        //System.out.println("Inspecting neighbour at " + neighbour.x + "," + neighbour.y + ", is wall/door: " + neighbour.IsWall() + "/" + neighbour.IsDoor() + ", open/closed:" + neighbour.aStar_open + "/" + neighbour.aStar_closed);
 
-        int temp_h = EstimateDistance(neighbour);
+        float temp_h = EstimateDistance(neighbour);
 
+        // Lasketaan paino
         int weight = 10;
-        if (!isDiagonal) {
-            weight = 15;
+        if (!neighbour.IsIce() && !neighbour.IsSwamp()) {
+            if (isDiagonal) {
+                weight = 14;
+            }
+        } else if (neighbour.IsIce()) {
+            weight = 5;
+            if (isDiagonal) {
+                weight = 7;
+            }
+        } else if (neighbour.IsSwamp()) {
+            weight = 20;
+            if (isDiagonal) {
+                weight = 28;
+            }
         }
-        
-        int temp_g = node.aStar_g + weight;
+
+        float temp_g = node.aStar_g + weight;
 
         if (!neighbour.aStar_open) {
             neighbour.parent = node;
@@ -86,7 +113,7 @@ public class AStar implements Algorithm {
             neighbour.aStar_f = neighbour.aStar_h + neighbour.aStar_g;
 
             open.add(neighbour);
-            
+
             neighbour.aStar_open = true;
         } else {
             if (temp_g < neighbour.aStar_g) {

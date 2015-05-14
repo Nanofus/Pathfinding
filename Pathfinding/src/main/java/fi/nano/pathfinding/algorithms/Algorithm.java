@@ -1,7 +1,6 @@
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.structure.Node;
-import fi.nano.pathfinding.dataStructures.OwnArrayList;
 
 /**
  * Rajapinta, jonka polunetsintäalgoritmit toteuttavat.

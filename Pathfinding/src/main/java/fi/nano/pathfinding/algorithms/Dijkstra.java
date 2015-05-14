@@ -12,7 +12,7 @@ import fi.nano.pathfinding.dataStructures.OwnBinaryHeap;
 public class Dijkstra implements Algorithm {
 
     OwnBinaryHeap open;
-    
+
     /**
      * Etsii polun solmusta toiseen Dijkstran algoritmilla.
      *
@@ -31,6 +31,7 @@ public class Dijkstra implements Algorithm {
 
         boolean finished = false;
 
+        //Käydään open-keossa olevia solmuja läpi kunnes maali löytyy.
         while (!open.isEmpty() && !finished) {
             Node node = open.poll();
 
@@ -46,27 +47,42 @@ public class Dijkstra implements Algorithm {
 
     /**
      * Tutkii solmun naapurit
+     *
      * @param node Solmu
      */
     private void InspectNeighbours(Node node) {
         for (int i = 0; i < node.GetNeighbours().size(); i++) {
             Node neighbour = node.GetNeighbours().get(i);
-            
+
             if (neighbour.IsWall()) {
                 continue;
             }
-            
+
             boolean isDiagonal = node.GetNeighbourDiagonals().get(i);
 
-            double weight = 10;
-            if (isDiagonal) {
-                weight = 14;
+            // Lasketaan paino
+            int weight = 10;
+            if (!neighbour.IsIce() && !neighbour.IsSwamp()) {
+                if (isDiagonal) {
+                    weight = 14;
+                }
+            } else if (neighbour.IsIce()) {
+                weight = 5;
+                if (isDiagonal) {
+                    weight = 7;
+                }
+            } else if (neighbour.IsSwamp()) {
+                weight = 20;
+                if (isDiagonal) {
+                    weight = 28;
+                }
             }
 
+            //Lasketaan solmulle paino tätä reittiä pitkin
             double distanceThroughNode = node.dijkstra_minDistance + weight;
 
+            //Jos solmuun on uutta reittiä pitkin lyhyempi matka, päivitetään tieto solmuun
             if (distanceThroughNode < neighbour.dijkstra_minDistance) {
-                //open.remove(neighbour);
                 neighbour.dijkstra_minDistance = distanceThroughNode;
                 neighbour.parent = node;
                 open.add(neighbour);

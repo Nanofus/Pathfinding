@@ -43,8 +43,8 @@ public class NodeComparatorTest {
     public void CompareAStarNodesFirstBigger() {
         NodeComparator nodeComparator = new NodeComparator(0);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.aStar_f = 5;
         two.aStar_f = 4;
@@ -56,8 +56,8 @@ public class NodeComparatorTest {
     public void CompareAStarNodesSecondBigger() {
         NodeComparator nodeComparator = new NodeComparator(0);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.aStar_f = 4;
         two.aStar_f = 5;
@@ -69,8 +69,8 @@ public class NodeComparatorTest {
     public void CompareAStarNodesSameValue() {
         NodeComparator nodeComparator = new NodeComparator(0);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.aStar_f = 5;
         two.aStar_f = 5;
@@ -82,8 +82,8 @@ public class NodeComparatorTest {
     public void CompareDijkstraNodesFirstBigger() {
         NodeComparator nodeComparator = new NodeComparator(1);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.dijkstra_minDistance = 5;
         two.dijkstra_minDistance = 4;
@@ -95,8 +95,8 @@ public class NodeComparatorTest {
     public void CompareDijkstraNodesSecondBigger() {
         NodeComparator nodeComparator = new NodeComparator(1);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.dijkstra_minDistance = 4;
         two.dijkstra_minDistance = 5;
@@ -108,8 +108,8 @@ public class NodeComparatorTest {
     public void CompareDijkstraNodesSameValue() {
         NodeComparator nodeComparator = new NodeComparator(1);
 
-        Node one = new Node(false);
-        Node two = new Node(false);
+        Node one = new Node();
+        Node two = new Node();
 
         one.dijkstra_minDistance = 5;
         two.dijkstra_minDistance = 5;

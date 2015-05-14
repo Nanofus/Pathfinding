@@ -1,6 +1,5 @@
 package fi.nano.pathfinding.structure;
 
-import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
 import fi.nano.pathfinding.algorithms.BreadthFirstSearch;
@@ -29,12 +28,18 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> path = new OwnArrayList<>();
 
     private Node[][] parsedMaze;
-    
+
     private OwnArrayList<Node> doors = new OwnArrayList<>();
 
     private long runTime;
 
+    /**
+     * Sokkelon leveys
+     */
     public int width;
+    /**
+     * Sokkelon korkeus
+     */
     public int height;
 
     private boolean hasRun = false;
@@ -49,6 +54,8 @@ public class AlgorithmRunner {
      * tai "A*".
      * @param allowDiagonalMovement Sallitaanko ruudukossa liikkuminen vinottain
      * @param maze Sokkelo tiedostosta luetussa tekstirivimuodossa
+     * @param chaser Takaa-ajaja
+     * @param chased Takaa-ajettu
      */
     public AlgorithmRunner(String testedAlgorithm, boolean allowDiagonalMovement, OwnArrayList<String> maze, MazeEntity chaser, MazeEntity chased) {
         this.testedAlgorithm = testedAlgorithm;
@@ -88,72 +95,86 @@ public class AlgorithmRunner {
 
         parsedMaze = new Node[width][height];
 
+        CreateNodes();
+        SetNodeDiagonality();
+    }
+
+    /**
+     * Luo sokkelon solmut
+     */
+    private void CreateNodes() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                Node node;
+                Node node = new Node();
                 if (((String) maze.get(j)).charAt(i) == ' ') {
-                    node = new Node(false);
                 } else if (((String) maze.get(j)).charAt(i) == 'D') {
-                    node = new Node(false);
                     node.SetDoor(true);
                     doors.add(node);
                 } else if (((String) maze.get(j)).charAt(i) == 'd') {
-                    node = new Node(true);
+                    node.SetWall(true);
                     node.SetDoor(true);
                     doors.add(node);
+                } else if (((String) maze.get(j)).charAt(i) == 's') {
+                    node.SetSwamp(true);
+                } else if (((String) maze.get(j)).charAt(i) == 'i') {
+                    node.SetIce(true);
                 } else {
-                    node = new Node(true);
+                    node.SetWall(true);
                 }
                 parsedMaze[i][j] = node;
                 node.x = i;
                 node.y = j;
             }
         }
+    }
 
+    /**
+     * Asettaa solmulle tiedon siitä, ovatko naapurit vieressä vai vinottain
+     */
+    private void SetNodeDiagonality() {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Node node = parsedMaze[i][j];
-                if (!node.IsWall()) {
-
+                if (GetsNeighbours(node)) {
                     if ((i - 1 >= 0) && (i - 1 < width)) {
-                        if (!parsedMaze[i - 1][j].IsWall()) {
+                        if (GetsNeighbours(parsedMaze[i - 1][j])) {
                             node.SetNeighbour(parsedMaze[i - 1][j], false);
                         }
                     }
                     if ((i + 1 >= 0) && (i + 1 < width)) {
-                        if (!parsedMaze[i + 1][j].IsWall()) {
+                        if (GetsNeighbours(parsedMaze[i + 1][j])) {
                             node.SetNeighbour(parsedMaze[i + 1][j], false);
                         }
                     }
                     if ((j - 1 >= 0) && (j - 1 < height)) {
-                        if (!parsedMaze[i][j - 1].IsWall()) {
+                        if (GetsNeighbours(parsedMaze[i][j - 1])) {
                             node.SetNeighbour(parsedMaze[i][j - 1], false);
                         }
                     }
                     if ((j + 1 >= 0) && (j + 1 < height)) {
-                        if (!parsedMaze[i][j + 1].IsWall()) {
+                        if (GetsNeighbours(parsedMaze[i][j + 1])) {
                             node.SetNeighbour(parsedMaze[i][j + 1], false);
                         }
                     }
 
                     if (allowDiagonalMovement) {
                         if ((i - 1 >= 0) && (i - 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
-                            if (!parsedMaze[i - 1][j - 1].IsWall()) {
+                            if (GetsNeighbours(parsedMaze[i - 1][j - 1])) {
                                 node.SetNeighbour(parsedMaze[i - 1][j - 1], true);
                             }
                         }
                         if ((i + 1 >= 0) && (i + 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
-                            if (!parsedMaze[i + 1][j + 1].IsWall()) {
+                            if (GetsNeighbours(parsedMaze[i + 1][j + 1])) {
                                 node.SetNeighbour(parsedMaze[i + 1][j + 1], true);
                             }
                         }
                         if ((i + 1 >= 0) && (i + 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
-                            if (!parsedMaze[i + 1][j - 1].IsWall()) {
+                            if (GetsNeighbours(parsedMaze[i + 1][j - 1])) {
                                 node.SetNeighbour(parsedMaze[i + 1][j - 1], true);
                             }
                         }
                         if ((i - 1 >= 0) && (i - 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
-                            if (!parsedMaze[i - 1][j + 1].IsWall()) {
+                            if (GetsNeighbours(parsedMaze[i - 1][j + 1])) {
                                 node.SetNeighbour(parsedMaze[i - 1][j + 1], true);
                             }
                         }
@@ -162,6 +183,13 @@ public class AlgorithmRunner {
                 }
             }
         }
+    }
+    
+    /**
+     * Tarkastaa voiko solmulle laittaa naapureita
+     */
+    private boolean GetsNeighbours(Node node) {
+        return !node.IsWall() || (node.IsWall() && node.IsDoor());
     }
 
     /**
@@ -189,6 +217,12 @@ public class AlgorithmRunner {
         }
     }
 
+    /**
+     * Palauttaa merkkinä tiedon siitä, mitä solmussa on. Käyttöliittymää varten.
+     * @param x Solmun x-koordinaatti
+     * @param y Solmun y-koordinaatti
+     * @return 
+     */
     public char ContentsOfTile(int x, int y) {
         if (chaser != null && chased != null) {
             if (chaser.x == x && chaser.y == y) {
@@ -199,6 +233,10 @@ public class AlgorithmRunner {
                 return 'X';
             } else if (parsedMaze[x][y].IsDoor() && parsedMaze[x][y].IsWall()) {
                 return 'D';
+            } else if (parsedMaze[x][y].IsSwamp()) {
+                return 's';
+            } else if (parsedMaze[x][y].IsIce()) {
+                return 'i';
             } else {
                 if (path.contains(parsedMaze[x][y])) {
                     return '.';
@@ -227,7 +265,7 @@ public class AlgorithmRunner {
         ResetNodes();
         return Run(start.x, start.y, end.x, end.y);
     }
-    
+
     public OwnArrayList<Node> GetDoors() {
         return doors;
     }
@@ -284,6 +322,10 @@ public class AlgorithmRunner {
 
     public long GetRunTime() {
         return runTime;
+    }
+    
+    public OwnArrayList<Node> GetPath() {
+        return path;
     }
 
     /**

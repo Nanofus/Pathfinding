@@ -42,7 +42,7 @@ public class OwnQueueTest {
     public void TestPush() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
+        Node node = new Node();
 
         queue.push(node);
 
@@ -53,7 +53,7 @@ public class OwnQueueTest {
     public void TestIsEmpty() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
+        Node node = new Node();
 
         queue.push(node);
 
@@ -70,8 +70,8 @@ public class OwnQueueTest {
     public void TestPushMultiple() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
 
         queue.push(node);
         queue.push(node2);
@@ -83,9 +83,9 @@ public class OwnQueueTest {
     public void TestPop() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
-        Node node3 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
 
         queue.push(node);
         queue.push(node2);
@@ -98,9 +98,9 @@ public class OwnQueueTest {
     public void TestPop2() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
-        Node node3 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
 
         queue.push(node);
         queue.push(node2);
@@ -115,9 +115,9 @@ public class OwnQueueTest {
     public void TestPeek() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
-        Node node3 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
 
         queue.push(node);
         queue.push(node2);
@@ -130,9 +130,9 @@ public class OwnQueueTest {
     public void TestPeek2() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
-        Node node3 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
 
         queue.push(node);
         queue.push(node2);
@@ -147,9 +147,9 @@ public class OwnQueueTest {
     public void TestPeek3() {
         OwnQueue queue = new OwnQueue();
 
-        Node node = new Node(false);
-        Node node2 = new Node(false);
-        Node node3 = new Node(false);
+        Node node = new Node();
+        Node node2 = new Node();
+        Node node3 = new Node();
 
         queue.push(node);
         queue.push(node2);

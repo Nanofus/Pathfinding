@@ -26,6 +26,7 @@ public class Pathfinding {
     private int moveDelay;
     private int doorDelay;
     private int waitInMillis;
+    private int waitBeforeFail;
     private boolean allowDiagonal;
     private String algo;
     private boolean smallTiles;
@@ -49,15 +50,20 @@ public class Pathfinding {
     private int steps;
     private int recalcs;
 
-    Pathfinding(String[] args) {
+    public Pathfinding(String[] args) {
         ParseArgs(args);
+        System.out.println("- Pathfinding created - Maze: '" + maze + "', allow diagonal: " + allowDiagonal + ", algorithm: '" + algo + "', target move delay: " + moveDelay + ", door delay: " + doorDelay);
+    }
+
+    public void Run() {
+        System.out.println("- Running pathfinding... - ");
         Init();
-        Run();
-        System.out.println("\nDONE - Time: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms, recalcs: " + recalcs + ", average calc time: " + (totalTime * 0.000001) / recalcs + " ms");
+        RunPathfinding();
+        System.out.println(" - Pathfinding done - ");
     }
 
     private void ParseArgs(String[] args) {
-        if (args.length > 8) {
+        if (args.length > 0) {
             maze = args[0];
             allowDiagonal = Boolean.parseBoolean(args[1]);
             algo = args[2];
@@ -67,16 +73,18 @@ public class Pathfinding {
             logEnabled = Boolean.parseBoolean(args[6]);
             windowEnabled = Boolean.parseBoolean(args[7]);
             doorDelay = Integer.parseInt(args[8]);
+            waitBeforeFail = Integer.parseInt(args[9]);
         } else {
-            maze = "401x401 nomove";
-            allowDiagonal = true;
+            maze = "junit_moving";
+            allowDiagonal = false;
             algo = "A*";
             smallTiles = false;
-            waitInMillis = 200;
+            waitInMillis = 20;
             moveDelay = 5;
-            logEnabled = false;
-            windowEnabled = false;
-            doorDelay = 10;
+            logEnabled = true;
+            windowEnabled = true;
+            doorDelay = 20;
+            waitBeforeFail = 10;
         }
     }
 
@@ -84,8 +92,9 @@ public class Pathfinding {
         mazeReader = new MazeReader(maze);
 
         String[] chasedStartPos = mazeReader.GetTargetMovement().get(0).split(" ");
+        String[] chaserStartPos = mazeReader.GetStartPosition().split(" ");
 
-        chaser = new MazeEntity(1, 1);
+        chaser = new MazeEntity(Integer.parseInt(chaserStartPos[0]), Integer.parseInt(chaserStartPos[1]));
         chased = new MazeEntity(Integer.parseInt(chasedStartPos[0]), Integer.parseInt(chasedStartPos[1]));
         runner = new AlgorithmRunner(algo, allowDiagonal, mazeReader.GetMaze(), chaser, chased);
         mover = new TargetMover(chased, mazeReader.GetTargetMovement());
@@ -102,7 +111,11 @@ public class Pathfinding {
         steps = 0;
     }
 
-    private void Run() {
+    private void RunPathfinding() {
+        boolean failure = false;
+        int fails = 0;
+        //OwnArrayList<Node> oldPath;
+        recalculateNeeded = true;
         while (true) {
             chasedMoveTimer--;
             if (chasedMoveTimer == 0) {
@@ -129,6 +142,8 @@ public class Pathfinding {
             }
 
             if (recalculateNeeded) {
+                //oldPath = path;
+                //System.out.println("RECALCULATING");
                 path = runner.Pathfind(new Position(chaser.x, chaser.y), new Position(chased.x, chased.y));
                 totalTime = totalTime + runner.GetRunTime();
                 if (logEnabled) {
@@ -137,7 +152,16 @@ public class Pathfinding {
                     }
                     System.out.println("Time (ms) spent calculating: " + (runner.GetRunTime() * 0.000001) + " (total: " + (totalTime * 0.000001) + "), path length: " + path.size() + " (time per step: " + (runner.GetRunTime() * 0.000001) / path.size() + ")");
                 }
-                recalculateNeeded = false;
+                if (path.isEmpty()) {
+                    //path = oldPath;
+                    fails++;
+                    if (fails == waitBeforeFail) {
+                        failure = true;
+                    }
+                } else {
+                    fails = 0;
+                    recalculateNeeded = false;
+                }
                 recalcs++;
             }
 
@@ -151,9 +175,20 @@ public class Pathfinding {
                 }
             }
 
-            if (chaser.x == chased.x && chaser.y == chased.y) {
+            if ((chaser.x == chased.x && chaser.y == chased.y) || failure) {
+                if (failure) {
+                    steps = -1;
+                }
                 break;
             }
         }
+    }
+
+    public void PrintResults() {
+        System.out.println("\nRESULTS - Time: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms, recalcs: " + recalcs + ", average calc time: " + (totalTime * 0.000001) / recalcs + " ms");
+    }
+
+    public int GetSteps() {
+        return steps;
     }
 }
