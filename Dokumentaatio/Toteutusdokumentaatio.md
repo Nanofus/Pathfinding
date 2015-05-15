@@ -6,7 +6,9 @@ Ohjelman käyttämät oheistiedostot on kuvattu tarkemmin käyttöohjeessa.
 
 Ohjelman päätoiminnallisuus keskittyy **Pathfinding**- ja **AlgorithmRunner**-luokkiin. Pathfinding määrittää ajon parametrit sekä luo **MazeReaderin** ja AlgorithmRunnerin. MazeReader-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, takaa-ajajan ja takaa-ajetun **MazeEntity**-instansseista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
 
-AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei (paitsi ovien tapauksessa). Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, tyypistään, sijainnistaan ruudukossa sekä algoritmien ja tietorakenteiden käyttämiä muuttujia.
+AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei (paitsi ovien tapauksessa). Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Solmulla on siis 4 tai 8 naapuria.
+
+Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, tyypistään, sijainnistaan ruudukossa sekä algoritmien ja tietorakenteiden käyttämiä muuttujia.
 
 AlgorithmRunner luo instanssin algoritmiluokasta, jonka se käskee ratkomaan sokkelon. Tällöin algoritmi etsii polun aloitussolmusta loppusolmuun, ja muodostaa reitin antamalla kulkemilleen solmuille parent-solmun. Kun maali löytyy, AlgorithmRunner kulkee polun lopusta alkuun parent-viitteitä pitkin ja generoi reitistä listan. Jos maalia ei löydy, saadaan tyhjä lista.
 
