@@ -56,7 +56,7 @@ Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algorit
 
 Kaikki ajat ovat millisekunneissa.
 
-Jos komentoriviloki on päällä, tulostetaan joka uudeleenlaskentakerta:
+Jos komentoriviloki on päällä, tulostetaan joka uudelleenlaskentakerta:
 * Laskentaan käytetty aika
 * Tähänastinen laskentaan käytetty kokonaisaika
 * Uuden polun pituus

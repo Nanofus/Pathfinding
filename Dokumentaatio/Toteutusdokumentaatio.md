@@ -69,3 +69,5 @@ Ohjelman suurin kompastuskivi tällä hetkellä on siinä, että algoritmit ja t
 * Binäärikeko tallentaa solmuun solmun indeksin keossa.
   * Tämä mahdollistaa keolle nopean solmun indeksin haun pelkän solmutiedon perusteella.
 Katsoin tämän olevan sopiva uhraus, sillä vaikka aina polun uudelleenlaskennan yhteydessä joudutaan käymään koko verkko läpi ja resetoimaan jokainen solmu, on tähän käytetty aika kuitenkin vain noin 3% koko ohjelman suoritusajasta. Tämän järjestelmän korvaaminen algoritmeissa hashseteillä ja binäärikeossa keon läpikäynnillä on periaatteessa yksinkertaista.
+
+Syvyyshakualgoritmi on rekursiivinen, joten suurilla sokkeloilla se kaatuu stack overflow -virheeseen.
