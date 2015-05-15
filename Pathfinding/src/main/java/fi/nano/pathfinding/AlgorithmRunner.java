@@ -1,4 +1,4 @@
-package fi.nano.pathfinding.structure;
+package fi.nano.pathfinding;
 
 import fi.nano.pathfinding.algorithms.Algorithm;
 import fi.nano.pathfinding.algorithms.AStar;
@@ -6,6 +6,9 @@ import fi.nano.pathfinding.algorithms.BreadthFirstSearch;
 import fi.nano.pathfinding.algorithms.DepthFirstSearch;
 import fi.nano.pathfinding.algorithms.Dijkstra;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
+import fi.nano.pathfinding.structure.MazeEntity;
+import fi.nano.pathfinding.structure.Node;
+import fi.nano.pathfinding.structure.Position;
 
 /**
  * Ohjeman "pääluokka", ajattaa sokkelossa eri algoritmit ja vastaa sokkelon
@@ -32,6 +35,7 @@ public class AlgorithmRunner {
     private OwnArrayList<Node> doors = new OwnArrayList<>();
 
     private long runTime;
+    private long nodeCleanTime;
 
     /**
      * Sokkelon leveys
@@ -196,11 +200,13 @@ public class AlgorithmRunner {
      * Resetoi sokkelon solmut
      */
     private void ResetNodes() {
+        long startTime = System.nanoTime();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 parsedMaze[i][j].Reset();
             }
         }
+        nodeCleanTime = System.nanoTime() - startTime;
     }
 
     /**
@@ -322,6 +328,10 @@ public class AlgorithmRunner {
 
     public long GetRunTime() {
         return runTime;
+    }
+    
+    public long GetNodeCleanTime() {
+        return nodeCleanTime;
     }
     
     public OwnArrayList<Node> GetPath() {

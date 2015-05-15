@@ -45,7 +45,7 @@ public class AStarTest {
      */
     @Test
     public void TestAStar() {
-        String[] paramArray = {"junit", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit", "false", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -59,7 +59,7 @@ public class AStarTest {
      */
     @Test
     public void TestAStarWithDiagonalMovement() {
-        String[] paramArray = {"junit", "true", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit", "true", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -72,12 +72,12 @@ public class AStarTest {
      */
     @Test
     public void TestAStarImpossible() {
-        String[] paramArray = {"junit_impossible", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_impossible", "false", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 
     /**
@@ -86,12 +86,12 @@ public class AStarTest {
      */
     @Test
     public void TestAStarImpossibleWithDiagonalMovement() {
-        String[] paramArray = {"junit_impossible", "true", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_impossible", "true", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 
     /**
@@ -99,7 +99,7 @@ public class AStarTest {
      */
     @Test
     public void TestAStarSwamp() {
-        String[] paramArray = {"junit_swamp", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_swamp", "false", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -112,7 +112,7 @@ public class AStarTest {
      */
     @Test
     public void TestAStarIce() {
-        String[] paramArray = {"junit_ice", "false", "A*", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_ice", "false", "A*", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -125,7 +125,7 @@ public class AStarTest {
      */
     @Test
     public void TestAStarDoors() {
-        String[] paramArray = {"junit_doors", "false", "A*", "false", "0", "5", "false", "false", "20", "10"};
+        String[] paramArray = {"junit_doors", "false", "A*", "5", "20", "12", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -138,11 +138,11 @@ public class AStarTest {
      */
     @Test
     public void TestAStarMovingTarget() {
-        String[] paramArray = {"junit_moving", "false", "A*", "false", "0", "5", "false", "false", "20", "10"};
+        String[] paramArray = {"junit_moving", "false", "A*", "5", "10", "12", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(264, steps);
+        assertEquals(210, steps);
     }
 }

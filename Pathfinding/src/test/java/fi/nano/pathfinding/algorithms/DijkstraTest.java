@@ -6,7 +6,7 @@
 package fi.nano.pathfinding.algorithms;
 
 import fi.nano.pathfinding.Pathfinding;
-import fi.nano.pathfinding.structure.AlgorithmRunner;
+import fi.nano.pathfinding.AlgorithmRunner;
 import fi.nano.pathfinding.structure.MazeReader;
 import fi.nano.pathfinding.structure.Node;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
@@ -47,7 +47,7 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstra() {
-        String[] paramArray = {"junit", "false", "Dijkstra", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit", "false", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -61,7 +61,7 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraWithDiagonalMovement() {
-        String[] paramArray = {"junit", "true", "Dijkstra", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit", "true", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -74,12 +74,12 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraImpossible() {
-        String[] paramArray = {"junit_impossible", "false", "Dijkstra", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit_impossible", "false", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 
     /**
@@ -88,12 +88,12 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraImpossibleWithDiagonalMovement() {
-        String[] paramArray = {"junit_impossible", "true", "Dijkstra", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit_impossible", "true", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 
     /**
@@ -101,7 +101,7 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraSwamp() {
-        String[] paramArray = {"junit_swamp", "false", "Dijkstra", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_swamp", "false", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -114,7 +114,7 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraIce() {
-        String[] paramArray = {"junit_ice", "false", "Dijkstra", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_ice", "false", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -127,7 +127,7 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraDoors() {
-        String[] paramArray = {"junit_doors", "false", "Dijkstra", "false", "0", "5", "false", "false", "20", "10"};
+        String[] paramArray = {"junit_doors", "false", "Dijkstra", "5", "20", "20", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -140,11 +140,11 @@ public class DijkstraTest {
      */
     @Test
     public void TestDijkstraMovingTarget() {
-        String[] paramArray = {"junit_moving", "false", "Dijkstra", "false", "0", "5", "false", "false", "20", "10"};
+        String[] paramArray = {"junit_moving", "false", "Dijkstra", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(264, steps);
+        assertEquals(210, steps);
     }
 }

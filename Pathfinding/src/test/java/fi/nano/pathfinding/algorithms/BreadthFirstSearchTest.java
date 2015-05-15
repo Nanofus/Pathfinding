@@ -45,7 +45,7 @@ public class BreadthFirstSearchTest {
      */
     @Test
     public void Test() {
-        String[] paramArray = {"junit", "false", "Breadth-first", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit", "false", "Breadth-first", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -59,7 +59,7 @@ public class BreadthFirstSearchTest {
      */
     @Test
     public void TestWithDiagonalMovement() {
-        String[] paramArray = {"junit", "true", "Breadth-first", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit", "true", "Breadth-first", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
@@ -72,12 +72,12 @@ public class BreadthFirstSearchTest {
      */
     @Test
     public void TestImpossible() {
-        String[] paramArray = {"junit_impossible", "false", "Breadth-first", "false", "0", "5", "false", "false", "10", "10"};
+        String[] paramArray = {"junit_impossible", "false", "Breadth-first", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 
     /**
@@ -86,11 +86,11 @@ public class BreadthFirstSearchTest {
      */
     @Test
     public void TestImpossibleWithDiagonalMovement() {
-        String[] paramArray = {"junit_impossible", "true", "Breadth-first", "false", "0", "5", "false", "false", "11", "10"};
+        String[] paramArray = {"junit_impossible", "true", "Breadth-first", "5", "10", "10", "false", "false", "false", "0"};
         Pathfinding p = new Pathfinding(paramArray);
         p.Run();
         int steps = p.GetSteps();
 
-        assertEquals(-1, steps);
+        assertEquals(10, steps);
     }
 }

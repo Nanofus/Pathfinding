@@ -12,8 +12,6 @@ Testissä 1 käytetään perinteisen labyrintin mallista sokkeloa, Mazes-kansion
 
 Vinottainen liike on sallittu.
 
-Komentoriviparametrit: 401x401 true
-
 #### Tulokset
 
 A*: 85ms, 2029 askelta<br />
@@ -27,11 +25,10 @@ Testissä käytetään samaa sokkeloa kuin testissä 1.
 
 Vinottainen liike on kielletty.
 
-Komentoriviparametrit: 401x401 false
-
 #### Tulokset
 
 A*: 72ms, 2879 askelta<br />
 Dijkstra: 48ms, 2879 askelta<br />
 Leveyshaku: 34ms, 2879 askelta<br />
 Syvyyshaku: 26ms, 7741 askelta<br />
+

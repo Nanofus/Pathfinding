@@ -5,7 +5,7 @@
  */
 package fi.nano.pathfinding.ui;
 
-import fi.nano.pathfinding.structure.AlgorithmRunner;
+import fi.nano.pathfinding.AlgorithmRunner;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;

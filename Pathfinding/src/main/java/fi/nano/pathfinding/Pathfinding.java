@@ -1,9 +1,7 @@
-
 package fi.nano.pathfinding;
 
 import fi.nano.pathfinding.structure.TargetMover;
 import fi.nano.pathfinding.dataStructures.OwnArrayList;
-import fi.nano.pathfinding.structure.AlgorithmRunner;
 import fi.nano.pathfinding.structure.MazeEntity;
 import fi.nano.pathfinding.structure.MazeReader;
 import fi.nano.pathfinding.structure.Node;
@@ -19,6 +17,8 @@ import javax.swing.SwingUtilities;
 public class Pathfinding {
 
     private long totalTime = 0;
+    private long nodeCleanTime = 0;
+
     private int moveDelay;
     private int doorDelay;
     private int waitInMillis;
@@ -46,13 +46,22 @@ public class Pathfinding {
     private int steps;
     private int recalcs;
 
+    private boolean failure = false;
+    private int fails = 0;
+    private int longestFailStreak = 0;
+    private int iceSteps = 0;
+    private int swampSteps = 0;
+    private int doorClosures = 0;
+    private int targetMovements = 0;
+
     public Pathfinding(String[] args) {
         ParseArgs(args);
         System.out.println("- Pathfinding created - Maze: '" + maze + "', allow diagonal: " + allowDiagonal + ", algorithm: '" + algo + "', target move delay: " + moveDelay + ", door delay: " + doorDelay);
     }
 
     /**
-     * Julkinen metodi aloitusarvojen asettamiseen ja polunetsintäoperaation käynnistämiseen.
+     * Julkinen metodi aloitusarvojen asettamiseen ja polunetsintäoperaation
+     * käynnistämiseen.
      */
     public void Run() {
         System.out.println("- Running pathfinding... - ");
@@ -63,29 +72,30 @@ public class Pathfinding {
 
     /**
      * Parseroi komentoriviargumentit tai niiden puuttuessa asettaa oletusarvot
-     * @param args 
+     *
+     * @param args
      */
     private void ParseArgs(String[] args) {
         if (args.length > 0) {
             maze = args[0];
             allowDiagonal = Boolean.parseBoolean(args[1]);
             algo = args[2];
-            smallTiles = Boolean.parseBoolean(args[3]);
-            waitInMillis = Integer.parseInt(args[4]);
-            moveDelay = Integer.parseInt(args[5]);
+            moveDelay = Integer.parseInt(args[3]);
+            doorDelay = Integer.parseInt(args[4]);
+            waitBeforeFail = Integer.parseInt(args[5]);
             logEnabled = Boolean.parseBoolean(args[6]);
             windowEnabled = Boolean.parseBoolean(args[7]);
-            doorDelay = Integer.parseInt(args[8]);
-            waitBeforeFail = Integer.parseInt(args[9]);
+            smallTiles = Boolean.parseBoolean(args[8]);
+            waitInMillis = Integer.parseInt(args[9]);
         } else {
-            maze = "junit_moving";
+            maze = "401x401";
             allowDiagonal = false;
             algo = "A*";
             smallTiles = false;
             waitInMillis = 20;
             moveDelay = 5;
-            logEnabled = true;
-            windowEnabled = true;
+            logEnabled = false;
+            windowEnabled = false;
             doorDelay = 20;
             waitBeforeFail = 10;
         }
@@ -121,8 +131,6 @@ public class Pathfinding {
      * Käynnistää polunetsintäoperaation
      */
     private void RunPathfinding() {
-        boolean failure = false;
-        int fails = 0;
         //OwnArrayList<Node> oldPath;
         recalculateNeeded = true;
         while (true) {
@@ -134,19 +142,23 @@ public class Pathfinding {
                 mover.Move();
                 if (chased.x != oldX || chased.y != oldY) {
                     recalculateNeeded = true;
+                    targetMovements++;
                 }
             }
 
-            doorTimer--;
-            if (doorTimer == 0) {
-                doorTimer = doorDelay;
-                for (int i = 0; i < runner.GetDoors().size(); i++) {
-                    if (runner.GetDoors().get(i).IsWall()) {
-                        runner.GetDoors().get(i).SetWall(false);
-                    } else {
-                        runner.GetDoors().get(i).SetWall(true);
+            if (runner.GetDoors().size() > 0) {
+                doorTimer--;
+                if (doorTimer == 0) {
+                    doorTimer = doorDelay;
+                    for (int i = 0; i < runner.GetDoors().size(); i++) {
+                        if (runner.GetDoors().get(i).IsWall()) {
+                            runner.GetDoors().get(i).SetWall(false);
+                        } else {
+                            runner.GetDoors().get(i).SetWall(true);
+                        }
+                        recalculateNeeded = true;
                     }
-                    recalculateNeeded = true;
+                    doorClosures++;
                 }
             }
 
@@ -155,6 +167,7 @@ public class Pathfinding {
                 //System.out.println("RECALCULATING");
                 path = runner.Pathfind(new Position(chaser.x, chaser.y), new Position(chased.x, chased.y));
                 totalTime = totalTime + runner.GetRunTime();
+                nodeCleanTime = nodeCleanTime + runner.GetNodeCleanTime();
                 if (logEnabled) {
                     if (path.isEmpty()) {
                         System.out.print("Path not found - ");
@@ -164,6 +177,9 @@ public class Pathfinding {
                 if (path.isEmpty()) {
                     //path = oldPath;
                     fails++;
+                    if (fails > longestFailStreak) {
+                        longestFailStreak = fails;
+                    }
                     if (fails == waitBeforeFail) {
                         failure = true;
                     }
@@ -172,6 +188,14 @@ public class Pathfinding {
                     recalculateNeeded = false;
                 }
                 recalcs++;
+            }
+
+            if (!path.isEmpty()) {
+                if (path.get(path.size() - 1).IsIce()) {
+                    iceSteps++;
+                } else if (path.get(path.size() - 1).IsSwamp()) {
+                    swampSteps++;
+                }
             }
 
             chaser.MakeMove(path);
@@ -185,9 +209,6 @@ public class Pathfinding {
             }
 
             if ((chaser.x == chased.x && chaser.y == chased.y) || failure) {
-                if (failure) {
-                    steps = -1;
-                }
                 break;
             }
         }
@@ -197,12 +218,23 @@ public class Pathfinding {
      * Tulostaa tulokset ajon valmistuttua.
      */
     public void PrintResults() {
-        System.out.println("\nRESULTS - Time: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms, recalcs: " + recalcs + ", average calc time: " + (totalTime * 0.000001) / recalcs + " ms");
+        System.out.println("---\n\nRESULTS\n");
+        if (failure) {
+            System.out.println("PATH NOT FOUND\n");
+        } else {
+            System.out.println("PATH FOUND SUCCESSFULLY\n");
+        }
+        System.out.println("Time spent calculating paths: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms");
+        System.out.println("Time spent cleaning nodes: " + nodeCleanTime * 0.000001 + " ms, on average: " + (nodeCleanTime * 0.000001) / recalcs + " ms");
+        System.out.println("Path recalculations: " + recalcs + ", average recalculation time: " + (totalTime * 0.000001) / recalcs + " ms");
+        System.out.println("Calculation failures: " + fails + ", longest streak: " + longestFailStreak);
+        System.out.println("Target movements: " + targetMovements + ", door toggles: " + doorClosures + "\nSteps on ice: " + iceSteps + ", steps on swamp: " + swampSteps + "\n\n---");
     }
 
     /**
      * Palauttaa tehtyjen askelten määrän (testien käyttöön)
-     * @return 
+     *
+     * @return
      */
     public int GetSteps() {
         return steps;

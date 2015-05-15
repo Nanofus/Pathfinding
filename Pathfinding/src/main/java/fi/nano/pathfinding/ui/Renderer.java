@@ -1,6 +1,6 @@
 package fi.nano.pathfinding.ui;
 
-import fi.nano.pathfinding.structure.AlgorithmRunner;
+import fi.nano.pathfinding.AlgorithmRunner;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
