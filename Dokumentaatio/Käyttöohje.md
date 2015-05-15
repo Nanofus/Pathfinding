@@ -37,23 +37,17 @@ Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentt
   
 Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset:
 * Löytyikö reitti
-
 * Laskemiseen käytetty aika yhteensä
 * Käytettyjen askelten määrä (mukaanlukien odottamiset jos reittiä ei löydy)
 * Yhteen askeleeseen käytetty keskimääräinen aika (ei välttämättä kovin hyödyllinen)
-
 * Solmujen siivoamiseen käytetty aika (solmut siivotaan aina uudelleenlaskennan yhteydessä)
 * Solmujen siivoamiseen käytetty keskimääräinen aika
-
 * Uudelleenlaskentakertojen määrä
 * Keskimääräinen uudelleenlaskentaan käytetty aika
-
 * Epäonnistuneet polunetsintäkerrat
 * Pisin putki epäonnistuneita polunetsintöjä
-
 * Kohdepisteen tekemät siirrot
 * Ovien aukeamiset/sulkeutumiset
-
 * Askeleet jääruuduissa
 * Askeleet suoruuduissa
 
