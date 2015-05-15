@@ -2,9 +2,25 @@
 
 Testauksessa ajetaan kaikki hakualgoritmit samanlaisessa verkossa.
 
-Testaus keskittyy algoritmien nopeuden ja löydetyn reitin lyhyyden mittaamiseen. Yleiseen käyttöön optimaalisin algoritmi on nopea ja löytää parhaan reitin.
+Testaus keskittyy algoritmien nopeuden ja käytetyn askelmäärän mittaamiseen. Yleiseen käyttöön optimaalisin algoritmi on nopea ja löytää parhaan reitin.
 
-Kaikissa testeissä käytetään 401x401 ruudun kokoista verkkoa.
+Verkkojen koko vaihtelee muutamien kymmenien solmujen kokoisista 400x400-kokoisiin.
+
+## Suoritettavat testit
+
+* Algoritmien toiminta yksinkertaisessa sokkelossa
+  * Sokkelotyypit: labyrintti ja avoin alue, jossa esteitä
+* Algoritmien toiminta sokkelossa, joka muuttuu
+* Algoritmien toiminta kohderuudun liikkuessa
+* Algoritmien toiminta verkossa, jonka kaarilla on eri painot ("jää" ja "suo")
+  * Vain A* ja Dijkstra
+* Suurikokoinen yhdistelmäsokkelo, jossa esiintyy kaikkia edellämainittuja
+
+Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kielletty. Vinottaisten liikkeiden tapauksessa käytetään vain A*:ä ja Dijkstran algoritmia, sillä vain ne osaavat ottaa huomioon vinottaisten liikkeiden hinnan.
+
+## Tulokset
+
+## Vanhentunut setti
 
 ### Testi 1
 

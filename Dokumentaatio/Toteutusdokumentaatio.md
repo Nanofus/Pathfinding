@@ -8,7 +8,7 @@ AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Se
 
 AlgorithmRunner luo instanssin algoritmiluokasta, jonka se käskee ratkomaan sokkelon. Tällöin algoritmi etsii polun aloitussolmusta loppusolmuun, ja muodostaa reitin antamalla kulkemilleen solmuille parent-solmun. Kun maali löytyy, AlgorithmRunner kulkee polun lopusta alkuun parent-viitteitä pitkin ja generoi reitistä listan. Jos maalia ei löydy, saadaan tyhjä lista.
 
-Pathfinding-luokka puolestaan liikuttaa takaa-ajajaa ja takaa-ajettua (jotka ovat **MazeEntity**-tyyppisiä olioita, **TargetMover** liikuttaa takaa-ajettua) sokkelossa sekä vastaa sokkelon muutoksista, ja pyytää AlgorithmRunneria tarvittaessa laskemaan reitin uudestaan.
+Pathfinding-luokka puolestaan liikuttaa takaa-ajajaa ja takaa-ajettua (jotka ovat **MazeEntity**-tyyppisiä olioita, **TargetMover** vastaa takaa-ajetun liikkeestä) sokkelossa sekä vastaa sokkelon muutoksista, ja pyytää AlgorithmRunneria tarvittaessa laskemaan reitin takaa-ajajalle uudestaan. Takaa-ajaja käyttää liikkuessaan AlgorithmRunnerilta saatua solmulistaa.
 
 Algoritmit toteuttavat **Algorithm**-rajapinnan, joka sisältää AlgorithmRunnerin kutsuman **FindPath**(alkusolmu,loppusolmu)-metodin.
 
@@ -59,3 +59,13 @@ Syvyyshaun löytämä reitti olisi oikeassa navigointikäytössä käyttökelvot
 *Saadun reitin pituus:* 7921<br />
 *Aikavaativuus:* O(e)<br />
 *Saavutettu aikavaativuus:* O(e)<br />
+
+## Ongelmat ja parannusehdotukset
+
+Ohjelman suurin kompastuskivi tällä hetkellä on siinä, että algoritmit ja tietorakenteet tallentavat tietoja itse solmuihin, jolloin ne joudutaan resetoimaan aina kun algoritmi ajetaan uudestaan.
+* Algoritmit tallentavat solmuihin esimerkiksi tietoja siitä, onko niissä käyty, etäisyyksiä maaliruutuun jne.
+  * Tämä yksinkertaistaa ohjelman toimintaa, eikä algoritmissa tarvitse käyttää useaa hashsetiä.
+  * Solmuun tallennettaisiin joka tapauksessa ainakin tieto sen vanhemmasta (jolloin polku voidaan luoda käymällä vanhemmat läpi), tätä ei kuitenkaan tarvitsisi resetoida sillä se päällekirjoitetaan algoritmia ajettaessa.
+* Binäärikeko tallentaa solmuun solmun indeksin keossa.
+  * Tämä mahdollistaa keolle nopean solmun indeksin haun pelkän solmutiedon perusteella.
+Katsoin tämän olevan sopiva uhraus, sillä vaikka aina polun uudelleenlaskennan yhteydessä joudutaan käymään koko verkko läpi ja resetoimaan jokainen solmu, on tähän käytetty aika kuitenkin vain noin 3% koko ohjelman suoritusajasta. Tämän järjestelmän korvaaminen algoritmeissa hashseteillä ja binäärikeossa keon läpikäynnillä on periaatteessa yksinkertaista.

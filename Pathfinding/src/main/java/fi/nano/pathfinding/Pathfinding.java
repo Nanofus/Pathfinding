@@ -71,34 +71,21 @@ public class Pathfinding {
     }
 
     /**
-     * Parseroi komentoriviargumentit tai niiden puuttuessa asettaa oletusarvot
+     * Parseroi komentoriviargumentit
      *
      * @param args
      */
     private void ParseArgs(String[] args) {
-        if (args.length > 0) {
-            maze = args[0];
-            allowDiagonal = Boolean.parseBoolean(args[1]);
-            algo = args[2];
-            moveDelay = Integer.parseInt(args[3]);
-            doorDelay = Integer.parseInt(args[4]);
-            waitBeforeFail = Integer.parseInt(args[5]);
-            logEnabled = Boolean.parseBoolean(args[6]);
-            windowEnabled = Boolean.parseBoolean(args[7]);
-            smallTiles = Boolean.parseBoolean(args[8]);
-            waitInMillis = Integer.parseInt(args[9]);
-        } else {
-            maze = "401x401";
-            allowDiagonal = false;
-            algo = "A*";
-            smallTiles = false;
-            waitInMillis = 20;
-            moveDelay = 5;
-            logEnabled = false;
-            windowEnabled = false;
-            doorDelay = 20;
-            waitBeforeFail = 10;
-        }
+        maze = args[0];
+        allowDiagonal = Boolean.parseBoolean(args[1]);
+        algo = args[2];
+        moveDelay = Integer.parseInt(args[3]);
+        doorDelay = Integer.parseInt(args[4]);
+        waitBeforeFail = Integer.parseInt(args[5]);
+        logEnabled = Boolean.parseBoolean(args[6]);
+        windowEnabled = Boolean.parseBoolean(args[7]);
+        smallTiles = Boolean.parseBoolean(args[8]);
+        waitInMillis = Integer.parseInt(args[9]);
     }
 
     /**

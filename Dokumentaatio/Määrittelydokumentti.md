@@ -4,7 +4,7 @@ Toteutin ohjelmoinnin harjoitustyönä [luolastoseikkailupelin](https://github.c
 
 ## Toteutustapa
 
-* Lähtökohtaisesti algoritmin tulee löytää reitti ruuduista koostuvan sokkelon läpi, pisteestä A pisteeseen B
+* Lähtökohtaisesti algoritmin tulee löytää reitti ruuduista koostuvan sokkelon läpi, pisteestä A pisteeseen B.
 
 Testaan kutakin algoritmia myös muissa tilanteessa:
 

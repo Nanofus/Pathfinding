@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa Pathfinding.java).
+Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa main.java).
 
 * maze
   * Käytettävä sokkelo. Mazes-kansiossa olevan kansion nimi. Kansion tulee sisältää kolme tiedostoa:
@@ -32,7 +32,8 @@ Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentt
   * Käytetäänkö visualisoinnissa 2x2 pikselin vai 10x10 pikselin ruutuja. True tai false.
   * Pienemmät ruudut ovat isompia sokkeloita varten.
 * waitInMillis
-  * Monenko millisekunnin välein ruutu piirretään uudestaan, kokonaisluku.
+  * Monenko millisekunnin välein uusi siirto tehdään, kokonaisluku.
+  * Käytetään vain jos visualisointi on päällä. Ei vaikuta laskenta-ajan mittauksiin.
   * Oletusarvo 200.
   
 Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset:
