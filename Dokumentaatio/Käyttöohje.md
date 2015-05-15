@@ -69,7 +69,7 @@ Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan 
   
 ## Ohjelman tuottamat tulokset
   
-Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset:
+Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset komentorivillä (ja käyttöliittymän voi sulkea):
 * Löytyikö reitti
 * Laskemiseen käytetty aika yhteensä
 * Käytettyjen askelten määrä (mukaanlukien odottamiset jos reittiä ei löydy)
