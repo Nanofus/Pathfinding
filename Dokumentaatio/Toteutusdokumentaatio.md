@@ -2,11 +2,13 @@
 
 ## Yleisrakenne
 
-Ohjelman päätoiminnallisuus keskittyy **AlgorithmRunner**-luokkaan. **MazeReader**-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, testausmoodista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
+Ohjelman päätoiminnallisuus keskittyy **Pathfinding**- ja **AlgorithmRunner**-luokkiin. Pathfinding määrittää ajon parametrit sekä luo **MazeReaderin** ja AlgorithmRunnerin. MazeReader-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, testausmoodista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
 
-AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei. Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, sijainnistaan ruudukossa sekä algoritmien käyttämiä muuttujia.
+AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei. Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, tyypistään, sijainnistaan ruudukossa sekä algoritmien käyttämiä muuttujia.
 
 AlgorithmRunner luo instanssin algoritmiluokasta, jonka se käskee ratkomaan sokkelon. Tällöin algoritmi etsii polun aloitussolmusta loppusolmuun, ja muodostaa reitin antamalla kulkemilleen solmuille parent-solmun. Kun maali löytyy, AlgorithmRunner kulkee polun lopusta alkuun parent-viitteitä pitkin ja generoi reitistä listan. Jos maalia ei löydy, saadaan tyhjä lista.
+
+Pathfinding-luokka puolestaan liikuttaa takaa-ajajaa ja takaa-ajettua (jotka ovat **MazeEntity**-tyyppisiä olioita, **TargetMover** liikuttaa takaa-ajettua) sokkelossa sekä vastaa sokkelon muutoksista, ja pyytää AlgorithmRunneria tarvittaessa laskemaan reitin uudestaan.
 
 Algoritmit toteuttavat **Algorithm**-rajapinnan, joka sisältää AlgorithmRunnerin kutsuman **FindPath**(alkusolmu,loppusolmu)-metodin.
 
@@ -18,7 +20,7 @@ Aikavaativuuksissa n on solmujen määrä ja e kaarien.
 
 A*-algoritmin pitäisi olla suhteellisen nopea ja se löytää optimaalisimman reitin. Se toimii keon avulla. Jokaisella solmulla on kolme arvoa: g, f ja h. G on kuljettu matka lähtösolmusta tähän solmuun, h on arvioitu etäisyys maalisolmuun ja f on näiden summa. Keon avulla algoritmi pyrkii kulkemaan kevyintä reittiä pitkin. Tämä reitti on se, jonka f on pienin.
 
-Algoritmi laskee h-arvon etäisyytenä suoraan linnuntietä nykyisestä solmusta maalisolmuun. Algoritmi pyöristää etäisyyden kuitenkin kokonaisluvuksi. Tämä saattaa aiheuttaa joissain tilanteissa pienen virheen, mutta nopeuttaa algoritmin toimintaa.
+Algoritmi laskee h-arvon etäisyytenä suoraan linnuntietä nykyisestä solmusta maalisolmuun Pythagoraan lauseella.
 
 Algoritmi ottaa huomioon kaarien painot: kyljet vastakkain olevien solmujen välinen etäisyys on 10, vinottaisten 14. Tämä on pyöristys kahden neliöjuuresta.
 

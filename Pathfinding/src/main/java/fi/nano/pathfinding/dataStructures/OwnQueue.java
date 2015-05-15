@@ -3,7 +3,7 @@ package fi.nano.pathfinding.dataStructures;
 import fi.nano.pathfinding.structure.Node;
 
 /**
- * Jonon toteutus
+ * Jonon toteutus.
  *
  * @author Nanofus
  */

@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package fi.nano.pathfinding;
 
 import fi.nano.pathfinding.structure.TargetMover;
@@ -55,6 +51,9 @@ public class Pathfinding {
         System.out.println("- Pathfinding created - Maze: '" + maze + "', allow diagonal: " + allowDiagonal + ", algorithm: '" + algo + "', target move delay: " + moveDelay + ", door delay: " + doorDelay);
     }
 
+    /**
+     * Julkinen metodi aloitusarvojen asettamiseen ja polunetsintäoperaation käynnistämiseen.
+     */
     public void Run() {
         System.out.println("- Running pathfinding... - ");
         Init();
@@ -62,6 +61,10 @@ public class Pathfinding {
         System.out.println(" - Pathfinding done - ");
     }
 
+    /**
+     * Parseroi komentoriviargumentit tai niiden puuttuessa asettaa oletusarvot
+     * @param args 
+     */
     private void ParseArgs(String[] args) {
         if (args.length > 0) {
             maze = args[0];
@@ -88,6 +91,9 @@ public class Pathfinding {
         }
     }
 
+    /**
+     * Luo tarvittavat oliot ja asettaa alkuarvoja.
+     */
     private void Init() {
         mazeReader = new MazeReader(maze);
 
@@ -111,6 +117,9 @@ public class Pathfinding {
         steps = 0;
     }
 
+    /**
+     * Käynnistää polunetsintäoperaation
+     */
     private void RunPathfinding() {
         boolean failure = false;
         int fails = 0;
@@ -184,10 +193,17 @@ public class Pathfinding {
         }
     }
 
+    /**
+     * Tulostaa tulokset ajon valmistuttua.
+     */
     public void PrintResults() {
         System.out.println("\nRESULTS - Time: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms, recalcs: " + recalcs + ", average calc time: " + (totalTime * 0.000001) / recalcs + " ms");
     }
 
+    /**
+     * Palauttaa tehtyjen askelten määrän (testien käyttöön)
+     * @return 
+     */
     public int GetSteps() {
         return steps;
     }

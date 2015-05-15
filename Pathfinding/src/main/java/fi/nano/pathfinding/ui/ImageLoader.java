@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * Luokka joka lataa kuvat visualisointia varten.
  * @author Nanofus
  */
 public class ImageLoader {

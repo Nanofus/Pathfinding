@@ -9,6 +9,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Luokka joka piirtää ikkunaan labyrintin sisällön.
+ * @author Nanofus
+ */
 public class Renderer extends JPanel {
 
     private final ImageLoader imageLoader;

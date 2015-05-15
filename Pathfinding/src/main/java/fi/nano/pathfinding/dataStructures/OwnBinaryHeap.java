@@ -3,7 +3,7 @@ package fi.nano.pathfinding.dataStructures;
 import fi.nano.pathfinding.structure.Node;
 
 /**
- *
+ * Binäärikeko. Käyttää solmuobjekteja sillä tallentaa tiedon solmun indeksistä solmuun itseensä.
  * @author Nanofus
  */
 public class OwnBinaryHeap {

@@ -26,7 +26,7 @@ public class OwnArrayList<O> {
      */
     public void add(O object) {
         if (size == array.length) {
-            enlargeArray();
+            EnlargeArray();
         }
         array[size++] = object;
     }
@@ -38,7 +38,7 @@ public class OwnArrayList<O> {
      * @return Objekti
      */
     public O get(int index) {
-        checkIfOutOfBounds(index);
+        CheckIfOutOfBounds(index);
 
         if (array[index] != null) {
             Object item = array[index];
@@ -54,12 +54,12 @@ public class OwnArrayList<O> {
      * @return Poistettu objekti
      */
     public O remove(int index) {
-        checkIfOutOfBounds(index);
+        CheckIfOutOfBounds(index);
 
         Object object = get(index);
 
         if (index != --size) {
-            cleanArray(index);
+            CleanArray(index);
         }
 
         return (O) object;
@@ -111,7 +111,7 @@ public class OwnArrayList<O> {
     /**
      * Kasvata taulukkoa sen täyttyessä.
      */
-    private void enlargeArray() {
+    private void EnlargeArray() {
         Object[] copy = new Object[array.length * 2];
 
         for (int i = 0; i < array.length; i++) {
@@ -127,7 +127,7 @@ public class OwnArrayList<O> {
      *
      * @param index
      */
-    private void checkIfOutOfBounds(int index) {
+    private void CheckIfOutOfBounds(int index) {
         if (index < 0 || index > array.length) {
             throw new IndexOutOfBoundsException();
         }
@@ -138,7 +138,7 @@ public class OwnArrayList<O> {
      *
      * @param index Indeksi josta objekti poistettiin
      */
-    private void cleanArray(int index) {
+    private void CleanArray(int index) {
         Object[] copy = new Object[array.length - 1];
         
         int objectIndex = 0;

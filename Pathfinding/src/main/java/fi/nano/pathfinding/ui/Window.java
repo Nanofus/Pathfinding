@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 /**
- *
+ * Luokka joka luo ikkunan visualisointia varten.
  * @author Nanofus
  */
 public class Window implements Runnable {
@@ -31,9 +31,9 @@ public class Window implements Runnable {
 
     /**
      * Luo uuden ikkunan
-     * @param runner
-     * @param smallTiles
-     * @param waitInMillis
+     * @param runner Algoritminajaja
+     * @param smallTiles Käytetäänkö isoja vai pieniä ruutuja
+     * @param repaintDelay Viive jonka jälkeen ruutu piirretään uudestaan
      * @param windowWidth Ikkunan leveys
      * @param windowHeight Ikkunan korkeus
      */
