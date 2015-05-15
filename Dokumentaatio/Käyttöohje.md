@@ -1,5 +1,7 @@
 # Käyttöohje
 
+Ohjelma löytyy projektin juuresta. Se vaatii oheensa kansiot mazes ja graphics.
+
 Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa main.java).
 
 * maze
