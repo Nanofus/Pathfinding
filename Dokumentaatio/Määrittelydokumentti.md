@@ -14,6 +14,8 @@ Testaan kutakin algoritmia myös kolmessa muussa tilanteessa:
 * Muuttuva sokkelo
   * Tällä simuloidaan esimerkiksi porttien ja siltojen avautumista pelimaailmassa
   * Algoritmi joutuu tarkistamaan, onko vanha reitti yhä käyttökuntoinen
+* Jää ja suo
+  * Eli ruudut joissa hahmo liikkuu eri nopeudella/solmujen kaarilla on eri painot. Pathfinding siis suosii jäätä, jonka pinnalla liukuessa solmujen välisten kaarten paino on pienempi, suolla se taas on suurempi.
 * Yllämainitut yhtä aikaa
 
 Sokkelot ladataan tekstitiedostosta, jossa määritellään seinien ja lattioiden lisäksi myös algoritmin aloituspiste ja maalipiste. Sokkelot ovat suuria ja monimutkaisia.
