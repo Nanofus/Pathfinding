@@ -21,7 +21,6 @@ public class AlgorithmRunner {
     private Algorithm algorithm;
 
     private String testedAlgorithm;
-    private int testMode;
 
     private float doorCloseInterval = 2000;
     private boolean allowDiagonalMovement = false;
