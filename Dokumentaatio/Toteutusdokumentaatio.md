@@ -2,7 +2,7 @@
 
 ## Yleisrakenne
 
-**Ohjelman käyttämät oheistiedostot on kuvattu tarkemmin käyttöohjeessa.**
+*Ohjelman käyttämät oheistiedostot on kuvattu tarkemmin käyttöohjeessa.*
 
 Ohjelman päätoiminnallisuus keskittyy **Pathfinding**- ja **AlgorithmRunner**-luokkiin. Pathfinding määrittää ajon parametrit sekä luo **MazeReaderin** ja AlgorithmRunnerin. MazeReader-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, takaa-ajajan ja takaa-ajetun **MazeEntity**-instansseista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
 
