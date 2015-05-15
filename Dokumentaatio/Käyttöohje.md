@@ -9,7 +9,7 @@ Ohjelma löytyy projektin juuresta. Se vaatii oheensa kansiot `mazes` ja `graphi
  * `startPosition.txt` - Aloitussijainti koordinaatteina
  * `targetMovement.txt` - Maalisijainti koordinaatteina sekä tämän jälkeen maalipisteen mahdollinen liike.
  
-Graphics-kansio sisältää visualisoinnin käyttämät grafiikat.
+`graphics`-kansio sisältää visualisoinnin käyttämät grafiikat.
  
 ### maze.txt
 
