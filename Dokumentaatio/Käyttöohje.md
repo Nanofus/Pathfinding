@@ -2,13 +2,42 @@
 
 Ohjelma löytyy projektin juuresta. Se vaatii oheensa kansiot mazes ja graphics.
 
+## Oheistiedostot
+
+Mazes-kansio sisältää ohjelman käyttämät verkot eli sokkelot. Jokainen sokkelon on omassa kansiossaan. Kansion tulee sisältää kolme tiedostoa:
+ * maze.txt - Sokkelo tekstitiedostona
+ * startPosition.txt - Aloitussijainti koordinaatteina
+ * targetMovement.txt - Maalisijainti koordinaatteina sekä tämän jälkeen maalipisteen mahdollinen liike.
+ 
+Graphics-kansio sisältää visualisoinnin käyttämät grafiikat.
+ 
+### maze.txt
+
+Maze.txt kuvaa sokkelon merkkien avulla:
+* Välilyönti - Normaali lattia
+* x - Seinä (mikä tahansa tässä määrittelemätön merkki käy)
+* s - Lattia, joka on suota. Liike suolla on kaksi kertaa raskaampaa.
+* i - Lattia, joka on jäätä. Liike jäällä on puolet kevyempää.
+* d - Ovi, joka on auki kun suoritus alkaa
+* D - Ovi, joka on kiinni kun suoritus alkaa
+
+On tärkeää, että sokkelotiedoston jokainen rivi on saman mittainen. Tällöin luotu verkko on nelikulmion mallinen ja käyttäytyy toivotusti.
+
+### startPosition.txt
+
+Sisältää tiedon siitä, mistä ruudusta aloitetaan. Sisältää kaksi välilyönneillä erotettua kokonaislukua, jotka ovat aloitussijainti x ja y -akseleilla. Vasen yläkulma on (0,0).
+
+### targetMovement.txt
+
+Ensimmäinen rivi määrittää maalipisteen sijainnin samaan tapaan kuin startPosition.txt. Kaikki sen jälkeiset rivit tulkitaan maalipisteen liikkeiksi: rivillä on kaksi välilyönnillä erotettua kokonaislukua, joista ensimmäinen on liike x-akselilla ja toinen y-akselilla. Näin ollen rivi "-1 0" tarkoittaa yhden ruudun liikettä vasemmalle ja "1 1" yhden liikettä yksi ruutu oikealle ja alas.
+
+## Ohjelman käynnistäminen
+
 Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa main.java).
+Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan ilman ylimääräisiä komentorivitulostuksia (logEnabled false) ja ilman visualisointia (windowEnabled false).
 
 * maze
-  * Käytettävä sokkelo. Mazes-kansiossa olevan kansion nimi. Kansion tulee sisältää kolme tiedostoa:
-    * maze.txt - Sokkelo tekstitiedostona
-	* startPosition.txt - Aloitussijainti koordinaatteina
-	* targetMovement.txt - Maalisijainti koordinaatteina sekä tämän jälkeen maalipisteen mahdollinen liike.
+  * Käytettävä sokkelo. Mazes-kansiossa olevan kansion nimi.
 * allowDiagonal
   * Onko vinottainen liike ruudukossa sallittu. True tai false.
 * algo
@@ -38,6 +67,8 @@ Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentt
   * Käytetään vain jos visualisointi on päällä. Ei vaikuta laskenta-ajan mittauksiin.
   * Oletusarvo 200.
   
+## Ohjelman tuottamat tulokset
+  
 Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset:
 * Löytyikö reitti
 * Laskemiseen käytetty aika yhteensä
@@ -61,5 +92,3 @@ Jos komentoriviloki on päällä, tulostetaan joka uudelleenlaskentakerta:
 * Tähänastinen laskentaan käytetty kokonaisaika
 * Uuden polun pituus
 * Laskemiseen käytetty aika per uuden polun askel (ei välttämättä hyödyllinen)
-
-Optimaalisessa tilanteessa ohjelma ajetaan ilman ylimääräisiä komentorivitulostuksia (logEnabled false) ja ilman visualisointia (windowEnabled false).

@@ -9,12 +9,12 @@ public class main {
                 "false", //allowDiagonal
                 "A*", //algo
                 "5", //moveDelay
-                "5", //doorDelay
+                "20", //doorDelay
                 "10", //waitBeforeFail
                 "true", //logEnabled
                 "true", //windowEnabled
                 "false", //smallTiles
-                "20" //waitInMillis
+                "200" //waitInMillis
         };
         }
 

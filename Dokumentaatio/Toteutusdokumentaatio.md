@@ -22,7 +22,7 @@ A*-algoritmin pitäisi olla suhteellisen nopea ja se löytää optimaalisimman r
 
 Algoritmi laskee h-arvon etäisyytenä suoraan linnuntietä nykyisestä solmusta maalisolmuun Pythagoraan lauseella.
 
-Algoritmi ottaa huomioon kaarien painot: kyljet vastakkain olevien solmujen välinen etäisyys on 10, vinottaisten 14. Tämä on pyöristys kahden neliöjuuresta.
+Algoritmi ottaa huomioon kaarien painot: kyljet vastakkain olevien solmujen välinen etäisyys on 10, vinottaisten 14. Tämä on pyöristys kahden neliöjuuresta. Suoruuduilla on kaksinkertainen ja jääruuduilla puolikas paino.
 
 *Aika 401x401-sokkelon ratkaisemiseen:* 85ms<br />
 *Saadun reitin pituus:* 2029<br />
