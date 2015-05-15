@@ -2,19 +2,27 @@
 
 ## Yleisrakenne
 
-Ohjelman päätoiminnallisuus keskittyy **Pathfinding**- ja **AlgorithmRunner**-luokkiin. Pathfinding määrittää ajon parametrit sekä luo **MazeReaderin** ja AlgorithmRunnerin. MazeReader-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, testausmoodista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
+Ohjelman käyttämät oheistiedostot on kuvattu tarkemmin käyttöohjeessa.
 
-AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei. Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, tyypistään, sijainnistaan ruudukossa sekä algoritmien käyttämiä muuttujia.
+Ohjelman päätoiminnallisuus keskittyy **Pathfinding**- ja **AlgorithmRunner**-luokkiin. Pathfinding määrittää ajon parametrit sekä luo **MazeReaderin** ja AlgorithmRunnerin. MazeReader-luokka lataa tekstitiedostosta sokkelon, joka syötetään AlgorithmRunnerille. AlgorithmRunner ottaa myös tiedon käytettävästä polunetsintäalgoritmista, takaa-ajajan ja takaa-ajetun **MazeEntity**-instansseista sekä siitä, sallitaanko liikkuminen ruudukossa vinottain.
+
+AlgorithmRunner parseroi sokkelosta verkon, jonka solmut se kytkee toisiinsa. Seinät eivät sisälly verkkoon lainkaan, ne jätetään siitä pois jo parserointivaiheessa. Näin polunetsintäalgoritmin ei tarvitse käyttää aikaa tarkistaakseen, onko ruutu kuljettava vai ei (paitsi ovien tapauksessa). Se, kytketäänkö vinottaiset ruudut toisiinsa, riippuu siitä, onko vinottain liikkuminen sallittu. Verkko tallennetaan kaksiulotteiseen taulukkoon **Node**-olioita. Nodella on tieto naapurisolmuistaan, tyypistään, sijainnistaan ruudukossa sekä algoritmien ja tietorakenteiden käyttämiä muuttujia.
 
 AlgorithmRunner luo instanssin algoritmiluokasta, jonka se käskee ratkomaan sokkelon. Tällöin algoritmi etsii polun aloitussolmusta loppusolmuun, ja muodostaa reitin antamalla kulkemilleen solmuille parent-solmun. Kun maali löytyy, AlgorithmRunner kulkee polun lopusta alkuun parent-viitteitä pitkin ja generoi reitistä listan. Jos maalia ei löydy, saadaan tyhjä lista.
 
-Pathfinding-luokka puolestaan liikuttaa takaa-ajajaa ja takaa-ajettua (jotka ovat **MazeEntity**-tyyppisiä olioita, **TargetMover** vastaa takaa-ajetun liikkeestä) sokkelossa sekä vastaa sokkelon muutoksista, ja pyytää AlgorithmRunneria tarvittaessa laskemaan reitin takaa-ajajalle uudestaan. Takaa-ajaja käyttää liikkuessaan AlgorithmRunnerilta saatua solmulistaa.
+Pathfinding-luokka puolestaan liikuttaa takaa-ajajaa ja takaa-ajettua (jotka ovat MazeEntity-tyyppisiä olioita) sokkelossa sekä vastaa sokkelon muutoksista (ovien avautumiset ja sulkeutumiset), ja pyytää AlgorithmRunneria tarvittaessa laskemaan reitin takaa-ajajalle uudestaan. Takaa-ajaja käyttää liikkuessaan AlgorithmRunnerilta saatua solmulistaa, kun taas **TargetMover**-luokka liikuttaa takaa-ajettua tiedostosta ladattujen liikkeiden perusteella.
 
 Algoritmit toteuttavat **Algorithm**-rajapinnan, joka sisältää AlgorithmRunnerin kutsuman **FindPath**(alkusolmu,loppusolmu)-metodin.
 
-Aikavaativuuksissa n on solmujen määrä ja e kaarien.
+**Position**-luokka on sijaintitiedon esittämiseen. Sen instanssit sisältävät x ja y -koordinaatit.
+
+**OwnArrayList** on ArrayList-tietorakenteen oma toteutus, **OwnBinaryHeap** binäärikeon ja **OwnQueue** jonon. Algoritmit käyttävät näitä tietorakenteita. **NodeComparator** puolestaan on komparaattori, jota OwnBinaryHeap käyttää solmujen vertailuun. Vertailutapa riippuu siitä, käytetäänkö kekoa A*:ssä vai Dijkstran algoritmissa.
+
+**ImageLoader**, **Renderer** ja **Window** ovat käyttöliittymäluokkia eivätkä ohjelman toiminnan kannalta oleellisia. ImageLoader lataa visualisointiin käytetyt kuvat, Window luo ikkunan ja Renderer piirtää sokkelon sisältöineen ikkunaan.
 
 ## Algoritmit
+
+Aikavaativuuksissa n on solmujen määrä ja e kaarien.
 
 ### A*
 
