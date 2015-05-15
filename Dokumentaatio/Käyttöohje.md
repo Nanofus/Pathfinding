@@ -29,7 +29,7 @@ Sisältää tiedon siitä, mistä ruudusta aloitetaan. Sisältää kaksi välily
 
 ### targetMovement.txt
 
-Ensimmäinen rivi määrittää maalipisteen sijainnin samaan tapaan kuin `startPosition.txt`. Kaikki sen jälkeiset rivit tulkitaan maalipisteen liikkeiksi: rivillä on kaksi välilyönnillä erotettua kokonaislukua, joista ensimmäinen on liike x-akselilla ja toinen y-akselilla. Näin ollen rivi `-1 0` tarkoittaa yhden ruudun liikettä vasemmalle ja `1 1` yhden liikettä yksi ruutu oikealle ja alas.
+Ensimmäinen rivi määrittää maalipisteen sijainnin samaan tapaan kuin `startPosition.txt`. Kaikki sen jälkeiset rivit tulkitaan maalipisteen liikkeiksi: rivillä on kaksi välilyönnillä erotettua kokonaislukua, joista ensimmäinen on liike x-akselilla ja toinen y-akselilla. Näin ollen rivi `-1 0` tarkoittaa yhden ruudun liikettä vasemmalle ja `1 1` liikettä yksi ruutu oikealle ja alas.
 
 ## Ohjelman käynnistäminen
 
