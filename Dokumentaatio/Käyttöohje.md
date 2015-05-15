@@ -37,7 +37,7 @@ Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentt
 Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan ilman ylimääräisiä komentorivitulostuksia (`logEnabled = false`) ja ilman visualisointia (`windowEnabled = false`).
 
 * `maze`
-  * Käytettävä sokkelo. Mazes-kansiossa olevan kansion nimi.
+  * Käytettävä sokkelo. Mazes-kansiossa olevan kansion nimi, esimerkiksi `41x41`.
 * `allowDiagonal`
   * Onko vinottainen liike ruudukossa sallittu, `true` tai `false`.
 * `algo`
