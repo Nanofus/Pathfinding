@@ -18,7 +18,7 @@ Testaan kutakin algoritmia myös kolmessa muussa tilanteessa:
   * Eli ruudut joissa hahmo liikkuu eri nopeudella/solmujen kaarilla on eri painot. Pathfinding siis suosii jäätä, jonka pinnalla liukuessa solmujen välisten kaarten paino on pienempi, suolla se taas on suurempi.
 * Yllämainitut yhtä aikaa
 
-Sokkelot ladataan tekstitiedostosta, jossa määritellään seinien ja lattioiden lisäksi myös algoritmin aloituspiste ja maalipiste. Sokkelot ovat suuria ja monimutkaisia.
+Sokkelot ladataan tekstitiedostosta, jossa määritellään seinien ja lattioiden lisäksi myös algoritmin aloituspiste ja maalipiste sekä ovet ja eri lattiatyypit. Toisessa tiedostossa on tallennettuna maalipisteen liike. Sokkelot ovat suuria ja monimutkaisia.
 
 Algoritmien testauksessa mitataan maaliin pääsyyn vaadittavien askelten määrä sekä reitin laskemiseen käytetty aika.
 
@@ -30,7 +30,6 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
 * Dijkstran algoritmi
 * Syvyyshaku
 * Leveyshaku
-* Todennäköisesti muita vielä määrittämättömiä
 
 ## Lähteet
 
