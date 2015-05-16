@@ -60,7 +60,7 @@ Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan 
   * Käytetäänkö polunetsinnän visualisointia, `true` tai `false`.
   * Optimaalisten olosuhteiden tuottamiseksi `false`, sillä ikkuna hidastaa ohjelman toimintaa jonkin verran.
 * `smallTiles`
-  * Käytetäänkö visualisoinnissa 2x2 pikselin vai 10x10 pikselin ruutuja, `true` tai `false`.
+  * Käytetäänkö visualisoinnissa 3x3 pikselin vai 10x10 pikselin ruutuja, `true` tai `false`.
   * Pienemmät ruudut ovat isompia sokkeloita varten.
 * `waitInMillis`
   * Monenko millisekunnin välein uusi siirto tehdään, kokonaisluku.
