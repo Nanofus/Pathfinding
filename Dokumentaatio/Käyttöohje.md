@@ -58,7 +58,7 @@ Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan 
   * `true` tai `false`, optimaalisten olosuhteiden tuottamiseksi `false`.
 * `windowEnabled`
   * Käytetäänkö polunetsinnän visualisointia, `true` tai `false`.
-  * Optimaalisten olosuhteiden tuottamiseksi false, sillä ikkuna hidastaa ohjelman toimintaa jonkin verran.
+  * Optimaalisten olosuhteiden tuottamiseksi `false`, sillä ikkuna hidastaa ohjelman toimintaa jonkin verran.
 * `smallTiles`
   * Käytetäänkö visualisoinnissa 2x2 pikselin vai 10x10 pikselin ruutuja, `true` tai `false`.
   * Pienemmät ruudut ovat isompia sokkeloita varten.
