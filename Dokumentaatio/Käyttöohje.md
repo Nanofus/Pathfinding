@@ -67,6 +67,8 @@ Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan 
   * Käytetään vain jos visualisointi on päällä. Ei vaikuta laskenta-ajan mittauksiin.
   * Oletusarvo `200`.
   
+Lopullinen komento näyttää siis tältä: `java -jar pathfinding.jar t105x105 false A* 5 20 10 true true true 150`
+
 ## Ohjelman tuottamat tulokset
   
 Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua se kertoo tulokset komentorivillä (ja käyttöliittymän voi sulkea):
