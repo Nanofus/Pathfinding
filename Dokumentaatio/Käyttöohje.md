@@ -76,8 +76,8 @@ Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algorit
 * Yhteen askeleeseen käytetty keskimääräinen aika (ei välttämättä kovin hyödyllinen)
 * Solmujen siivoamiseen käytetty aika (solmut siivotaan aina uudelleenlaskennan yhteydessä)
 * Solmujen siivoamiseen käytetty keskimääräinen aika
-* Uudelleenlaskentakertojen määrä
-* Keskimääräinen uudelleenlaskentaan käytetty aika
+* Laskentakertojen määrä (nimetty vähän hämäävästi recalculations)
+* Keskimääräinen laskentaan käytetty aika
 * Epäonnistuneet polunetsintäkerrat
 * Pisin putki epäonnistuneita polunetsintöjä
 * Kohdepisteen tekemät siirrot
