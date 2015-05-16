@@ -83,7 +83,7 @@ Käyttöliittymässä alkaa vältittömästi pyöriä visualisaatio algoritmin t
 
 ## Ohjelman tuottamat tulokset
   
-Tämän jälkeen ohjelma käynnistyy ja aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua (visualisoinnin ollessa päällä sen pysähdyttyä) se kertoo tulokset komentorivillä (ja käyttöliittymän voi sulkea):
+Ohjelman käynnistyttyä se aloittaa välittömästi valitun algoritmin suorittamisen valituilla parametreilla. Ohjelman suorituksen loputtua (visualisoinnin ollessa päällä sen pysähdyttyä) se kertoo tulokset komentorivillä (ja käyttöliittymän voi sulkea):
 * Löytyikö reitti
 * Laskemiseen käytetty aika yhteensä
 * Käytettyjen askelten määrä (mukaanlukien odottamiset jos reittiä ei löydy)
