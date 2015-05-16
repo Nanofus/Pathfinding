@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Ohjelma löytyy projektin juuresta. Se vaatii oheensa kansiot `mazes` ja `graphics`.
+Ohjelma löytyy projektin juuresta, nimellä `pathfinding.jar`. Se vaatii oheensa kansiot `mazes` ja `graphics`.
 
 ## Oheistiedostot
 
@@ -33,7 +33,7 @@ Ensimmäinen rivi määrittää maalipisteen sijainnin samaan tapaan kuin `start
 
 ## Ohjelman käynnistäminen
 
-Ohjelma ajetaan komentoriviltä seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa main.java).
+Ohjelma ajetaan komentoriviltä komennolla `java -jar pathfinding.jar` ja seuraavilla argumenteilla. Jos kaikkia argumentteja ei määritellä, ajetaan ohjelma oletusasetuksilla (määritetty tiedostossa main.java).
 Optimaalisessa tilanteessa, parhaiden tulosten saavuttamiseksi, ohjelma ajetaan ilman ylimääräisiä komentorivitulostuksia (`logEnabled = false`) ja ilman visualisointia (`windowEnabled = false`).
 
 * `maze`
