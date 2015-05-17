@@ -2,9 +2,9 @@
 
 Testauksessa ajetaan kaikki hakualgoritmit samanlaisessa verkossa.
 
-Testaus keskittyy algoritmien nopeuden ja käytetyn askelmäärän mittaamiseen. Yleiseen käyttöön optimaalisin algoritmi on nopea ja löytää parhaan reitin.
+Testaus keskittyy algoritmien nopeuden ja käytetyn askelmäärän mittaamiseen. Yleiseen käyttöön optimaalisin algoritmi on nopea ja löytää parhaan reitin. Testeissä käytetään suurta 401x401 solmun sokkeloa.
 
-Verkkojen koko vaihtelee muutamien kymmenien solmujen kokoisista 400x400-kokoisiin.
+Tulos on keskiarvo kolmen ajamiskerran tuloksista, pyöristettynä millisekunteihin.
 
 ## Suoritettavat testit
 
@@ -20,31 +20,34 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 
 ## Tulokset
 
-## Vanhentunut setti
-
-### Testi 1
-
-Testissä 1 käytetään perinteisen labyrintin mallista sokkeloa, Mazes-kansion sokkeloa "401x401".
-
-Vinottainen liike on sallittu.
-
-#### Tulokset
-
-A*: 85ms, 2029 askelta<br />
-Dijkstra: 58ms, 2029 askelta<br />
-Leveyshaku: 30ms, 2029 askelta<br />
-Syvyyshaku: 26ms, 7921 askelta<br />
-
-### Testi 2
-
-Testissä käytetään samaa sokkeloa kuin testissä 1.
-
-Vinottainen liike on kielletty.
-
-#### Tulokset
-
-A*: 72ms, 2879 askelta<br />
-Dijkstra: 48ms, 2879 askelta<br />
-Leveyshaku: 34ms, 2879 askelta<br />
-Syvyyshaku: 26ms, 7741 askelta<br />
-
+### Yksinkertainen sokkelo
+* Labyrintti
+  * Ei vinottaisia liikkeitä
+     * A*: 65ms
+       * `java -jar pathfinding.jar 401x401 false A* 5 20 10 false false false 0`
+     * Dijkstra: 59ms
+       * `java -jar pathfinding.jar 401x401 false Dijkstra 5 20 10 false false false 0`
+     * Leveyshaku: 30ms
+       * `java -jar pathfinding.jar 401x401 false Breadth-first 5 20 10 false false false 0`
+     * Syvyyshaku: 25ms (joka toinen kerta stack overflow)
+       * `java -jar pathfinding.jar 401x401 false Depth-first 5 20 10 false false false 0`
+  * Vinottaiset liikkeet
+     * A*: 84ms
+       * `java -jar pathfinding.jar 401x401 true A* 5 20 10 false false false 0`
+     * Dijkstra: 67ms
+       * `java -jar pathfinding.jar 401x401 true Dijkstra 5 20 10 false false false 0`
+* Avoin tila
+  * Ei vinottaisia liikkeitä
+     * A*: 85ms
+       * `java -jar pathfinding.jar 401x401_open false A* 5 20 10 false false false 0`
+     * Dijkstra: 72ms
+       * `java -jar pathfinding.jar 401x401_open false Dijkstra 5 20 10 false false false 0`
+     * Leveyshaku: 31ms 
+       * `java -jar pathfinding.jar 401x401_open false Breadth-first 5 20 10 false false false 0`
+     * Syvyyshaku: stack overflow
+       * `java -jar pathfinding.jar 401x401_open false Depth-first 5 20 10 false false false 0`
+  * Vinottaiset liikkeet
+     * A*: 98ms
+       * `java -jar pathfinding.jar 401x401_open true A* 5 20 10 false false false 0`
+     * Dijkstra: 87ms
+       * `java -jar pathfinding.jar 401x401_open true Dijkstra 5 20 10 false false false 0`
