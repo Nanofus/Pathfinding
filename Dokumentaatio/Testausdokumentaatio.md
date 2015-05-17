@@ -190,6 +190,7 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 |-----------|------|----------|------------|----------------------------------------------|------------------|-----------------------|
 | Aika | 65ms | 59ms | 30ms | 25ms (noin joka toinen kerta stack overflow) | 84ms | 67ms |
 | Askeleet | 2877 | 2877 | 2877 | 7753 | 2029 | 2029 |
+| `java -jar pathfinding.jar 401x401 false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 true Dijkstra 5 20 10 false false false 0` |
 
 ##### Avoin tila 401x401
 
