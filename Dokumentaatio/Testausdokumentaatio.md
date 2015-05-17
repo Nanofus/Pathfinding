@@ -16,6 +16,8 @@ Jokaiselta tietorakenteelta testasin JUnit-testeillä julkisten metodien oikean 
 
 #### Tietorakenteiden nopeus verrattuna Javan vastaaviin
 
+Kaikissa testeissä saadut ajat heittelivät noin 30% kumpaankin suuntaan, joten saadut nanosekuntiajat eivät ole täysin absoluuttisia. Nämä luvut edustavat silmämääräisesti tarkasteltuna keskimääräistä ajokertaa. Heittelystä huolimatta omien ja valmiiden tietorakenteiden käyttämät ajat olivat joka ajokerralla samoissa suhteissa toisiinsa, joten ainakin graafisista esityksistä saa jonkinlaista kuvaa ajoaikojen suhteista. Joissain tapauksissa tiettyihin operaatioihin kului huomattavasti pidempi aika kuin muihin, ja näiden palkkien on annettu jatkua kuvan ulkopuolelle matalampien palkkien hahmottamisen helpottamiseksi.
+
 ##### OwnBinaryHeap
 
 Testissä täytin OwnBinaryHeapin ja PriorityQueuen ensin yksittäisellä ja sitten 100 solmulla, joilla on arvot välillä 0-299. Kumpikin tietorakenne käytti samaa komparaattoria solmujen vertailuun (NodeComparator). Valitsin solmumäärän 100 nimenomaan siksi, että tuolla arvolla molemmat tietorakenteet ylittävät oletuskapasiteettinsa (11) ja joutuvat kasvattamaan kokoaan. 11 on kuulemma jostain syystä optimaalinen oletuskapasiteetti jos etukäteen ei ole tietoa lisättävien alkioiden määrästä, en vain saanut selville, miksi.
@@ -26,7 +28,9 @@ Testissä täytin OwnBinaryHeapin ja PriorityQueuen ensin yksittäisellä ja sit
 | **Add x 100** | 49608ns | 526015ns |
 | **Poll** | 1711ns | 21810ns |
 | **IsEmpty** | 7271ns | 8125ns |
-| Size | 855ns | 4705ns |
+| **Size** | 855ns | 4705ns |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/ownbinaryheap.png)
 
 OwnBinaryHeap osoittautui PriorityQueuea huomattavasti nopeammaksi. Sen toimintaa kuitenkin rajoittaa pelkkien Node-tyyppisten olioiden salliminen, eikä se myöskään sisällä kaikkia PriorityQueuen ominaisuuksia, kuten `contains()` ja `remove()`.
 
@@ -41,6 +45,8 @@ Testissä täytin OwnQueuen ja ArrayDequen ensin yhdellä ja sitten 200 solmulla
 | **Peek** | 1283ns | 14540ns |
 | **Pop** | 855ns | 13258ns |
 | **IsEmpty** | 428ns | 5560ns |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/ownqueue.png)
 
 Jononi on huomattavasti nopeampi kuin Javan ArrayDeque. Toiminnallisuudeltaan se on kuitenkin sekä yksinkertaisempi että rajoittuneempi, kuten OwnBinaryHeapkin; se hyväksyy vain Node-tyyppisiä olioita.
 
@@ -65,6 +71,8 @@ Täytin kummankin tietorakenteen 200 satunnaisella liukuluvulla väliltä 0-1.
 | **IsEmpty** | 427ns | 855ns |
 | **Size** | 428ns | 855ns |
 
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/ownarraylist%20float.png)
+
 Liukuluvuilla Javan oma ArrayList toimi paljon nopeammin kuin OwnArrayList kaikissa tilanteissa, paitsi `isEmpty()`- ja `size()`-kyselyissä. ArrayListin `size()` on monimutkaisempi, kun taas kummassakin `isEmpty()` perustuu suoraan siihen, onko `size()`:n arvo `0`.
 
 ###### Kokonaisluvuilla
@@ -84,6 +92,8 @@ Täytin kummankin tietorakenteen 200 järjestyksessä olevalla kokonaisluvulla.
 | **IsEmpty** | 855ns | 855ns |
 | **Size** | 427ns | 428ns |
 
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/ownarraylist%20integer.png)
+
 Kokonaisluvuilla OwnArrayList oli jälleen hitaampi kuin ArrayList, mutta ei läheskään yhtä pahasti kuin liukuluvuilla. Yksittäisessä lisäyksessä päästiin lähes samaan aikaan, ja `contains()` ja `indexOf()` jäivät vain puolta hitaammiksi.
 
 ###### Solmuilla
@@ -102,6 +112,8 @@ Täytin kummankin listan 200 solmulla.
 | **Remove** | 17106ns | 6842ns |
 | **IsEmpty** | 427ns | 3421ns |
 | **Size** | 428ns | 2566ns |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/ownarraylist%20node.png)
 
 Monimutkaisemmalla oliolla, tässä tapauksessa Nodella, OwnArrayList pääsi nopeudeltaan vieläkin lähemmäksi ArrayListia, ja aikaerot jäivät kaikissa operaatioissa `remove()`:a lukuunottamatta suhteessa paljon pienemmiksi kuin millään muilla alkiotyypeillä. `remove()` on siis ArrayListissa selvästi tehokkaampi kuin OwnArrayListissa. Kummassakin tietorakenteessa metodi kopioi vanhan taulukon uuteen taulukkoon lukuunottamatta pois pudotettavaa alkiota, mutta ArrayList käyttää `System.arraycopy`-metodia, joka on huomattavasti nopeampi kuin manuaalinen taulukon kopiointi.
 
@@ -137,7 +149,7 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 | **Askeleet** | 2877 | 2877 | 2877 | 7753 | 2029 | 2029 |
 | **Ajoparametrit** | `java -jar pathfinding.jar 401x401 false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401 true Dijkstra 5 20 10 false false false 0` |
 
-![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/105x105%20labyrintti.png)
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/401x401%20labyrintti.png)
 
 ##### Avoin tila 401x401
 
@@ -147,6 +159,8 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 | **Askeleet** | 797 | 797 | 797 |  | 468 | 468 |
 | **Ajoparametrit** | `java -jar pathfinding.jar 401x401_open false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open true Dijkstra 5 20 10 false false false 0` |
 
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/401x401%20avoin.png)
+
 ##### Labyrintti 105x105
 
 | Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset) |
@@ -154,6 +168,8 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 | **Aika** | 15ms | 13ms | 7ms | 2ms | 20ms | 15ms |
 | **Askeleet** | 265 | 265 | 265 | 2805 | 189 | 189 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105 false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true Dijkstra 5 20 10 false false false 0` |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/105x105%20labyrintti.png)
 
 Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa hieman AStaria nopeammin. A*, Dijkstran algoritmi ja leveyshaku tuottavat kaikki lyhimmän mahdollisen reitin. Kun kaarten painoja ei tarvitse ottaa huomioon, on leveyshaku algoritmeista paras. Syvyyshakua puolestaan ei voi käyttää varsinaisesti polunetsintään, sillä sen tuottama reitti on käyttökelvottoman pitkä. Syvyyshaku on kuitenkin merkittävästi nopeampi kuin muut, jos halutaan vain tarkistaa reitin olemassaolo.
 
@@ -165,6 +181,8 @@ Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa h
 | **Askeleet** | 302 | 302 | 302 |
 | **Laskentakerrat** | 16 | 16 | 16 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105_doors false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_doors false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_doors false Breadth-first 5 20 10 false false false 0` |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/105x105%20ovet.png)
 
 Syvyyshaku jäi loputtomaan looppiin. Etsijä ei ehtinyt ovelle ennen sen sulkeutumista ja se lähti etsimään uutta reittiä. Myös uusi reitti sulkeutui ennen kuin etsijä ehti ovelle, ja vanha reitti aukesi uudestaan. Tämän jälkeen etsijä yritti uudestaan vanhaa reittiä. Ajoparametrit: `java -jar pathfinding.jar t105x105_doors false Depth-first 5 20 10 false false false 0`.
 
@@ -181,6 +199,8 @@ Muuttuvan sokkelon tilanteessa ei tapahtunut mitään erityisen yllättävää. 
 | **Laskentakerrat** | 60 | 60 | 60 | 67 | 39 | 39 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105_moving false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_moving false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_moving false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_moving false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_moving false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_moving true Dijkstra 5 20 10 false false false 0` |
 
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/105x105%20liikkuva.png)
+
 Tulokset ei-vinottaisilla liikkeillä vastaavat suurin piirtein edellisten testien perusteella odotettuja.  Syvyyshaku teki kuitenkin hassun tempun liikkuvan kohteen kanssa; se käytti lähes saman ajan kuin leveyshaku, vaikka aiemmin se on ollut merkittävästi nopeampi. Huomattavasti huonomman reitin löytävä syvyyshaku joutui tekemään enemmän laskentakertoja, sillä etsijä ei pysynyt läheskään yhtä hyvin maalin perässä. Todennäköisesti syvyyshaulla olisi kuulunut kestää vielä paljon pidempään, mutta maaliruudulta loppuivat siirrot kesken 67 siirron jälkeen.
 
 Vinottaisten liikkeiden tapauksessa huomataan päinvastainen ilmiö; vinottaisten liikkeiden avulla reitistä saadaan paljon lyhyempi, jolloin maaliruutu ei ehdi liikkua yhtä paljon ennen kuin se saadaan kiinni ja laskentakertoja tarvitaan paljon vähemmän. Tällöin ohjelman suoritus on huomattavasti nopeampi.
@@ -196,6 +216,8 @@ Testataan siis sokkeloa, jossa esiintyvät kaikkien aiempien testien erityispiir
 | **Laskentakerrat** | 71 | 71 | 72 |  | 58 | 58 |
 | **Epäonnistuneet laskentakerrat** | 5 | 5 | 5 |  | 5 | 5 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105_all false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all true Dijkstra 5 20 10 false false false 0` |
+
+![ ](https://github.com/Nanofus/Pathfinding-by-Nanofus/blob/master/Dokumentaatio/Kuvat/105x105%20kaikki.png)
 
 Näissäkin testeissä leveyshaku osoittautui nopeimmaksi, Dijkstra toiseksi nopeimmaksi ja A* hitaimmaksi. Leveyshaku kuitenkin jostain syystä päätyi kulkemaan pidempää reittiä kuin kaksi muuta. Tämä johtuu siitä, että se ei huomioi solmujen painoja, kun taas A* ja Dijkstra pyrkivät kulkemaan nopeampia jääruutuja pitkin - ja sinänsä siis kulkivat siirtomäärällisesti pidempää reittiä, vaikka reitin paino oli matalampi. Leveyshaku posotti suoraan suoruuduista läpi.
 
