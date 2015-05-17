@@ -183,7 +183,12 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 ### Tulokset
 
 #### Yksinkertainen sokkelo
-* Labyrintti 401x401
+#####Labyrintti 401x401
+| Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset |
+|-----------|------|----------|------------|----------------------------------------------|------------------|-----------------------|
+| Aika | 65ms | 59ms | 30ms | 25ms (noin joka toinen kerta stack overflow) | 84ms | 67ms |
+| Askeleet | 2877 | 2877 | 2877 | 7753 | 2029 | 2029 |
+|  |  |  |  |  |  |  |
   * Ei vinottaisia liikkeitä
      * A*
        * 65ms
