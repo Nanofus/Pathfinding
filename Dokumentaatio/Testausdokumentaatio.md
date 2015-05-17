@@ -186,7 +186,7 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 
 ##### Labyrintti 401x401
 
-| Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset |
+| Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset) |
 |-----------|------|----------|------------|----------------------------------------------|------------------|-----------------------|
 | **Aika** | 65ms | 59ms | 30ms | 25ms (noin joka toinen kerta stack overflow) | 84ms | 67ms |
 | **Askeleet** | 2877 | 2877 | 2877 | 7753 | 2029 | 2029 |
@@ -194,59 +194,19 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 
 ##### Avoin tila 401x401
 
-* Avoin tila 401x401
-  * Ei vinottaisia liikkeitä
-     * A*
-       * 85ms
-       * 797 askelta
-       * `java -jar pathfinding.jar 401x401_open false A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 72ms
-       * 797 askelta
-       * `java -jar pathfinding.jar 401x401_open false Dijkstra 5 20 10 false false false 0`
-     * Leveyshaku
-       * 31ms 
-       * 797 askelta
-       * `java -jar pathfinding.jar 401x401_open false Breadth-first 5 20 10 false false false 0`
-     * Syvyyshaku
-       * stack overflow
-       * `java -jar pathfinding.jar 401x401_open false Depth-first 5 20 10 false false false 0`
-  * Vinottaiset liikkeet
-     * A*
-       * 98ms
-       * 468 askelta
-       * `java -jar pathfinding.jar 401x401_open true A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 87ms
-       * 468 askelta
-       * `java -jar pathfinding.jar 401x401_open true Dijkstra 5 20 10 false false false 0`
-* Labyrintti 105x105
-  * Ei vinottaisia liikkeitä
-     * A*
-       * 15ms
-       * 265 askelta
-       * `java -jar pathfinding.jar t105x105 false A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 13ms
-       * 265 askelta
-       * `java -jar pathfinding.jar t105x105 false Dijkstra 5 20 10 false false false 0`
-     * Leveyshaku
-       * 7ms
-       * 265 askelta
-       * `java -jar pathfinding.jar t105x105 false Breadth-first 5 20 10 false false false 0`
-     * Syvyyshaku
-       * 2ms
-       * 2805 askelta
-       * `java -jar pathfinding.jar t105x105 false Depth-first 5 20 10 false false false 0`
-  * Vinottaiset liikkeet
-     * A*
-       * 20ms
-       * 189 askelta
-       * `java -jar pathfinding.jar t105x105 true A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 15ms
-       * 189 askelta
-       * `java -jar pathfinding.jar t105x105 true Dijkstra 5 20 10 false false false 0`
+| Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset) |
+|---------------|-------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| Aika | 85ms | 72ms | 31ms | Stack overflow liian suuren verkon vuoksi | 98ms | 87ms |
+| Askeleet | 797 | 797 | 797 |  | 468 | 468 |
+| Ajoparametrit | `java -jar pathfinding.jar 401x401_open false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar 401x401_open true Dijkstra 5 20 10 false false false 0` |
+
+##### Labyrintti 105x105
+
+| Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset) |
+|---------------|---------------------------------------------------------------------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|--------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| Aika | 15ms | 13ms | 7ms | 2ms | 20ms | 15ms |
+| Askeleet | 265 | 265 | 265 | 2805 | 189 | 189 |
+| Ajoparametrit | `java -jar pathfinding.jar t105x105 false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true Dijkstra 5 20 10 false false false 0` |
 
 Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa hieman A*:eä nopeammin. A*, Dijkstran algoritmi ja leveyshaku tuottavat kaikki lyhimmän mahdollisen reitin. Kun kaarten painoja ei tarvitse ottaa huomioon, on leveyshaku algoritmeista paras. Syvyyshakua puolestaan ei voi käyttää varsinaisesti polunetsintään, sillä sen tuottama reitti on käyttökelvottoman pitkä. Syvyyshaku on kuitenkin merkittävästi nopeampi kuin muut, jos halutaan vain tarkistaa reitin olemassaolo.
 
@@ -287,7 +247,7 @@ Testataan siis sokkeloa, jossa esiintyvät kaikkien aiempien testien erityispiir
 | **Aika** | 115ms | 82ms | 36ms | Loputon looppi kuten aiemmin | 105ms | 86ms |
 | **Askeleet** | 333 | 333 | 352 |  | 267 | 267 |
 | **Laskentakerrat** | 71 | 71 | 72 |  | 58 | 58 |
-| **Epäonnistunutta laskentakertaa** | 5 | 5 | 5 |  | 5 | 5 |
+| **Epäonnistuneet laskentakerrat** | 5 | 5 | 5 |  | 5 | 5 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105_all false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_all true Dijkstra 5 20 10 false false false 0` |
 
 Näissäkin testeissä leveyshaku osoittautui nopeimmaksi, Dijkstra toiseksi nopeimmaksi ja A* hitaimmaksi. Leveyshaku kuitenkin jostain syystä päätyi kulkemaan pidempää reittiä kuin kaksi muuta. Tämä johtuu siitä, että se ei huomioi solmujen painoja, kun taas A* ja Dijkstra pyrkivät kulkemaan nopeampia jääruutuja pitkin - ja sinänsä siis kulkivat siirtomäärällisesti pidempää reittiä, vaikka reitin paino oli matalampi. Leveyshaku posotti suoraan suoruuduista läpi.
