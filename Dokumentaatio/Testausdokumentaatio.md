@@ -183,38 +183,16 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 ### Tulokset
 
 #### Yksinkertainen sokkelo
-#####Labyrintti 401x401
+
+##### Labyrintti 401x401
+
 | Algoritmi | A* | Dijkstra | Leveyshaku | Syvyyshaku | A* (vinottaiset) | Dijkstra (vinottaiset |
 |-----------|------|----------|------------|----------------------------------------------|------------------|-----------------------|
 | Aika | 65ms | 59ms | 30ms | 25ms (noin joka toinen kerta stack overflow) | 84ms | 67ms |
 | Askeleet | 2877 | 2877 | 2877 | 7753 | 2029 | 2029 |
-|  |  |  |  |  |  |  |
-  * Ei vinottaisia liikkeitä
-     * A*
-       * 65ms
-       * 2877 askelta
-       * `java -jar pathfinding.jar 401x401 false A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 59ms
-       * 2877 askelta
-       * `java -jar pathfinding.jar 401x401 false Dijkstra 5 20 10 false false false 0`
-     * Leveyshaku
-       * 30ms
-       * 2877 askelta
-       * `java -jar pathfinding.jar 401x401 false Breadth-first 5 20 10 false false false 0`
-     * Syvyyshaku
-       * 25ms (noin joka toinen kerta stack overflow)
-       * 7753 askelta
-       * `java -jar pathfinding.jar 401x401 false Depth-first 5 20 10 false false false 0`
-  * Vinottaiset liikkeet
-     * A*
-       * 84ms
-       * 2029 askelta
-       * `java -jar pathfinding.jar 401x401 true A* 5 20 10 false false false 0`
-     * Dijkstra
-       * 67ms
-       * 2029 askelta
-       * `java -jar pathfinding.jar 401x401 true Dijkstra 5 20 10 false false false 0`
+
+##### Avoin tila 401x401
+
 * Avoin tila 401x401
   * Ei vinottaisia liikkeitä
      * A*
@@ -273,27 +251,16 @@ Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa h
 
 #### Muuttuva sokkelo (ovet)
 
-* A*
-  * 46ms
-  * 302 askelta
-  * 16 laskentakertaa
-  * `java -jar pathfinding.jar t105x105_doors false A* 5 20 10 false false false 0`
-* Dijkstra
-  * 36ms
-  * 302 askelta
-  * 16 laskentakertaa
-  * `java -jar pathfinding.jar t105x105_doors false Dijkstra 5 20 10 false false false 0`
-* Leveyshaku
-  * 20ms
-  * 302 askelta
-  * 16 laskentakertaa
-  * `java -jar pathfinding.jar t105x105_doors false Breadth-first 5 20 10 false false false 0`
-* Syvyyshaku
-  * Jäi jumiin loputtomaan looppiin
-    * Algoritmi ei ehtinyt ovelle ennen sen sulkeutumista, lähti etsimään toista reittiä jota se ei myöskään ehtinyt käydä ja sulkeutuessaan toinen reitti vapautti ensimmäisen reitin uudestaan.
-  * `java -jar pathfinding.jar t105x105_doors false Depth-first 5 20 10 false false false 0`
+| Algoritmi | A* | Dijkstra | Leveyshaku |
+|----------------|---------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+| Aika | 46ms | 36ms | 20ms |
+| Askeleet | 302 | 302 | 302 |
+| Laskentakerrat | 16 | 16 | 16 |
+| Ajoparametrit | `java -jar pathfinding.jar t105x105_doors false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_doors false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105_doors false Breadth-first 5 20 10 false false false 0` |
 
-Vinottaiset liikkeet saattoivat ohjelman samanlaiseen looppiin kuin syvyyshaku ei-vinottaisilla testisokkelossa.
+Syvyyshaku jäi loputtomaan looppiin. Etsijä ei ehtinyt ovelle ennen sen sulkeutumista ja se lähti etsimään uutta reittiä. Myös uusi reitti sulkeutui ennen kuin etsijä ehti ovelle, ja vanha reitti aukesi uudestaan. Tämän jälkeen etsijä yritti uudestaan vanhaa reittiä. Ajoparametrit: `java -jar pathfinding.jar t105x105_doors false Depth-first 5 20 10 false false false 0`.
+
+Vinottaiset liikkeet saattoivat ohjelman samanlaiseen looppiin kuin syvyyshaku.
 
 Muuttuvan sokkelon tilanteessa ei tapahtunut mitään erityisen yllättävää. Suoritusajoista kuitenkin huomaa, ettei aikaa kulunut kovin paljoa enempää kuin yksinkertaisessa polunetsinnässä, vaikka laskentakertoja oli 16-kertainen määrä. Syy tähän on siinä, että etsijän lähestyessä kohdettaan tarvittavan uuden polun pituus lyhenee. Pienemmässä sokkelossa reitti on eksponentiaalisesti nopeampi laskea.
 
