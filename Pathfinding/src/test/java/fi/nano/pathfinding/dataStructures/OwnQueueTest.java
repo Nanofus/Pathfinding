@@ -6,6 +6,7 @@
 package fi.nano.pathfinding.dataStructures;
 
 import fi.nano.pathfinding.structure.Node;
+import java.util.ArrayDeque;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -158,5 +159,13 @@ public class OwnQueueTest {
         queue.pop();
 
         assertEquals(node2, queue.peek());
+    }
+    
+    @Test
+    public void CompareToArrayDeque() {
+        OwnQueue queue = new OwnQueue();
+        ArrayDeque<Node> deque = new ArrayDeque<>();
+        
+        
     }
 }

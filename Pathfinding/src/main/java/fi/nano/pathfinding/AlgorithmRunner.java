@@ -139,55 +139,33 @@ public class AlgorithmRunner {
             for (int j = 0; j < height; j++) {
                 Node node = parsedMaze[i][j];
                 if (GetsNeighbours(node)) {
-                    if ((i - 1 >= 0) && (i - 1 < width)) {
-                        if (GetsNeighbours(parsedMaze[i - 1][j])) {
-                            node.SetNeighbour(parsedMaze[i - 1][j], false);
-                        }
-                    }
-                    if ((i + 1 >= 0) && (i + 1 < width)) {
-                        if (GetsNeighbours(parsedMaze[i + 1][j])) {
-                            node.SetNeighbour(parsedMaze[i + 1][j], false);
-                        }
-                    }
-                    if ((j - 1 >= 0) && (j - 1 < height)) {
-                        if (GetsNeighbours(parsedMaze[i][j - 1])) {
-                            node.SetNeighbour(parsedMaze[i][j - 1], false);
-                        }
-                    }
-                    if ((j + 1 >= 0) && (j + 1 < height)) {
-                        if (GetsNeighbours(parsedMaze[i][j + 1])) {
-                            node.SetNeighbour(parsedMaze[i][j + 1], false);
-                        }
-                    }
-
+                    SetNeighbour(node, i - 1, j, false);
+                    SetNeighbour(node, i + 1, j, false);
+                    SetNeighbour(node, i, j + 1, false);
+                    SetNeighbour(node, i, j - 1, false);
                     if (allowDiagonalMovement) {
-                        if ((i - 1 >= 0) && (i - 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
-                            if (GetsNeighbours(parsedMaze[i - 1][j - 1])) {
-                                node.SetNeighbour(parsedMaze[i - 1][j - 1], true);
-                            }
-                        }
-                        if ((i + 1 >= 0) && (i + 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
-                            if (GetsNeighbours(parsedMaze[i + 1][j + 1])) {
-                                node.SetNeighbour(parsedMaze[i + 1][j + 1], true);
-                            }
-                        }
-                        if ((i + 1 >= 0) && (i + 1 < width) && (j - 1 >= 0) && (j - 1 < height)) {
-                            if (GetsNeighbours(parsedMaze[i + 1][j - 1])) {
-                                node.SetNeighbour(parsedMaze[i + 1][j - 1], true);
-                            }
-                        }
-                        if ((i - 1 >= 0) && (i - 1 < width) && (j + 1 >= 0) && (j + 1 < height)) {
-                            if (GetsNeighbours(parsedMaze[i - 1][j + 1])) {
-                                node.SetNeighbour(parsedMaze[i - 1][j + 1], true);
-                            }
-                        }
+                        SetNeighbour(node, i - 1, j - 1, true);
+                        SetNeighbour(node, i + 1, j - 1, true);
+                        SetNeighbour(node, i - 1, j + 1, true);
+                        SetNeighbour(node, i + 1, j + 1, true);
                     }
 
                 }
             }
         }
     }
-    
+
+    /**
+     * Asettaa solmulle naapurit
+     */
+    private void SetNeighbour(Node node, int x, int y, boolean diagonal) {
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            if (GetsNeighbours(parsedMaze[x][y])) {
+                node.SetNeighbour(parsedMaze[x][y], diagonal);
+            }
+        }
+    }
+
     /**
      * Tarkastaa voiko solmulle laittaa naapureita
      */
@@ -223,10 +201,12 @@ public class AlgorithmRunner {
     }
 
     /**
-     * Palauttaa merkkinä tiedon siitä, mitä solmussa on. Käyttöliittymää varten.
+     * Palauttaa merkkinä tiedon siitä, mitä solmussa on. Käyttöliittymää
+     * varten.
+     *
      * @param x Solmun x-koordinaatti
      * @param y Solmun y-koordinaatti
-     * @return 
+     * @return
      */
     public char ContentsOfTile(int x, int y) {
         if (chaser != null && chased != null) {
@@ -328,11 +308,11 @@ public class AlgorithmRunner {
     public long GetRunTime() {
         return runTime;
     }
-    
+
     public long GetNodeCleanTime() {
         return nodeCleanTime;
     }
-    
+
     public OwnArrayList<Node> GetPath() {
         return path;
     }

@@ -119,86 +119,114 @@ public class Pathfinding {
      * Käynnistää polunetsintäoperaation
      */
     private void RunPathfinding() {
-        //OwnArrayList<Node> oldPath;
         recalculateNeeded = true;
         while (true) {
-            chasedMoveTimer--;
-            if (chasedMoveTimer == 0) {
-                chasedMoveTimer = moveDelay;
-                int oldX = chased.x;
-                int oldY = chased.y;
-                mover.Move();
-                if (chased.x != oldX || chased.y != oldY) {
-                    recalculateNeeded = true;
-                    targetMovements++;
-                }
-            }
-
-            if (runner.GetDoors().size() > 0) {
-                doorTimer--;
-                if (doorTimer == 0) {
-                    doorTimer = doorDelay;
-                    for (int i = 0; i < runner.GetDoors().size(); i++) {
-                        if (runner.GetDoors().get(i).IsWall()) {
-                            runner.GetDoors().get(i).SetWall(false);
-                        } else {
-                            runner.GetDoors().get(i).SetWall(true);
-                        }
-                        recalculateNeeded = true;
-                    }
-                    doorClosures++;
-                }
-            }
-
-            if (recalculateNeeded) {
-                //oldPath = path;
-                //System.out.println("RECALCULATING");
-                path = runner.Pathfind(new Position(chaser.x, chaser.y), new Position(chased.x, chased.y));
-                totalTime = totalTime + runner.GetRunTime();
-                nodeCleanTime = nodeCleanTime + runner.GetNodeCleanTime();
-                if (logEnabled) {
-                    if (path.isEmpty()) {
-                        System.out.print("Path not found - ");
-                    }
-                    System.out.println("Time (ms) spent calculating: " + (runner.GetRunTime() * 0.000001) + " (total: " + (totalTime * 0.000001) + "), path length: " + path.size() + " (time per step: " + (runner.GetRunTime() * 0.000001) / path.size() + ")");
-                }
-                if (path.isEmpty()) {
-                    //path = oldPath;
-                    fails++;
-                    totalFails++;
-                    if (fails > longestFailStreak) {
-                        longestFailStreak = fails;
-                    }
-                    if (fails == waitBeforeFail) {
-                        failure = true;
-                    }
-                } else {
-                    fails = 0;
-                    recalculateNeeded = false;
-                }
-                recalcs++;
-            }
-
-            if (!path.isEmpty()) {
-                if (path.get(path.size() - 1).IsIce()) {
-                    iceSteps++;
-                } else if (path.get(path.size() - 1).IsSwamp()) {
-                    swampSteps++;
-                }
-            }
+            HandleTargetMovement();
+            HandleDoors();
+            HandleRecalculations();
+            HandleSpecialNodeCounting();
 
             chaser.MakeMove(path);
             steps++;
 
-            if (windowEnabled) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(waitInMillis);
-                } catch (InterruptedException ex) {
-                }
-            }
+            WaitIfWindowEnabled();
 
             if ((chaser.x == chased.x && chaser.y == chased.y) || failure) {
                 break;
+            }
+        }
+    }
+
+    /**
+     * Vastaa kohteen liikkumisesta suorituksen aikana
+     */
+    private void HandleTargetMovement() {
+        chasedMoveTimer--;
+        if (chasedMoveTimer == 0) {
+            chasedMoveTimer = moveDelay;
+            int oldX = chased.x;
+            int oldY = chased.y;
+            mover.Move();
+            if (chased.x != oldX || chased.y != oldY) {
+                recalculateNeeded = true;
+                targetMovements++;
+            }
+        }
+    }
+
+    /**
+     * Vastaa ovien käsittelystä suorituksen aikana
+     */
+    private void HandleDoors() {
+        if (runner.GetDoors().size() > 0) {
+            doorTimer--;
+            if (doorTimer == 0) {
+                doorTimer = doorDelay;
+                for (int i = 0; i < runner.GetDoors().size(); i++) {
+                    if (runner.GetDoors().get(i).IsWall()) {
+                        runner.GetDoors().get(i).SetWall(false);
+                    } else {
+                        runner.GetDoors().get(i).SetWall(true);
+                    }
+                    recalculateNeeded = true;
+                }
+                doorClosures++;
+            }
+        }
+    }
+
+    /**
+     * Vastaa uudelleenlaskentojen määräämisestä suorituksen aikana
+     */
+    private void HandleRecalculations() {
+        if (recalculateNeeded) {
+            path = runner.Pathfind(new Position(chaser.x, chaser.y), new Position(chased.x, chased.y));
+            totalTime = totalTime + runner.GetRunTime();
+            nodeCleanTime = nodeCleanTime + runner.GetNodeCleanTime();
+            if (logEnabled) {
+                if (path.isEmpty()) {
+                    System.out.print("Path not found - ");
+                }
+                System.out.println("Time (ms) spent calculating: " + (runner.GetRunTime() * 0.000001) + " (total: " + (totalTime * 0.000001) + "), path length: " + path.size() + " (time per step: " + (runner.GetRunTime() * 0.000001) / path.size() + ")");
+            }
+            if (path.isEmpty()) {
+                fails++;
+                totalFails++;
+                if (fails > longestFailStreak) {
+                    longestFailStreak = fails;
+                }
+                if (fails == waitBeforeFail) {
+                    failure = true;
+                }
+            } else {
+                fails = 0;
+                recalculateNeeded = false;
+            }
+            recalcs++;
+        }
+    }
+
+    /**
+     * Laskee käydyt erityisruudut suorituksen aikana
+     */
+    private void HandleSpecialNodeCounting() {
+        if (!path.isEmpty()) {
+            if (path.get(path.size() - 1).IsIce()) {
+                iceSteps++;
+            } else if (path.get(path.size() - 1).IsSwamp()) {
+                swampSteps++;
+            }
+        }
+    }
+
+    /**
+     * Estää ohjelmaa pyörimästä liian nopeasti visualisoinnin ollessa päällä
+     */
+    private void WaitIfWindowEnabled() {
+        if (windowEnabled) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(waitInMillis);
+            } catch (InterruptedException ex) {
             }
         }
     }
