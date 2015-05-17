@@ -36,6 +36,8 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
 
 * Yleisesti:
   * http://en.wikipedia.org/wiki/Pathfinding
+* Sokkelogeneraattori:
+  * http://www.delorie.com/game-room/mazes/genmaze.cgi
 * A*:
   * http://www.policyalmanac.org/games/aStarTutorial.htm
   * http://theory.stanford.edu/~amitp/GameProgramming/AStarComparison.html
@@ -47,11 +49,12 @@ Tutkin yleisimpiä polunetsintään käytettyjä algoritmeja:
   * http://en.wikipedia.org/wiki/Depth-first_search
 * Leveyshaku:
   * http://en.wikipedia.org/wiki/Breadth-first_search
-  
 * Keko:
   * http://opendatastructures.org/ods-java/10_1_BinaryHeap_Implicit_Bi.html
   * http://www.cse.hut.fi/en/research/SVG/TRAKLA2/tutorials/heap_tutorial/taulukkona.html
   * http://en.wikipedia.org/wiki/Binary_heap
+* ArrayList:
+  * http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/6-b14/java/util/ArrayList.java
 * HashSet:
   * http://stackoverflow.com/questions/4558754/define-what-is-a-hashset
 * HashMap:
