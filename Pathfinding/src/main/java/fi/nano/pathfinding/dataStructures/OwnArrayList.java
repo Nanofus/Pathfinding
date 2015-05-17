@@ -9,7 +9,7 @@ package fi.nano.pathfinding.dataStructures;
 public class OwnArrayList<O> {
 
     private int size = 0;
-    private int capacity = 12;
+    private int capacity = 10;
     private Object array[];
 
     /**

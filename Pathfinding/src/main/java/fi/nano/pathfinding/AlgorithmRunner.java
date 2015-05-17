@@ -109,20 +109,28 @@ public class AlgorithmRunner {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Node node = new Node();
-                if (((String) maze.get(j)).charAt(i) == ' ') {
-                } else if (((String) maze.get(j)).charAt(i) == 'D') {
-                    node.SetDoor(true);
-                    doors.add(node);
-                } else if (((String) maze.get(j)).charAt(i) == 'd') {
-                    node.SetWall(true);
-                    node.SetDoor(true);
-                    doors.add(node);
-                } else if (((String) maze.get(j)).charAt(i) == 's') {
-                    node.SetSwamp(true);
-                } else if (((String) maze.get(j)).charAt(i) == 'i') {
-                    node.SetIce(true);
-                } else {
-                    node.SetWall(true);
+                Character character = ((String) maze.get(j)).charAt(i);
+                switch (character) {
+                    case ' ':
+                        break;
+                    case 'D':
+                        node.SetDoor(true);
+                        doors.add(node);
+                        break;
+                    case 'd':
+                        node.SetWall(true);
+                        node.SetDoor(true);
+                        doors.add(node);
+                        break;
+                    case 's':
+                        node.SetSwamp(true);
+                        break;
+                    case 'i':
+                        node.SetIce(true);
+                        break;
+                    default:
+                        node.SetWall(true);
+                        break;
                 }
                 parsedMaze[i][j] = node;
                 node.x = i;

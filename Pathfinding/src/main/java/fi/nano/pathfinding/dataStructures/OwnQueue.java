@@ -10,7 +10,7 @@ import fi.nano.pathfinding.structure.Node;
 public class OwnQueue {
 
     private Node[] array;
-    private int capacity = 10;
+    private int capacity = 16;
     private int size = 0;
 
     private int front = 0;

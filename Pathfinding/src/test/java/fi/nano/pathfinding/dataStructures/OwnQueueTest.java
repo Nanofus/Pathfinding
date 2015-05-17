@@ -160,12 +160,78 @@ public class OwnQueueTest {
 
         assertEquals(node2, queue.peek());
     }
-    
+
     @Test
     public void CompareToArrayDeque() {
+        long runTime;
+        long startTime;
+
         OwnQueue queue = new OwnQueue();
         ArrayDeque<Node> deque = new ArrayDeque<>();
+
+        System.out.println("\nOwnQueue:");
+
+        startTime = System.nanoTime();
+        queue.push(new Node());
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Push: " + runTime + "ns");
+        queue = new OwnQueue();
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < 200; i++) {
+            queue.push(new Node());
+        }
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Push x 200: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        queue.peek();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Peek: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        queue.pop();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Pop: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        queue.isEmpty();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("IsEmpty: " + runTime + "ns");
+
+        System.out.println();
+
+        System.out.println("ArrayDeque:");
+
+        startTime = System.nanoTime();
+        deque.push(new Node());
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Push: " + runTime + "ns");
+        deque = new ArrayDeque();
         
-        
+        startTime = System.nanoTime();
+        for (int i = 0; i < 200; i++) {
+            deque.push(new Node());
+        }
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Push x 200: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        deque.peek();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Peek: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        deque.pop();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("Pop: " + runTime + "ns");
+
+        startTime = System.nanoTime();
+        deque.isEmpty();
+        runTime = System.nanoTime() - startTime;
+        System.out.println("IsEmpty: " + runTime + "ns");
+
+        System.out.println();
+        assertEquals(true, true);
     }
 }

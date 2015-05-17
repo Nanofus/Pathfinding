@@ -5,7 +5,7 @@ public class main {
     public static void main(String[] args) throws InterruptedException {
 
         if (args.length == 0) {
-            args = new String[]{"41x41", //maze
+            args = new String[]{"t105x105_all", //maze
                 "false", //allowDiagonal
                 "A*", //algo
                 "5", //moveDelay
