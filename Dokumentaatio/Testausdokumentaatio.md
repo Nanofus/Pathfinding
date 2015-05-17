@@ -6,7 +6,159 @@ Ohjelman JUnit-testaus sisältää ohjelman perustoimintojen oikean toiminnan ta
 
 ### Algoritmien testaus
 
+JUnit-testeillä testasin, että A*, Dijkstran algoritmi ja leveyshaku löytävät aina lyhyimmän reitin tilanteesta riippumatta, että ne reagoivat oikein tilanteessa, jossa reittiä ei löydy sekä sen, että kaikki käyttäytyvät järkevästi sokkelossa jossa on ovia. Testien pohjana käytin visualisointi päällä ajettuja yksinkertaisia sokkeloita, joista laskin manuaalisesti todellisen lyhimmän reitin ja optimaalisen käytöksen ovien tullessa vastaan. Testeistä on sekä versiot jotka sallivat vinottaiset liikkeet että versiot jotka eivät salli. Syvyyshaulle on koodissa läpimenevät testit, mutta niiden odottamat tulokset eivät perustu juuri mihinkään, sillä en pitänyt syvyyshakua erityisen tärkeänä.
+
+A*:lle ja Dijkstralle on lisäksi erilliset testit, joissa testataan, ymmärtävätkö ne kaarten painot oikein (suo- ja jääruudut).
+
 ### Tietorakenteiden testaus
+
+Jokaiselta tietorakenteelta testasin JUnit-testeillä julkisten metodien oikean toiminnan, sekä vertasin niiden nopeutta vastaaviin Javan omiin tietorakenteisiin.
+
+#### Tietorakenteiden nopeus verrattuna Javan vastaaviin
+
+##### OwnBinaryHeap
+
+Testissä täytin OwnBinaryHeapin ja PriorityQueuen ensin yksittäisellä ja sitten 100 solmulla, joilla on arvot välillä 0-299. Kumpikin tietorakenne käytti samaa komparaattoria solmujen vertailuun (NodeComparator). Valitsin solmumäärän 100 nimenomaan siksi, että tuolla arvolla molemmat tietorakenteet ylittävät oletuskapasiteettinsa (11) ja joutuvat kasvattamaan kokoaan. 11 on kuulemma jostain syystä optimaalinen oletuskapasiteetti jos etukäteen ei ole tietoa lisättävien alkioiden määrästä, en vain saanut selville, miksi.
+
+```
+OwnBinaryHeap:
+Add: 2994ns
+Add x 100: 49608ns
+Poll: 1711ns
+IsEmpty: 7271ns
+Size: 855ns
+
+PriorityQueue:
+Add: 27797ns
+Add x 100: 526015ns
+Poll: 21810ns
+IsEmpty: 8125ns
+Size: 4705ns
+```
+
+OwnBinaryHeap osoittautui PriorityQueuea huomattavasti nopeammaksi. Sen toimintaa kuitenkin rajoittaa pelkkien Node-tyyppisten olioiden salliminen, eikä se myöskään sisällä kaikkia PriorityQueuen ominaisuuksia, kuten `contains()` ja `remove()`.
+
+##### OwnQueue
+
+Testissä täytin OwnQueuen ja ArrayDequen ensin yhdellä ja sitten 200 solmulla ja otin eri operaatioihin käytetyt ajat ylös. Kummankin tietorakenteen oletuskapasiteetti on 16, joten kumpikin joutui laajentamaan taulukkoaan.
+
+```
+OwnQueue:
+Push: 855ns
+Push x 200: 38916ns
+Peek: 1283ns
+Pop: 855ns
+IsEmpty: 428ns
+
+ArrayDeque:
+Push: 13685ns
+Push x 200: 61582ns
+Peek: 14540ns
+Pop: 13258ns
+IsEmpty: 5560ns
+```
+
+Jononi on huomattavasti nopeampi kuin Javan ArrayDeque. Toiminnallisuudeltaan se on kuitenkin sekä yksinkertaisempi että rajoittuneempi, kuten OwnBinaryHeapkin; se hyväksyy vain Node-tyyppisiä olioita.
+
+##### OwnArrayList
+
+OwnArrayList on, toisin kuin muut tietorakenteeni, toiminnallisuudeltaan lähes samaa tasoa Javan oman ArrayListin kanssa, ja hyväksyy kaikentyyppisiä olioita. Vertasin sitä ArrayListiin sekä solmuilla, liukuluvuilla että kokonaisluvuilla. ArrayListin aloituskapasiteetti on 10, joten annoin OwnArrayListille saman. Kaikissa tapauksessa käytin ensin yhtä ja sitten 200 lisättyä alkiota (välissä tyhjennys), jolloin lista joutui kasvattamaan itseään useaan kertaan. Kaikissa contains-testeissä etsitty alkio on taulukossa, joko ensimmäisenä tai viimeisenä. IndexOf-testeissä testataan ensimmäisen ja viimeisen alkion indeksin löytämistä.
+
+###### Liukuluvuilla
+
+Täytin kummankin tietorakenteen 200 satunnaisella liukuluvulla väliltä 0-1.
+
+```
+OwnArrayList:
+Add: 64148ns
+Add x 200: 108197ns
+Contains (chosen one last): 11119ns
+Contains (chosen one first): 10264ns
+IndexOf (chosen one last): 11119ns
+IndexOf (chosen one first): 13258ns
+Get (101st): 428ns
+Remove (101st): 16678ns
+IsEmpty: 427ns
+Size: 428ns
+
+ArrayList:
+Add: 2138ns
+Add x 200: 126158ns
+Contains (chosen one last): 75695ns
+Contains (chosen one first): 2566ns
+IndexOf (chosen one last): 1910334ns
+IndexOf (chosen one first): 2566ns
+Get (101st): 1283ns
+Remove (101st): 5131ns
+IsEmpty: 855ns
+Size: 855ns
+```
+
+Liukuluvuilla Javan oma ArrayList toimi paljon nopeammin kuin OwnArrayList kaikissa tilanteissa, paitsi `isEmpty()`- ja `size()`-kyselyissä. ArrayListin `size()` on monimutkaisempi, kun taas kummassakin `isEmpty()` perustuu suoraan siihen, onko `size()`:n arvo `0`.
+
+###### Kokonaisluvuilla
+
+Täytin kummankin tietorakenteen 200 järjestyksessä olevalla kokonaisluvulla. 
+
+```
+OwnArrayList:
+Add: 2138ns
+Add x 200: 44049ns
+Contains (chosen one last): 12829ns
+Contains (chosen one first): 2138ns
+IndexOf (chosen one last): 11546ns
+IndexOf (chosen one first): 1283ns
+Get (101st): 428ns
+Remove (101st): 18389ns
+IsEmpty: 855ns
+Size: 427ns
+
+ArrayList:
+Add: 2566ns
+Add x 200: 649180ns
+Contains (chosen one last): 89380ns
+Contains (chosen one first): 4704ns
+IndexOf (chosen one last): 36350ns
+IndexOf (chosen one first): 2138ns
+Get (101st): 855ns
+Remove (101st): 4705ns
+IsEmpty: 855ns
+Size: 428ns
+```
+
+Kokonaisluvuilla OwnArrayList oli jälleen hitaampi kuin ArrayList, mutta ei läheskään yhtä pahasti kuin liukuluvuilla. Yksittäisessä lisäyksessä päästiin lähes samaan aikaan, ja `contains()` ja `indexOf()` jäivät vain puolta hitaammiksi.
+
+###### Solmuilla
+
+Täytin kummankin listan 200 solmulla.
+
+```
+OwnArrayList:
+Add: 4705ns
+Add x 200: 32074ns
+Contains (chosen one last): 11975ns
+Contains (chosen one first): 428ns
+IndexOf (chosen one last): 11119ns
+IndexOf (chosen one first): 428ns
+Get (101st): 3422ns
+Remove (101st): 17106ns
+IsEmpty: 427ns
+Size: 428ns
+
+ArrayList:
+Add: 6843ns
+Add x 200: 39772ns
+Contains (chosen one last): 17106ns
+Contains (chosen one first): 427ns
+IndexOf (chosen one last): 14968ns
+IndexOf (chosen one first): 428ns
+Get (101st): 3849ns
+Remove (101st): 6842ns
+IsEmpty: 3421ns
+Size: 2566ns
+```
+
+Monimutkaisemmalla oliolla, tässä tapauksessa Nodella, OwnArrayList pääsi nopeudeltaan vieläkin lähemmäksi ArrayListia, ja aikaerot jäivät kaikissa operaatioissa `remove()`:a lukuunottamatta suhteessa paljon pienemmiksi kuin millään muilla alkiotyypeillä. `remove()` on siis ArrayListissa selvästi tehokkaampi kuin OwnArrayListissa.
 
 ## Algoritmien manuaalinen testaus
 
