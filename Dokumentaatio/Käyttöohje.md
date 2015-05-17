@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Ohjelma löytyy projektin juuresta, nimellä `pathfinding.jar`. Se vaatii oheensa kansiot `mazes` ja `graphics`.
+Ohjelma löytyy repositorion juuresta .zip-tiedostona, nimellä `Pathfinding.zip`. Zipissä on ohjelma `pathfinding.jar`, ja se vaatii oheensa kansiot `mazes` ja `graphics`.
 
 ## Oheistiedostot
 
@@ -96,8 +96,8 @@ Ohjelman käynnistyttyä se aloittaa valitun algoritmin suorittamisen valituilla
 * Pisin putki epäonnistuneita polunetsintöjä
 * Kohdepisteen tekemät siirrot
 * Ovien aukeamiset/sulkeutumiset
-* Askeleet jääruuduissa
-* Askeleet suoruuduissa
+* Askeleet jääruuduissa (puolikas kaaren paino)
+* Askeleet suoruuduissa (kaksinkertainen kaaren paino)
 
 Kaikki ajat ovat millisekunneissa.
 
