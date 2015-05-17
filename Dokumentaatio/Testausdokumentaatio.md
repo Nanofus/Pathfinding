@@ -84,7 +84,6 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
        * 87ms
        * 468 askelta
        * `java -jar pathfinding.jar 401x401_open true Dijkstra 5 20 10 false false false 0`
-
 * Labyrintti 105x105
   * Ei vinottaisia liikkeitä
      * A*
