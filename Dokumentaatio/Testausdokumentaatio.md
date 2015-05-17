@@ -153,7 +153,7 @@ Kaikista testeistä ajetaan versiot, joissa vinottainen liike on sallittu ja kie
 | **Askeleet** | 265 | 265 | 265 | 2805 | 189 | 189 |
 | **Ajoparametrit** | `java -jar pathfinding.jar t105x105 false A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Dijkstra 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Breadth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 false Depth-first 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true A* 5 20 10 false false false 0` | `java -jar pathfinding.jar t105x105 true Dijkstra 5 20 10 false false false 0` |
 
-Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa hieman A*:eä nopeammin. A*, Dijkstran algoritmi ja leveyshaku tuottavat kaikki lyhimmän mahdollisen reitin. Kun kaarten painoja ei tarvitse ottaa huomioon, on leveyshaku algoritmeista paras. Syvyyshakua puolestaan ei voi käyttää varsinaisesti polunetsintään, sillä sen tuottama reitti on käyttökelvottoman pitkä. Syvyyshaku on kuitenkin merkittävästi nopeampi kuin muut, jos halutaan vain tarkistaa reitin olemassaolo.
+Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa hieman AStaria nopeammin. A*, Dijkstran algoritmi ja leveyshaku tuottavat kaikki lyhimmän mahdollisen reitin. Kun kaarten painoja ei tarvitse ottaa huomioon, on leveyshaku algoritmeista paras. Syvyyshakua puolestaan ei voi käyttää varsinaisesti polunetsintään, sillä sen tuottama reitti on käyttökelvottoman pitkä. Syvyyshaku on kuitenkin merkittävästi nopeampi kuin muut, jos halutaan vain tarkistaa reitin olemassaolo.
 
 #### Muuttuva sokkelo (ovet)
 
