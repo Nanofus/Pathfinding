@@ -268,25 +268,25 @@ Tuloksista huomataan, että Dijkstran algoritmi toimii testatuissa sokkeloissa h
 
 #### Muuttuva sokkelo (ovet)
 
-  * A*
-   * 46ms
-   * 302 askelta
-   * 16 laskentakertaa
-   * `java -jar pathfinding.jar t105x105_doors false A* 5 20 10 false false false 0`
- * Dijkstra
-   * 36ms
-   * 302 askelta
-   * 16 laskentakertaa
-   * `java -jar pathfinding.jar t105x105_doors false Dijkstra 5 20 10 false false false 0`
- * Leveyshaku
-   * 20ms
-   * 302 askelta
-   * 16 laskentakertaa
-   * `java -jar pathfinding.jar t105x105_doors false Breadth-first 5 20 10 false false false 0`
- * Syvyyshaku
-   * Jäi jumiin loputtomaan looppiin
-     * Algoritmi ei ehtinyt ovelle ennen sen sulkeutumista, lähti etsimään toista reittiä jota se ei myöskään ehtinyt käydä ja sulkeutuessaan toinen reitti vapautti ensimmäisen reitin uudestaan.
-   * `java -jar pathfinding.jar t105x105_doors false Depth-first 5 20 10 false false false 0`
+* A*
+  * 46ms
+  * 302 askelta
+  * 16 laskentakertaa
+  * `java -jar pathfinding.jar t105x105_doors false A* 5 20 10 false false false 0`
+* Dijkstra
+  * 36ms
+  * 302 askelta
+  * 16 laskentakertaa
+  * `java -jar pathfinding.jar t105x105_doors false Dijkstra 5 20 10 false false false 0`
+* Leveyshaku
+  * 20ms
+  * 302 askelta
+  * 16 laskentakertaa
+  * `java -jar pathfinding.jar t105x105_doors false Breadth-first 5 20 10 false false false 0`
+* Syvyyshaku
+  * Jäi jumiin loputtomaan looppiin
+    * Algoritmi ei ehtinyt ovelle ennen sen sulkeutumista, lähti etsimään toista reittiä jota se ei myöskään ehtinyt käydä ja sulkeutuessaan toinen reitti vapautti ensimmäisen reitin uudestaan.
+  * `java -jar pathfinding.jar t105x105_doors false Depth-first 5 20 10 false false false 0`
 
 Vinottaiset liikkeet saattoivat ohjelman samanlaiseen looppiin kuin syvyyshaku ei-vinottaisilla testisokkelossa.
 
