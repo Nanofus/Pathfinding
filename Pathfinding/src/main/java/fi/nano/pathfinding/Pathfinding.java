@@ -48,6 +48,7 @@ public class Pathfinding {
 
     private boolean failure = false;
     private int fails = 0;
+    private int totalFails = 0;
     private int longestFailStreak = 0;
     private int iceSteps = 0;
     private int swampSteps = 0;
@@ -164,6 +165,7 @@ public class Pathfinding {
                 if (path.isEmpty()) {
                     //path = oldPath;
                     fails++;
+                    totalFails++;
                     if (fails > longestFailStreak) {
                         longestFailStreak = fails;
                     }
@@ -214,7 +216,7 @@ public class Pathfinding {
         System.out.println("Time spent calculating paths: " + totalTime * 0.000001 + " ms, steps: " + steps + ", per step: " + (totalTime * 0.000001) / steps + " ms");
         System.out.println("Time spent cleaning nodes: " + nodeCleanTime * 0.000001 + " ms, on average: " + (nodeCleanTime * 0.000001) / recalcs + " ms");
         System.out.println("Path recalculations: " + recalcs + ", average recalculation time: " + (totalTime * 0.000001) / recalcs + " ms");
-        System.out.println("Calculation failures: " + fails + ", longest streak: " + longestFailStreak);
+        System.out.println("Calculation failures: " + totalFails + ", longest streak: " + longestFailStreak);
         System.out.println("Target movements: " + targetMovements + ", door toggles: " + doorClosures + "\nSteps on ice: " + iceSteps + ", steps on swamp: " + swampSteps + "\n\n---");
     }
 
